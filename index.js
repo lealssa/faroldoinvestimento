@@ -61,33 +61,44 @@ document.addEventListener('alpine:init', () => {
     })
 
     Alpine.data('simulador', () => ({
-        montante: 0,
-        prazo: 12,
-        tipo: 'pre',
-        taxa: 0,
-        defaultTaxaPos: 90,
-        IR: "naoIsento",
+        dadosEntrada: {
+            montante: 0,
+            prazo: 12,
+            taxa: 0,
+            IR: 'naoIsento'
+        },
+        tipoIndiceSelecionado: 'pre',
+        opcoesIndices: {
+            pos: { label: "% da SELIC a.a", taxa: 90 },
+            pre: { label: "Taxa a.a", taxa: 0 },
+            poupanca: { label: "Poupança a.a", taxa: 0 },
+            ipca: { label: "+ IPCA a.a", taxa: 5 },
+        },
         resultadoRendimento: {
             montanteAplicado: 0,
             valorNoVencimento: 0,
             bruto: 0,
             liquido: 0,
             impostoDeRenda: 0,
-            aliquotaIR: 0
+            aliquotaIR: 0,
+            prazoMeses: 0,
+            info: ''
         },
         init() {
 
-            this.taxa = this.$store.indices.listaIndices.SELIC.data ?? 0
+            this.$watch('$store.indices.listaIndices', (value) => {
+                this.opcoesIndices.pre.taxa = value['SELIC'].data
+                this.opcoesIndices.poupanca.taxa = value['Poupanca'].data
 
-            this.$watch('$store.indices.listaIndices.SELIC.data', (value) => {
-                this.taxa = value;
+                this.dadosEntrada.taxa = this.opcoesIndices.pre.taxa
             })
 
-            this.$watch('tipo', (value) => {
-                if (value === 'pos')
-                    this.taxa = this.defaultTaxaPos
-                else
-                    this.taxa = this.$store.indices.listaIndices.SELIC.data
+            this.$watch('tipoIndiceSelecionado', (value) => {
+                this.dadosEntrada.taxa = this.opcoesIndices[value].taxa
+            })
+
+            this.$watch('dadosEntrada', () => {
+                this.resultadoRendimento = this.rendimento
             })
         },
         salvar() {
@@ -101,27 +112,48 @@ document.addEventListener('alpine:init', () => {
             if (existe.length > 0)
                 return
 
-
             this.$store.simulacoes.lista.push(result)
-
-            this.montante = 0
         },
         get isentoIR() {
-            return this.IR === "isento"
+            return this.dadosEntrada.IR === "isento"
         },
         get rendimento() {
 
-            let taxa = this.taxa
+            let resultadoRendimento = {
+                montanteAplicado: 0,
+                valorNoVencimento: 0,
+                bruto: 0,
+                liquido: 0,
+                impostoDeRenda: 0,
+                aliquotaIR: 0,
+                prazoMeses: this.dadosEntrada.prazo,
+                info: ''
+            }
 
-            const montante = parseInt(this.montante)
+            let taxa = this.dadosEntrada.taxa
 
-            if (this.tipo === 'pos')
-                taxa = (this.taxa * this.$store.indices.listaIndices.SELIC.data) / 100
+            const montante = parseInt(this.dadosEntrada.montante)
 
-            const valorNoVencimento = montante * Math.pow(1 + taxa / 100 / 12, this.prazo)
+            if (this.tipoIndiceSelecionado === 'pos') {
+                taxa = (this.dadosEntrada.taxa * this.$store.indices.listaIndices.SELIC.data) / 100
+                resultadoRendimento.info = `${this.dadosEntrada.taxa}% da SELIC a.a`
+
+            }                
+            else if (this.tipoIndiceSelecionado === 'ipca') {
+                taxa = parseFloat(this.dadosEntrada.taxa) + parseFloat(this.$store.indices.listaIndices.IPCA.data)
+                resultadoRendimento.info = `${this.dadosEntrada.taxa}% + IPCA a.a`
+            }
+            else if (this.tipoIndiceSelecionado === 'poupanca') {
+                resultadoRendimento.info = `Poupança a.a`
+            }            
+            else {
+                resultadoRendimento.info = `${this.dadosEntrada.taxa}% a.a`
+            }
+
+            const valorNoVencimento = montante * Math.pow(1 + taxa / 100 / 12, this.dadosEntrada.prazo)
 
             if (isNaN(valorNoVencimento))
-                return this.resultadoRendimento
+                return resultadoRendimento
 
             const rendimentoBruto = valorNoVencimento - montante
 
@@ -131,7 +163,7 @@ document.addEventListener('alpine:init', () => {
             let aliquotaIR = 0
 
             if (!this.isentoIR) {
-                calculoIR = this.calculaIR(this.prazo, rendimentoBruto)
+                calculoIR = this.calculaIR(this.dadosEntrada.prazo, rendimentoBruto)
                 rendimentoLiquido = rendimentoBruto - calculoIR.impostoDeRenda
                 impostoDeRenda = calculoIR.impostoDeRenda
                 aliquotaIR = calculoIR.aliquotaIR
@@ -139,14 +171,14 @@ document.addEventListener('alpine:init', () => {
             else
                 rendimentoLiquido = rendimentoBruto
 
-            this.resultadoRendimento.montanteAplicado = montante
-            this.resultadoRendimento.valorNoVencimento = valorNoVencimento
-            this.resultadoRendimento.bruto = rendimentoBruto
-            this.resultadoRendimento.liquido = rendimentoLiquido
-            this.resultadoRendimento.impostoDeRenda = impostoDeRenda
-            this.resultadoRendimento.aliquotaIR = aliquotaIR
+            resultadoRendimento.montanteAplicado = montante
+            resultadoRendimento.valorNoVencimento = valorNoVencimento
+            resultadoRendimento.bruto = rendimentoBruto
+            resultadoRendimento.liquido = rendimentoLiquido
+            resultadoRendimento.impostoDeRenda = impostoDeRenda
+            resultadoRendimento.aliquotaIR = aliquotaIR
 
-            return this.resultadoRendimento
+            return resultadoRendimento
         },
         calculaIR(prazoMes, rendimentoBruto) {
             let aliquotaIR

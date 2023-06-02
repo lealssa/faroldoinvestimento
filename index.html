@@ -107,6 +107,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Valor aplicado</th>
+                                <th>Tipo</th>
+                                <th>Prazo a.m</th>
                                 <th>Valor no venc.</th>
                                 <th>Rend. bruto</th>
                                 <th>IR</th>
@@ -117,7 +119,7 @@
                         </thead>
                         <tbody>
                             <tr x-show="$store.simulacoes.lista.length <= 0">
-                                <td colspan="8">
+                                <td colspan="10">
                                     <p class="subtitle has-text-centered">Preencha os dados e clique em "Comparar"</p>
                                 </td>
                             </tr>
@@ -128,6 +130,13 @@
                                     </td>
                                     <td
                                         x-text="simulacao.montanteAplicado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
+                                    </td>
+                                    <td
+                                        x-text="simulacao.info"
+                                    >
+                                    <td
+                                        x-text="simulacao.prazoMeses"
+                                    >                                    
                                     </td>
                                     <td
                                         x-text="simulacao.valorNoVencimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
@@ -191,7 +200,7 @@
                                     <div class="field">
                                         <label class="label has-text-weight-light">Montante</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Montante" x-model="montante">
+                                            <input class="input" type="text" placeholder="Montante" x-model="dadosEntrada.montante">
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +210,7 @@
                                         <label class="label has-text-weight-light">Prazo
                                             a.m</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Prazo a.m" x-model="prazo">
+                                            <input class="input" type="text" placeholder="Prazo a.m" x-model="dadosEntrada.prazo">
                                         </div>
                                     </div>
                                 </div>
@@ -209,9 +218,9 @@
                                 <div class="column is-2">
                                     <div class="field">
                                         <label class="label has-text-weight-light"
-                                            x-text="tipo === 'pre' ? 'Taxa a.a' : '% da SELIC a.a'"></label>
+                                            x-text="opcoesIndices[tipoIndiceSelecionado].label"></label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Taxa a.a" x-model="taxa">
+                                            <input class="input" type="text" placeholder="Taxa a.a" x-model="dadosEntrada.taxa">
                                         </div>
                                     </div>
                                 </div>
@@ -221,9 +230,11 @@
                                         <label class="label has-text-weight-light">Tipo</label>
                                         <div class="control">
                                             <div class="select is-fullwidth">
-                                                <select x-model="tipo">
+                                                <select x-model="tipoIndiceSelecionado">
                                                     <option value="pre">Pré-fixado</option>
                                                     <option value="pos">Pós-fixado</option>
+                                                    <option value="poupanca">Poupança</option>
+                                                    <option value="ipca">IPCA+</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -236,11 +247,11 @@
                                             IR?</label>
                                         <div class="control">
                                             <label class="radio">
-                                                <input type="radio" name="ir" value="isento" x-model="IR">
+                                                <input type="radio" name="ir" value="isento" x-model="dadosEntrada.IR">
                                                 Sim
                                             </label>
                                             <label class="radio">
-                                                <input type="radio" name="ir" value="naoIsento" x-model="IR">
+                                                <input type="radio" name="ir" value="naoIsento" x-model="dadosEntrada.IR">
                                                 Não
                                             </label>
                                         </div>
@@ -256,7 +267,7 @@
                                     <div class="tile is-child box">
                                         <p class="subtitle">Valor no venc.</p>
                                         <p class="title is-size-5"
-                                            x-text="rendimento.valorNoVencimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
+                                            x-text="resultadoRendimento.valorNoVencimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
                                         </p>
                                     </div>
                                 </div>
@@ -264,7 +275,7 @@
                                     <div class="tile is-child box">
                                         <p class="subtitle">Rend. bruto</p>
                                         <p class="title is-size-5"
-                                            x-text="rendimento.bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
+                                            x-text="resultadoRendimento.bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
                                         </p>
                                     </div>
                                 </div>
@@ -273,7 +284,7 @@
 
                                         <p class="subtitle">IR</p>
                                         <p class="title is-size-5"
-                                            x-text="rendimento.impostoDeRenda.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
+                                            x-text="resultadoRendimento.impostoDeRenda.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
                                         </p>
 
                                     </div>
@@ -283,7 +294,7 @@
 
                                         <p class="subtitle">Rend. líquido</p>
                                         <p class="title is-size-5"
-                                            x-text="rendimento.liquido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
+                                            x-text="resultadoRendimento.liquido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
                                         </p>
 
                                     </div>
@@ -291,7 +302,7 @@
                                 <div class="tile is-parent">
                                     <div class="tile is-child box">
                                         <p class="subtitle">Alíq. IR</p>
-                                        <p class="title is-size-5" x-text="rendimento.aliquotaIR.toLocaleString('pt-BR', {
+                                        <p class="title is-size-5" x-text="resultadoRendimento.aliquotaIR.toLocaleString('pt-BR', {
                                                 style: 'percent',
                                                 minimumFractionDigits: 1,
                                                 maximumFractionDigits: 1,
