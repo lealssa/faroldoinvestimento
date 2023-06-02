@@ -327,10 +327,10 @@
             </div>
         </main>
 
-        <footer class="hero-foot">
+        <footer class="hero-foot" x-data="{ anoAtual: (new Date()).getFullYear()}">
             <div class="footer py-4 has-background-white">
                 <div class="content has-text-centered has-text-weight-semibold">
-                    <p>Farol do Investimento 2023</p>
+                    <p x-text="`Farol do Investimento ${anoAtual}`"></p>
                 </div>
             </div>
         </footer>
