@@ -5,59 +5,47 @@ document.addEventListener('alpine:init', () => {
     })
 
     Alpine.store('indices', {
-        listaIndices: {
-            SELIC: { data: null, error: null, info: { name: "SELIC", description: "Taxa básica de juros", notes: null } },
-            Poupanca: { data: null, error: null, info: { name: "Poupanca", description: "Rendimento dos últimos 12 meses", notes: null } },
-            IPCA: { data: null, error: null, info: { name: "IPCA", description: "Inflação acumulada dos últimos 12 meses", notes: null } }
+        isLoading: false,
+        isErrored: false,
+        oci: {
+            SELIC: {},
+            Poupanca: {},
+            IPCA: {}
         },
         init() {
-            this.fetchSELIC(),
-            this.fetchPoupanca(),
-            this.fetchIPCA()
+            this.fetchIndicesOCI()
         },
-        get loading() {
-            return (this.listaIndices.SELIC.data === null || this.listaIndices.IPCA.data === null || this.listaIndices.Poupanca.data === null)
-        },
-        fetchData(url, handleData, propName) {
+        fetchIndicesOCI() {
+
+            this.isLoading = true
+
+            const hoje = new Date()
+            let ano = hoje.getFullYear()
+            let mes = hoje.getMonth() + 1
+            let dia = hoje.getDate()
+
+            const dataAtual = `${ano}${mes.toString().padStart(2, '0')}${dia.toString().padStart(2, '0')}`
+
+            const url = `https://objectstorage.sa-vinhedo-1.oraclecloud.com/n/axjwvnzorobg/b/indices/o/${dataAtual}.json`
+
             fetch(url)
                 .then((res) => {
                     if (res.status !== 200)
-                        this.listaIndices[propName].error = `status ${res.status}`
+                        throw new Error('Status != 200')
+
                     return res.json()
                 })
-                .then((json) => (this.listaIndices[propName].data = handleData(json)))
-                .catch((err) => {
-                    this.listaIndices[propName].error = err
+                .then((json) => {
+                    this.oci.SELIC = json.filter((item) => item.nome === 'SELIC')[0]
+                    this.oci.IPCA = json.filter((item) => item.nome === 'IPCA')[0]
+                    this.oci.Poupanca = json.filter((item) => item.nome === 'Poupança')[0]
                 })
-        },
-        fetchIPCA() {
-            const date = new Date();
-            let year = date.getFullYear();
-            let month = date.getMonth();
-            if (month === 0) {
-                month = 12;
-                year--;
-            }
-            const period = `${year}${month.toString().padStart(2, '0')}`;
-            const urlIPCA = `https://servicodados.ibge.gov.br/api/v3/agregados/7062/periodos/${period}/variaveis/1120?localidades=N1[all]&classificacao=315[7169]`;
-            this.listaIndices.IPCA.info.notes = `Medido em ${new Date(year, month - 1).toLocaleString('pt-BR', { month: 'long' })} de ${year} pelo IBGE`
-            this.fetchData(urlIPCA, (json) => json[0].resultados[0].series[0].serie[period], "IPCA")
-        },
-        fetchSELIC() {
-            const date = new Date();
-            const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            const period = `${day}/${month}/${year}`;
-            const urlSELIC = `https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=json&dataInicial=${period}&dataFinal=${period}`;
-            this.listaIndices.SELIC.info.notes = `Obtido em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "medium", }).format(new Date())}`
-            this.fetchData(urlSELIC, (json) => json[0].valor, "SELIC")
-        },
-        fetchPoupanca() {
-            const urlPoupanca = `https://api.bcb.gov.br/dados/serie/bcdata.sgs.195/dados/ultimos/12?formato=json`;
-            this.listaIndices.Poupanca.info.notes = `Obtido em ${new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "medium", }).format(new Date())}`
-            this.fetchData(urlPoupanca, (json) => json.reduce((accumulator, currentValue) => { return accumulator + parseFloat(currentValue.valor) }, 0), "Poupanca")
-        },
+                .catch((err) => {
+                    this.isErrored = true
+                    console.error(err)
+                })
+                .finally(() => this.isLoading = false)
+        }
     })
 
     Alpine.data('simulador', () => ({
@@ -86,9 +74,9 @@ document.addEventListener('alpine:init', () => {
         },
         init() {
 
-            this.$watch('$store.indices.listaIndices', (value) => {
-                this.opcoesIndices.pre.taxa = value['SELIC'].data
-                this.opcoesIndices.poupanca.taxa = value['Poupanca'].data
+            this.$watch('$store.indices.oci', (value) => {
+                this.opcoesIndices.pre.taxa = value['SELIC'].valor
+                this.opcoesIndices.poupanca.taxa = value['Poupanca'].valor
 
                 this.dadosEntrada.taxa = this.opcoesIndices.pre.taxa
             })
@@ -135,17 +123,17 @@ document.addEventListener('alpine:init', () => {
             const montante = parseInt(this.dadosEntrada.montante)
 
             if (this.tipoIndiceSelecionado === 'pos') {
-                taxa = (this.dadosEntrada.taxa * this.$store.indices.listaIndices.SELIC.data) / 100
+                taxa = (this.dadosEntrada.taxa * this.$store.indices.oci.SELIC.valor) / 100
                 resultadoRendimento.info = `${this.dadosEntrada.taxa}% da SELIC a.a`
 
-            }                
+            }
             else if (this.tipoIndiceSelecionado === 'ipca') {
-                taxa = parseFloat(this.dadosEntrada.taxa) + parseFloat(this.$store.indices.listaIndices.IPCA.data)
+                taxa = parseFloat(this.dadosEntrada.taxa) + parseFloat(this.$store.indices.oci.IPCA.valor)
                 resultadoRendimento.info = `${this.dadosEntrada.taxa}% + IPCA a.a`
             }
             else if (this.tipoIndiceSelecionado === 'poupanca') {
                 resultadoRendimento.info = `Poupança a.a`
-            }            
+            }
             else {
                 resultadoRendimento.info = `${this.dadosEntrada.taxa}% a.a`
             }

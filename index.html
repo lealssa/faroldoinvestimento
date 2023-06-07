@@ -63,27 +63,32 @@
                 <!-- Índices -->
                 <div class="columns is-centered is-multiline">
 
-                    <template x-for="(value, name) in $store.indices.listaIndices" :key="name">
-                        <div class="column is-4">
+                    <!-- Mensagem de erro -->
+                    <div class="column" x-show="$store.indices.isErrored">
+
+                        <article class="message is-warning">
+                            <div class="message-body has-text-centered">
+                                <p class="title has-text-warning-dark is-size-4">Não foi possível obter os índices</p>
+                                <p class="subtitle">Tente novamente em instantes</p>
+                            </div>
+                          </article>                                                
+
+                    </div>
+
+                    <!-- Lista de índices -->
+                    <template x-for="(value, nome) in $store.indices.oci" :key="nome">
+                        <div class="column is-4" x-show="!$store.indices.isLoading && !$store.indices.isErrored">
                             <div class="card">
-                                <div class="card-header"
-                                    :class="value.error ? 'has-background-danger' : 'has-background-white-ter'">
-                                    <p class="card-header-title has-text-grey-dark" x-text="name"></p>
+                                <div class="card-header has-background-white-ter">
+                                    <p class="card-header-title has-text-grey-dark" x-text="value.nome"></p>
                                 </div>
                                 <div class="card-content">
-                                    <div :class="!value.data && 'is-hidden'">
-                                        <h3 x-text="value.info.description"></h3>
-                                        <p><span x-text="value.data"></span>% a.a</p>
-                                    </div>
-
-                                    <div class="block is-flex is-justify-content-center"
-                                        :class="{ 'is-hidden': value.data }">
-                                        <span class="loader"></span>
-                                    </div>
+                                    <h3 x-text="value.descricao"></h3>
+                                    <p><span x-text="value.valor"></span>% a.a</p>
                                 </div>
                                 <div class="card-footer is-size-7">
                                     <p class="card-footer-item">
-                                        <span x-text="value.info.notes"></span>
+                                        <span x-text="value.notas"></span>
                                     </p>
                                 </div>
                             </div>
@@ -131,12 +136,8 @@
                                     <td
                                         x-text="simulacao.montanteAplicado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
                                     </td>
-                                    <td
-                                        x-text="simulacao.info"
-                                    >
-                                    <td
-                                        x-text="simulacao.prazoMeses"
-                                    >                                    
+                                    <td x-text="simulacao.info">
+                                    <td x-text="simulacao.prazoMeses">
                                     </td>
                                     <td
                                         x-text="simulacao.valorNoVencimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })">
@@ -173,7 +174,7 @@
 
 
                 <!-- Loader -->
-                <div class="card" :class="{ 'is-hidden': !$store.indices.loading }">
+                <div class="card" :class="{ 'is-hidden': !$store.indices.isLoading || $store.indices.isErrored }">
                     <div class="card-header has-background-white-ter">
                         <p class="card-header-title">Obtendo índices...</p>
                     </div>
@@ -183,7 +184,7 @@
                 </div>
 
 
-                <div class="block" x-data="simulador" :class="{ 'is-hidden': $store.indices.loading }">
+                <div class="block" x-data="simulador" :class="{ 'is-hidden': $store.indices.isLoading || $store.indices.isErrored }">
 
                     <div class="card">
 
@@ -200,7 +201,8 @@
                                     <div class="field">
                                         <label class="label has-text-weight-light">Montante</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Montante" x-model="dadosEntrada.montante">
+                                            <input class="input" type="text" placeholder="Montante"
+                                                x-model="dadosEntrada.montante">
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +212,8 @@
                                         <label class="label has-text-weight-light">Prazo
                                             a.m</label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Prazo a.m" x-model="dadosEntrada.prazo">
+                                            <input class="input" type="text" placeholder="Prazo a.m"
+                                                x-model="dadosEntrada.prazo">
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +223,8 @@
                                         <label class="label has-text-weight-light"
                                             x-text="opcoesIndices[tipoIndiceSelecionado].label"></label>
                                         <div class="control">
-                                            <input class="input" type="text" placeholder="Taxa a.a" x-model="dadosEntrada.taxa">
+                                            <input class="input" type="text" placeholder="Taxa a.a"
+                                                x-model="dadosEntrada.taxa">
                                         </div>
                                     </div>
                                 </div>
@@ -251,7 +255,8 @@
                                                 Sim
                                             </label>
                                             <label class="radio">
-                                                <input type="radio" name="ir" value="naoIsento" x-model="dadosEntrada.IR">
+                                                <input type="radio" name="ir" value="naoIsento"
+                                                    x-model="dadosEntrada.IR">
                                                 Não
                                             </label>
                                         </div>
