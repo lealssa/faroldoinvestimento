@@ -64,16 +64,19 @@
                 <div class="columns is-centered is-multiline">
 
                     <!-- Mensagem de erro -->
-                    <div class="column" x-show="$store.indices.isErrored">
+                    <template x-if="$store.indices.isErrored">
+                        <div class="column">
 
-                        <article class="message is-warning">
-                            <div class="message-body has-text-centered">
-                                <p class="title has-text-warning-dark is-size-4">Não foi possível obter os índices</p>
-                                <p class="subtitle">Tente novamente em instantes</p>
-                            </div>
-                          </article>                                                
+                            <article class="message is-warning">
+                                <div class="message-body has-text-centered">
+                                    <p class="title has-text-warning-dark is-size-4">Não foi possível obter os índices</p>
+                                    <p class="subtitle">Tente novamente em instantes</p>
+                                </div>
+                            </article>
+    
+                        </div>
+                    </template>
 
-                    </div>
 
                     <!-- Lista de índices -->
                     <template x-for="(value, nome) in $store.indices.oci" :key="nome">
@@ -106,7 +109,7 @@
                     </p>
                 </div>
 
-                <div class="block is-hidden-mobile">
+                <div class="block is-hidden-mobile has-background-white">
                     <table class="table is-fullwidth is-hoverable">
                         <thead>
                             <tr>
@@ -165,13 +168,21 @@
                                             </span>
                                         </a>
                                     </td>
-
                                 </tr>
                             </template>
                         </tbody>
                     </table>
+                    <div class="buttons is-right" x-show="$store.simulacoes.lista.length > 1">
+                        <button class="button is-small is-danger is-light" @click="$store.simulacoes.limpar()">
+                            <span class="icon">
+                                <i class="fas fa-trash-can" aria-hidden="true"></i>
+                            </span>
+                            <span>
+                                Limpar todos
+                            </span>
+                        </button>
+                    </div>
                 </div>
-
 
                 <!-- Loader -->
                 <div class="card" :class="{ 'is-hidden': !$store.indices.isLoading || $store.indices.isErrored }">
@@ -183,8 +194,8 @@
                     </div>
                 </div>
 
-
-                <div class="block" x-data="simulador" :class="{ 'is-hidden': $store.indices.isLoading || $store.indices.isErrored }">
+                <div class="block" x-data="simulador"
+                    :class="{ 'is-hidden': $store.indices.isLoading || $store.indices.isErrored }">
 
                     <div class="card">
 
@@ -222,9 +233,12 @@
                                     <div class="field">
                                         <label class="label has-text-weight-light"
                                             x-text="opcoesIndices[tipoIndiceSelecionado].label"></label>
-                                        <div class="control">
+                                        <div class="control has-icons-right">
                                             <input class="input" type="text" placeholder="Taxa a.a"
                                                 x-model="dadosEntrada.taxa">
+                                            <span class="icon is-small is-right">
+                                                <i class="fas fa-percentage"></i>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -319,12 +333,18 @@
 
                             </div>
 
+                            <p class="block is-size-7">* Valores aproximados e apenas para simulação. Não é uma indicação de aplicação.</p>
+
                             <!-- Botão adicionar -->
-
                             <button class="button is-rounded is-warning is-light is-outlined is-hidden-mobile"
-                                @click="salvar()">Comparar</button>
-
-
+                                @click="salvar()">
+                                <span class="icon">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                    Comparar
+                                </span>                                
+                            </button>
                         </div>
                     </div>
                 </div>

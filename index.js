@@ -1,7 +1,10 @@
 document.addEventListener('alpine:init', () => {
 
     Alpine.store('simulacoes', {
-        lista: []
+        lista: [],
+        limpar() {
+            this.lista.splice(0, this.lista.length)
+        }
     })
 
     Alpine.store('indices', {
