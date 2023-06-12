@@ -1,7 +1,7 @@
 document.addEventListener('alpine:init', () => {
 
     Alpine.store('simulacoes', {
-        lista: [],
+        lista: Alpine.$persist([]),
         limpar() {
             this.lista.splice(0, this.lista.length)
         }
