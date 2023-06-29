@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: faroldoinvestimento-vue3cdn
-          image: docker.io/lealssa/faroldoinvestimento:vue3cdn-v1.0
+          image: docker.io/lealssa/faroldoinvestimento:vue3cdn-v1.1
           ports:
             - containerPort: 80
 ---
