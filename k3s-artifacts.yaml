@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: faroldoinvestimento-vue3cdn
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: faroldoinvestimento-vue3cdn
+  name: faroldoinvestimento-vue3cdn
+spec:
+  selector:
+    matchLabels:
+      app: faroldoinvestimento-vue3cdn
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: faroldoinvestimento-vue3cdn
+    spec:
+      containers:
+        - name: faroldoinvestimento-vue3cdn
+          image: docker.io/lealssa/faroldoinvestimento:vue3cdn-v1.0
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: faroldoinvestimento-vue3cdn
+  name: faroldoinvestimento-vue3cdn
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5678
+      targetPort: 80
+  selector:
+    app: faroldoinvestimento-vue3cdn
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: faroldoinvestimento-vue3cdn
+  name: faroldoinvestimento-tls-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.middlewares: default-redirect-https@kubernetescrd
+spec:
+  rules:
+    - host: www.faroldoinvestimento.com.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: faroldoinvestimento-vue3cdn
+                port:
+                  number: 5678
+  tls:
+    - secretName: faroldoinvestimento-tls
+      hosts:
+        - www.faroldoinvestimento.com.br

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farol do Investimento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="hero is-fullheight" id="app">
+
+        <!-- Modal cadastro investimento -->
+        <div class="modal" :class="{ 'is-active': showCadastroInvestimento }">
+            <div class="modal-background"></div>
+
+            <div class="modal-card">
+
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Cadastro de investimento</p>
+                    <button class="delete" aria-label="close" @click="fecharCadastroInvestimento()"></button>
+                </header>
+
+                <section class="modal-card-body">
+
+                    <!-- Aviso -->
+                    <div class="notification is-success is-light has-text-centered" v-if="showModalMessage">
+                        <span class="icon">
+                            <i class="fas fa-check" aria-hidden="true"></i>
+                        </span>
+                        <p class="subtitle">Investimento adicionado com sucesso</p>
+                    </div>
+
+                    <!-- Categoria -->
+                    <div class="field">
+                        <label class="label">Categoria</label>
+                        <div class="control">
+                            <label class="radio" v-for="(categoria, index) in categoriasInvestimento" :key="index">
+                                <input type="radio" name="answer" :value="categoria" v-model="investimento.categoria" :checked="categoria === 'CDB'">
+                                {{ categoria }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Descrição -->
+                    <div class="field">
+                        <label class="label">Descrição</label>
+                        <div class="control">
+                            <input :class="{ 'is-danger': v$.investimento.descricao.$error }"
+                                v-model="investimento.descricao" type="text" class="input"
+                                placeholder="Ex.: CDB Banco do Brasil, LCI Banco Original, Poupança Caixa, etc...">
+                        </div>
+                        <p class="help is-danger" v-if="v$.investimento.descricao.$error">{{
+                            v$.investimento.descricao.$errors[0].$message }}</p>
+                    </div>
+
+                    <!-- Corretora/Banco -->
+                    <div class="field">
+                        <label class="label">Corretora/Banco</label>
+                        <div class="control">
+                            <input :class="{ 'is-danger': v$.investimento.corretora.$error }"
+                                v-model="investimento.corretora" type="text" class="input"
+                                placeholder="Ex.: XP, BTG, BB, Bradesco, Caixa, Easyinvest, Rico, Ágora, etc...">
+                        </div>
+                        <p class="help is-danger" v-if="v$.investimento.corretora.$error">{{
+                            v$.investimento.corretora.$errors[0].$message }}</p>
+                    </div>
+
+                    <!-- Montante -->
+                    <div class="field">
+                        <label class="label">Montante (R$)</label>
+                        <div class="control">
+                            <input :class="{ 'is-danger': v$.investimento.montante.$error }"
+                                v-model.number="investimento.montante" type="text" class="input">
+                        </div>
+                        <p class="help is-danger" v-if="v$.investimento.montante.$error">{{
+                            v$.investimento.montante.$errors[0].$message }}</p>
+                    </div>
+                    <!-- Taxa e Indexador -->
+                    <div class="field is-horizontal" v-if="investimento.categoria !== 'Poupança'">
+
+                        <div class="field-body">
+
+                            <div class="field">
+                                <label class="label">{{ indexadores[investimento.indexador] }}</label>
+                                <div class="control is-expanded">
+                                    <input :class="{ 'is-danger': v$.investimento.taxa.$error }"
+                                        v-model.number="investimento.taxa" class="input" type="text">
+                                </div>
+                                <p class="help is-danger" v-if="v$.investimento.taxa.$error">{{
+                                    v$.investimento.taxa.$errors[0].$message }}</p>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Indexador</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select id="tipo" v-model="investimento.indexador">
+                                            <option v-for="(indexador, index) in Object.keys(indexadores)" :key="index">{{ indexador }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- DataInicio e DataFinal -->
+                    <div class="field is-horizontal">
+
+                        <div class="field-body">
+
+                            <div class="field">
+                                <label class="label">Data do aporte</label>
+                                <div class="control">
+                                    <input :class="{ 'is-danger': v$.investimento.dataAporte.$error }"
+                                        v-model="investimento.dataAporte" class="input" type="text">
+                                </div>
+                                <p class="help is-danger" v-if="v$.investimento.dataAporte.$error">{{
+                                    v$.investimento.dataAporte.$errors[0].$message }}</p>
+                            </div>
+
+                            <div class="field" v-if="investimento.categoria !== 'Poupança'">
+                                <label class="label">Data do vencimento</label>
+                                <div class="control">
+                                    <input :class="{ 'is-danger': v$.investimento.dataVencimento.$error }"
+                                        v-model="investimento.dataVencimento" type="text" class="input">
+                                </div>
+                                <p class="help is-danger" v-if="v$.investimento.dataVencimento.$error">{{
+                                    v$.investimento.dataVencimento.$errors[0].$message }}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <footer class="modal-card-foot">
+                    <div class="buttons is-right">
+                        <!-- Botão salvar -->
+                        <button class="button is-warning is-light is-outlined is-rounded" @click="salvar()">
+                            <span class="icon">
+                                <i class="fas fa-save" aria-hidden="true"></i>
+                            </span>
+                            <span>Salvar</span>
+                        </button>
+                        <!-- Botão fechar -->
+                        <button class="button is-rounded" @click="fecharCadastroInvestimento()">Fechar</button>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <!-- Head -->
+        <head class="hero-head">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="./index.html">
+                        <img src="./img/farol_do_investimento_logo.png" alt="Logo" />
+                    </a>
+                    <a class="navbar-item link" href="./index.html">Farol do Investimento</a>
+                </div>
+                <div class="navbar-menu mx-5">
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <button class="button is-warning is-light is-outlined">
+                                <span class="icon">
+                                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                                </span>
+                                <span>Contato</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </head>
+
+        <!-- Body -->
+        <main class="hero-body has-background-light">
+
+            <section class="container is-max-widescreen">
+
+                <!-- Logo -->
+                <section class="section has-text-centered">
+
+                    <figure class="image is-128x128 has-image-centered">
+                        <img src="./img/farol_do_investimento_logo.png" alt="Logo" width="432px">
+                    </figure>
+
+                    <p class="title">Farol do Investimento</p>
+                    <p class="subtitle">
+                        Seu guia de investimentos.
+                    </p>
+
+                </section>
+
+                <!-- Aviso -->
+                <div class="notification is-light has-text-centered" v-if="mainMessage.isActive"
+                    :class="mainMessage.severityClass">
+                    <p class="subtitle">{{ mainMessage.message }}</p>
+                </div>
+
+                <!-- Botão novo investimento -->
+                <div class="block">
+                    <button class="button is-warning is-light is-outlined is-rounded" @click="abrirCadastroInvestimento()">
+                        <span class="icon">
+                            <i class="fas fa-plus" aria-hidden="true"></i>
+                        </span>
+                        <span>Cadastrar investimento</span>
+                    </button>
+                </div>
+
+                <!-- Tabela investimentos -->
+                <div class="block">
+                    <div class="card">
+
+                        <div class="card-header has-background-white-ter">
+                            <p class="card-header-title has-text-grey-dark">
+                                <span class="icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </span>
+                                <span class="mx-2">
+                                    Investimentos cadastrados
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="card-content">
+                            <p class="subtitle has-text-centered" v-if="listaInvestimentos.length <= 0">Você ainda não possui investimentos cadastrados</p>                            
+                            <tabela-investimentos :investimentos="listaInvestimentos" @delete-investimento="deletarInvestimento" @edit-investimento="editarInvestimento" v-else></tabela-investimentos>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+    </div>
+    <script src="https://kit.fontawesome.com/7c8801c017.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-demi"></script>
+    <script src="https://unpkg.com/pinia@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@vuelidate/core"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@vuelidate/validators"></script>    
+
+    <script type="module" src="./apps/investimento.js"></script>
+</body>
+
+</html>

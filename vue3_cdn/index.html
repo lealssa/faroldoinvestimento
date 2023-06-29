@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farol do Investimento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="hero is-fullheight" id="app">
+
+        <head class="hero-head">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="./index.html">
+                        <img src="./img/farol_do_investimento_logo.png" alt="Logo" />
+                    </a>
+                    <a class="navbar-item link" href="./index.html">Farol do Investimento</a>
+                </div>
+                <div class="navbar-menu mx-5">
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <button class="button is-warning is-light is-outlined">
+                                <span class="icon">
+                                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                                </span>
+                                <span>Contato</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </head>
+
+        <main class="hero-body has-background-light">
+
+            <div class="container is-max-widescreen">
+
+                <section class="section has-text-centered">
+
+                    <figure class="image is-128x128 has-image-centered">
+                        <img src="./img/farol_do_investimento_logo.png" alt="Logo" width="432px">
+                    </figure>
+
+                    <p class="title">Farol do Investimento</p>
+                    <p class="subtitle">
+                        Seu guia de investimentos.
+                    </p>
+                </section>
+
+                <div class="section has-text-centered">
+                    <p class="title is-size-4">
+                        Índices da renda fixa
+                    </p>
+                    <p class="subtitle is-size-5">
+                        Estes índices são usados como indexadores do rendimento das aplicações na Renda Fixa
+                    </p>
+                </div>
+
+                <!-- Índices -->
+                <lista-indices></lista-indices>
+
+                <div class="content has-text-centered">
+                    <p class="title">
+                        Simulador de rendimento
+                    </p>
+                    <p class="subtitle is-size-5">
+                        Simule e compare quanto rende seu dinheiro aplicado na Renda Fixa
+                    </p>
+                </div>
+
+                <!-- Tabela com as simulações -->
+                <tabela-simulacoes v-if="!indicesStore.isErrored && !indicesStore.isLoading"></tabela-simulacoes>
+
+                <!-- Calculadora de renda fixa -->
+                <calculadora-renda-fixa v-if="!indicesStore.isErrored && !indicesStore.isLoading"></calculadora-renda-fixa>
+            </div>
+        </main>
+    </div>
+    <script src="https://kit.fontawesome.com/7c8801c017.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-demi"></script>
+    <script src="https://unpkg.com/pinia@2"></script>
+    
+    <script type="module" src="./apps/simuladorRendaFixa.js"></script>
+</body>
+
+</html>
