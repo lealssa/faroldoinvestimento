@@ -14,7 +14,7 @@ export const CalculadoraRendaFixa = {
     data() {
 
         const opcoesIndices = {
-            pos: { label: "% da SELIC a.a", taxa: 90 },
+            pos: { label: "% da CDI/SELIC a.a", taxa: 90 },
             pre: { label: "Taxa a.a", taxa: 0 },
             poupanca: { label: "Poupança a.a", taxa: 0 },
             ipca: { label: "+ IPCA a.a", taxa: 5 }
@@ -83,7 +83,7 @@ export const CalculadoraRendaFixa = {
 
             if (this.tipoIndiceSelecionado === 'pos') {
                 taxa = (this.dadosEntrada.taxa * this.indicesStore.oci.SELIC.valor) / 100
-                info = `${this.dadosEntrada.taxa}% da SELIC`
+                info = `${this.dadosEntrada.taxa}% da CDI/SELIC`
             }
             else if (this.tipoIndiceSelecionado === 'ipca') {
                 taxa = this.dadosEntrada.taxa + this.indicesStore.oci.IPCA.valor

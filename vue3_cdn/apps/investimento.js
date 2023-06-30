@@ -28,7 +28,7 @@ createApp({
 
         const indexadores = {
             'Pré-fixado': 'Taxa a.a',
-            'Pós-fixado': '% da SELIC a.a',
+            'Pós-fixado': '% da CDI/SELIC a.a',
             'IPCA+': '% + IPCA a.a'
         }
 
