@@ -15,14 +15,8 @@ export const useIndicesStore = defineStore({
         fetchIndicesOCI() {
             this.isLoading = true
 
-            const hoje = new Date()
-            let ano = hoje.getFullYear()
-            let mes = hoje.getMonth() + 1
-            let dia = hoje.getDate()
-
-            const dataAtual = `${ano}${mes.toString().padStart(2, '0')}${dia.toString().padStart(2, '0')}`
-
-            const url = `https://objectstorage.sa-vinhedo-1.oraclecloud.com/n/axjwvnzorobg/b/indices/o/${dataAtual}.json`
+            // Pega o último arquivo de índices
+            const url = `https://objectstorage.sa-vinhedo-1.oraclecloud.com/n/axjwvnzorobg/b/indices/o/latest.json`
 
             fetch(url)
                 .then((res) => {
