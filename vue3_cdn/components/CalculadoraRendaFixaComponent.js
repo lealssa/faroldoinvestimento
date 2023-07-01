@@ -164,6 +164,16 @@ export const CalculadoraRendaFixa = {
     template: `
     <div class="block">
 
+        <!-- Aviso mobile virar horizontal -->
+        <article class="message is-info is-hidden-tablet">
+            <div class="message-body has-text-centered">
+                <span class="icon">
+                    <i class="fas fa-lightbulb"></i>
+                </span>
+                <span>Deixe seu celular na horizontal para acessar o simulador completo</span>        
+            </div>
+        </article>    
+
         <div class="card">
 
             <div class="card-header has-background-white-ter">
