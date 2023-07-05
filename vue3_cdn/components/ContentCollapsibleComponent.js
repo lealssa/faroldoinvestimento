@@ -10,7 +10,7 @@ export const ContentCollapsible = {
 
         <a class="link is-size-6 has-text-grey is-pulled-right" @click="showContent = ! showContent">
             <span class="icon">
-                <i class="fas" :class="showContent ? 'fa-chevron-down' : 'fa-chevron-up'" aria-hidden="true"></i>
+                <i class="fas fa-chevron-up rotate" :class="{ 'down': showContent }" aria-hidden="true"></i>
             </span>
         </a>
 

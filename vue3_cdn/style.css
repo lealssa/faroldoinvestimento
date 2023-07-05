@@ -21,6 +21,17 @@ body {
     display: flex;
 } */
 
+.rotate {
+    -moz-transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    transition: all .1s linear;
+}
+.rotate.down {
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    transform:rotate(180deg);
+}
+
 .content.is-vcentered {
     display: flex;
     flex-wrap: wrap;
