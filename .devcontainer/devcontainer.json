@@ -1,0 +1,18 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+	"name": "Untitled Node.js project",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"runArgs": [
+		"--userns=keep-id"
+	],
+	"containerEnv": {
+		"HOME": "/home/node"
+	},
+	"remoteEnv": {
+		"HOME": "/home/node"
+	},
+	"containerUser": "node",
+	"remoteUser": "node"  
+}

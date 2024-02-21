@@ -5,11 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Simule seus investimentos em Renda Fixa com nosso simulador exclusivo. Compare e escolha os investimentos mais rentáveis para você.">
+    <meta name="description"
+        content="Simule seus investimentos em Renda Fixa com nosso simulador exclusivo. Compare e escolha os investimentos mais rentáveis para você.">
     <title>Farol do Investimento</title>
-    <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2794472319642190"
         crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7c8801c017.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue-demi"></script>
+    <script src="https://unpkg.com/pinia@2"></script>
+    <script src="./imports.js"></script>
+    <script defer src="./app.js"></script>
 </head>
 
 <body>
@@ -19,7 +25,7 @@
             <nav class="navbar">
                 <div class="navbar-brand">
                     <a class="navbar-item" href="./index.html">
-                        <img src="./img/farol_do_investimento_logo.png" alt="Logo" />
+                        <img src="./farol_do_investimento_logo.png" alt="Logo" />
                     </a>
                     <a class="navbar-item link" href="./index.html">Farol do Investimento</a>
                 </div>
@@ -45,7 +51,7 @@
                 <section class="section has-text-centered">
 
                     <figure class="image is-128x128 has-image-centered">
-                        <img src="./img/farol_do_investimento_logo.png" alt="Logo Farol do Investimento" width="432px">
+                        <img src="./farol_do_investimento_logo.png" alt="Logo Farol do Investimento" width="432px">
                     </figure>
 
                     <h1 class="title">Farol do Investimento</h1>
@@ -64,15 +70,17 @@
                                 <span class="icon is-size-4 mb-5">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                 </span>
-            
+
                                 <p class="is-size-5 has-text-left">
-                                    Aprenda como funcionam os investimentos em <strong>Renda Fixa</strong> e aplique seu dinheiro de
+                                    Aprenda como funcionam os investimentos em <strong>Renda Fixa</strong> e aplique seu
+                                    dinheiro de
                                     forma correta e com o
                                     maior rendimento.
                                 </p>
 
                                 <p class="is-size-5 has-text-left">
-                                    <a href="#rendafixa" class="link has-text-link">Abaixo</a> você encontra um guia introdutório super didático que elaboramos para você.
+                                    <a href="#rendafixa" class="link has-text-link">Abaixo</a> você encontra um guia
+                                    introdutório super didático que elaboramos para você.
                                 </p>
 
                             </div>
@@ -81,38 +89,42 @@
                             <div class="content box py-6">
                                 <span class="icon is-size-4 mb-5">
                                     <i class="fa-solid fa-calculator"></i>
-                                </span>                    
-                                
+                                </span>
+
                                 <p class="is-size-5 has-text-left">
-                                    Use nosso exclusivo <strong>simulador de rendimento</strong>, compare e escolha os mais 
+                                    Use nosso exclusivo <strong>simulador de rendimento</strong>, compare e escolha os
+                                    mais
                                     rentáveis. Ou simplesmente monte uma carteira com vários investimentos e obtenha
                                     o valor total na mesma simulação.
                                 </p>
 
-                                <a class="button is-link is-outlined is-fullwidth" href="#simuladorrendafixa">Simulador</a>
+                                <a class="button is-link is-outlined is-fullwidth"
+                                    href="#simuladorrendafixa">Simulador</a>
                             </div>
                         </div>
                         <div class="column is-flex">
                             <div class="content box py-6">
                                 <span class="icon is-size-4 mb-5">
                                     <i class="fa-solid fa-chart-line"></i>
-                                </span>                    
-                                
+                                </span>
+
                                 <p class="is-size-5 has-text-left">
-                                    Cadastre-se em uma corretora à sua escolha e invista nos títulos de Renda Fixa 
+                                    Cadastre-se em uma corretora à sua escolha e invista nos títulos de Renda Fixa
                                     com maior retorno.
                                 </p>
 
                                 <p class="is-size-5 has-text-left">
-                                    Lembre-se de escolher corretoras com mais solidez e tempo de mercado. 
-                                    <a href="https://sistemas.cvm.gov.br/asp/cvmwww/InvNRes/tabecus.asp" class="link has-text-link" target="_blank">
-                                        Clique aqui                                  
-                                    </a>para consultar 
-                                    a lista de corretoras registradas na <strong>CVM</strong>, que é o orgão responsável por regular as atividades
+                                    Lembre-se de escolher corretoras com mais solidez e tempo de mercado.
+                                    <a href="https://sistemas.cvm.gov.br/asp/cvmwww/InvNRes/tabecus.asp"
+                                        class="link has-text-link" target="_blank">
+                                        Clique aqui
+                                    </a>para consultar
+                                    a lista de corretoras registradas na <strong>CVM</strong>, que é o orgão responsável
+                                    por regular as atividades
                                     delas.
                                 </p>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </section>
 
@@ -210,7 +222,8 @@
 
                         <template v-slot:title>
 
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5" id="indicesvariamrendafixa">
+                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5"
+                                id="indicesvariamrendafixa">
                                 Os índices da Renda Fixa variam ao longo do tempo?
                                 <a href="#indicesvariamrendafixa" class="link is-size-6 has-text-grey">
                                     <span class="icon">
@@ -251,7 +264,8 @@
 
                         <template v-slot:title>
 
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5" id="impostorendafixa">
+                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5"
+                                id="impostorendafixa">
                                 Preciso pagar imposto sobre o rendimento de Renda Fixa?
                                 <a href="#impostorendafixa" class="link is-size-6 has-text-grey">
                                     <span class="icon">
@@ -310,7 +324,8 @@
 
                         <template v-slot:title>
 
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5" id="investimentostributadosrendafixa">
+                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5"
+                                id="investimentostributadosrendafixa">
                                 Quais investimentos de Renda Fixa são tributados e quais são isentos?
                                 <a href="#investimentostributadosrendafixa" class="link is-size-6 has-text-grey">
                                     <span class="icon">
@@ -396,12 +411,6 @@
             </div>
         </main>
     </div>
-    <script src="https://kit.fontawesome.com/7c8801c017.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="https://unpkg.com/vue-demi"></script>
-    <script src="https://unpkg.com/pinia@2"></script>
-
-    <script type="module" src="./apps/simuladorRendaFixa.js"></script>
 </body>
 
 </html>

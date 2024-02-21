@@ -1,12 +1,11 @@
 const { createApp } = Vue
 
-import { ListaIndices } from '../components/ListaIndicesComponent.js'
-import { TabelaSimulacoes } from '../components/TabelaSimulacoesComponent.js'
-import { CalculadoraRendaFixa } from '../components/CalculadoraRendaFixaComponent.js'
+import { ListaIndices } from './components/ListaIndicesComponent.js'
+import { TabelaSimulacoes } from './components/TabelaSimulacoesComponent.js'
+import { CalculadoraRendaFixa } from './components/CalculadoraRendaFixaComponent.js'
+import { ContentCollapsible } from './components/ContentCollapsibleComponent.js'
 
-import { ContentCollapsible } from '../components/ContentCollapsibleComponent.js'
-
-import { useIndicesStore } from '../stores/IndicesStore.js'
+import { useIndicesStore } from './stores/IndicesStore.js'
 
 const pinia = Pinia.createPinia()
 
