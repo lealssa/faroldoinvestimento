@@ -18,7 +18,7 @@ export const CalculadoraRendaFixa = {
             pre: { label: "Taxa a.a", taxa: 0 },
             poupanca: { label: "Poupança a.a", taxa: 0 },
             ipca: { label: "+ IPCA a.a", taxa: 5 },
-            selic: { label: "+ SELIC a.a", taxa: 1 }
+            selic: { label: "+ SELIC a.a", taxa: 0.15 }
         }
 
         const dadosEntrada = {
@@ -44,7 +44,8 @@ export const CalculadoraRendaFixa = {
             impostoDevido: 0,
             aliquotaIR: 0,
             prazoMes: 0,
-            info: ''
+            info: '',
+            taxaReal: 0
         }        
 
         return {
@@ -80,7 +81,7 @@ export const CalculadoraRendaFixa = {
         calculaRendaFixa() {
 
             let taxa = this.dadosEntrada.taxa
-            let info = ''
+            let info = 'Pré-fixado'
 
             if (this.tipoIndiceSelecionado === 'pos') {
                 taxa = (this.dadosEntrada.taxa * this.indicesStore.oci.SELIC.valor) / 100
@@ -97,9 +98,6 @@ export const CalculadoraRendaFixa = {
             else if (this.tipoIndiceSelecionado === 'poupanca') {
                 info = `Poupança`                
             }
-            else {
-                info = `${this.dadosEntrada.taxa}%`
-            }  
             
             const valorNoVencimento = this.calculaJurosCompostos(this.dadosEntrada.montante, this.dadosEntrada.prazo, taxa)
             const rendimentoBruto = valorNoVencimento - this.dadosEntrada.montante
@@ -219,6 +217,11 @@ export const CalculadoraRendaFixa = {
                                     <i class="fas fa-percentage"></i>
                                 </span>
                             </div>
+                            <p class="help is-success">Taxa real {{ ((resultadoRendimento.taxaReal > 0 ? resultadoRendimento.taxaReal : opcoesIndices.pre.taxa ) / 100.0).toLocaleString('pt-BR', {
+                                style: 'percent',
+                                minimumFractionDigits: 1,
+                                maximumFractionDigits: 2,
+                            }) }}</p>
                         </div>
                     </div>
                     <!-- Tipo -->

@@ -56,7 +56,12 @@ export const TabelaSimulacoes = {
                     </td>
                     <td>{{ simulacao.montanteAplicado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</td>
                     <td>
-                        {{ simulacao.info }}                        
+                        {{ simulacao.info }}               
+                        <span class="tag is-info is-light is-rounded mx-2">{{ (simulacao.taxaReal / 100).toLocaleString('pt-BR', {
+                            style: 'percent',
+                            minimumFractionDigits: 1,
+                            maximumFractionDigits: 2,
+                        }) }}</span>
                         <span class="tag is-success is-light is-rounded" v-if="simulacao.aliquotaIR === 0">Isento IR</span>
                     </td>
                     <td>{{ simulacao.prazoMes }}</td>
