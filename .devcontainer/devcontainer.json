@@ -5,7 +5,8 @@
 		"dockerfile": "Dockerfile"
 	},
 	"runArgs": [
-		"--userns=keep-id"
+		"--userns=keep-id",
+		"-p=5500:5500"
 	],
 	"containerEnv": {
 		"HOME": "/home/node"
