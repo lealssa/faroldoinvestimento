@@ -25,7 +25,8 @@ export const CalculadoraRendaFixa = {
             montante: 0,
             prazo: 12,
             taxa: 0,
-            IR: true
+            IR: true,
+            calcularInflacao: false
         }
 
         const tipoIndiceSelecionado = 'pre'
@@ -45,7 +46,9 @@ export const CalculadoraRendaFixa = {
             aliquotaIR: 0,
             prazoMes: 0,
             info: '',
-            taxaReal: 0
+            taxaReal: 0,
+            inflacaoPeriodo: 0,
+            divididoNoPrazo: 0
         }        
 
         return {
@@ -82,6 +85,7 @@ export const CalculadoraRendaFixa = {
 
             let taxa = this.dadosEntrada.taxa
             let info = 'Pré-fixado'
+            let inflacaoPeriodo = 0
 
             if (this.tipoIndiceSelecionado === 'pos') {
                 taxa = (this.dadosEntrada.taxa * this.indicesStore.oci.SELIC.valor) / 100
@@ -99,20 +103,30 @@ export const CalculadoraRendaFixa = {
                 info = `Poupança`                
             }
             
-            const valorNoVencimento = this.calculaJurosCompostos(this.dadosEntrada.montante, this.dadosEntrada.prazo, taxa)
+            let valorNoVencimento = this.calculaJurosCompostos(this.dadosEntrada.montante, this.dadosEntrada.prazo, taxa)
+
+            if (this.dadosEntrada.calcularInflacao) {
+                inflacaoPeriodo = this.calculaJurosCompostos(this.dadosEntrada.montante, this.dadosEntrada.prazo, this.indicesStore.oci.IPCA.valor) - this.dadosEntrada.montante
+                valorNoVencimento = valorNoVencimento - inflacaoPeriodo
+            }                     
+
             const rendimentoBruto = valorNoVencimento - this.dadosEntrada.montante
             let rendimentoLiquido = 0
             let calculoIR = {
                 impostoDevido: 0,
                 aliquotaIR: 0
-            }
+            }   
 
             if (this.dadosEntrada.IR) {
                 calculoIR = this.calculaIR(this.dadosEntrada.prazo, rendimentoBruto)
                 rendimentoLiquido = rendimentoBruto - calculoIR.impostoDevido
             }
             else
-                rendimentoLiquido = rendimentoBruto     
+                rendimentoLiquido = rendimentoBruto       
+                            
+            let dividido = 0
+            if (rendimentoLiquido > 0 && this.dadosEntrada.prazo > 0)
+                dividido = rendimentoLiquido / this.dadosEntrada.prazo
 
             this.resultadoRendimento = {
                 montanteAplicado: this.dadosEntrada.montante,
@@ -123,7 +137,9 @@ export const CalculadoraRendaFixa = {
                 aliquotaIR: calculoIR.aliquotaIR,
                 prazoMes: this.dadosEntrada.prazo,
                 info: info,
-                taxaReal: taxa
+                taxaReal: taxa,
+                inflacaoPeriodo: inflacaoPeriodo,
+                divididoNoPrazo: dividido
             }               
         },
         salvarSimulacao() {
@@ -185,29 +201,39 @@ export const CalculadoraRendaFixa = {
 
             <div class="card-content">
                 <!-- Campos -->
-                <div class="columns is-centered is-multiline">
+                <div class="columns is-centered is-multiline is-variable">
                     <!-- Montante -->
-                    <div class="column is-2">
-                        <div class="field">
-                            <label class="label has-text-weight-light">Montante</label>
-                            <div class="control">
+                    <div class="column is-3">
+                        <label class="label has-text-weight-light">Montante</label>
+                        <div class="field has-addons">                            
+                            <div class="control has-icons-left is-expanded">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-brazilian-real-sign"></i>
+                                </span>                            
                                 <input class="input" type="text" placeholder="Montante" v-model.number="dadosEntrada.montante">
                             </div>
+                            <div class="control">
+                                <a class="button is-static">
+                                ,00
+                                </a>
+                            </div>                            
                         </div>
                     </div>
                     <!-- Prazo -->
-                    <div class="column is-2">
+                    <div class="column">
                         <div class="field">
-                            <label class="label has-text-weight-light">Prazo
-                                a.m</label>
-                            <div class="control">
-                                <input class="input" type="text" placeholder="Prazo a.m"
+                            <label class="label has-text-weight-light">Prazo a.m</label>
+                            <div class="control has-icons-left">
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-calendar"></i>
+                                </span>                                    
+                                <input class="input" type="text" placeholder="Prazo em meses"
                                     v-model.number="dadosEntrada.prazo">
                             </div>
                         </div>
                     </div>
                     <!-- Taxa -->
-                    <div class="column is-2">
+                    <div class="column">
                         <div class="field">
                             <label class="label has-text-weight-light">{{ opcoesIndices[tipoIndiceSelecionado].label }}</label>
                             <div class="control has-icons-right">
@@ -217,7 +243,7 @@ export const CalculadoraRendaFixa = {
                                     <i class="fas fa-percentage"></i>
                                 </span>
                             </div>
-                            <p class="help is-success">Taxa real {{ ((resultadoRendimento.taxaReal > 0 ? resultadoRendimento.taxaReal : opcoesIndices.pre.taxa ) / 100.0).toLocaleString('pt-BR', {
+                            <p class="help is-info">Taxa real {{ ((resultadoRendimento.taxaReal > 0 ? resultadoRendimento.taxaReal : opcoesIndices.pre.taxa ) / 100.0).toLocaleString('pt-BR', {
                                 style: 'percent',
                                 minimumFractionDigits: 1,
                                 maximumFractionDigits: 2,
@@ -242,66 +268,91 @@ export const CalculadoraRendaFixa = {
                         </div>
                     </div>
                     <!-- IR -->
-                    <div class="column is-2">
+                    <div class="column">
                         <div class="field">
-                            <label class="label has-text-weight-light">Isento
-                                IR?</label>
+                            <label class="label has-text-weight-light">Isento IR</label>
                             <div class="control">
-                                <label class="radio">
-                                    <input type="radio" id="isento" name="ir" :value="false" v-model="dadosEntrada.IR">
-                                    Sim
+                                <label class="b-radio radio">
+                                    <input type="radio" name="ir" :value="false" v-model="dadosEntrada.IR">
+                                    <span class="check is-info"></span>
+                                    <span class="control-label">Sim</span>
                                 </label>
-                                <label class="radio">
-                                    <input type="radio" id="naoIsento" name="ir" :value="true"
-                                        v-model="dadosEntrada.IR">
-                                    Não
-                                </label>
+                                <label class="b-radio radio">
+                                    <input type="radio" name="ir" :value="true" v-model="dadosEntrada.IR">
+                                    <span class="check is-info"></span>
+                                    <span class="control-label">Não</span>
+                                </label>                                
                             </div>
-                        </div>
+                        </div>                                                           
                     </div>
-
+                    <!-- Inflação -->
+                    <div class="column">
+                        <div class="field">
+                            <label class="label has-text-weight-light">Inflação</label>
+                            <div class="control">
+                                <label class="b-radio radio">
+                                    <input type="radio" name="inflacao" :value="true" v-model="dadosEntrada.calcularInflacao">
+                                    <span class="check is-info"></span>
+                                    <span class="control-label">Sim</span>
+                                </label>
+                                <label class="b-radio radio">
+                                    <input type="radio" name="inflacao" :value="false" v-model="dadosEntrada.calcularInflacao">
+                                    <span class="check is-info"></span>
+                                    <span class="control-label">Não</span>
+                                </label>                                
+                            </div>
+                        </div>                         
+                    <!--
+                        <div class="field">
+                            <label class="switch is-outlined is-rounded">
+                                <input type="checkbox" value="false" checked="" v-model="dadosEntrada.IR">
+                                <span class="check is-info"></span>
+                                <span class="control-label">IR</span>
+                            </label>
+                        </div>   
+                    
+                        <div class="field">
+                            <label class="switch is-outlined is-rounded">
+                                <input type="checkbox" value="false" checked="" v-model="dadosEntrada.calcularInflacao">
+                                <span class="check is-info"></span>
+                                <span class="control-label">Inflação</span>
+                            </label>
+                        </div> 
+                    -->                                                                   
+                    </div>    
                 </div>
 
                 <!-- Resultado mobile -->
                 <div class="tile is-ancestor has-text-centered">
 
                     <div class="tile is-parent">
-                        <div class="tile is-child box">
+                        <div class="tile is-child box has-text-centered">
                             <p class="subtitle is-size-6">Valor no vencimento</p>
                             <p class="title is-size-5">{{ resultadoRendimento.valorNoVencimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
+                            <p class="subtitle is-size-7">Inflação no período</p>
+                            <p class="title is-size-6 has-text-danger">{{ (resultadoRendimento.inflacaoPeriodo * -1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
                         </div>
                     </div>
                     <div class="tile is-parent">
                         <div class="tile is-child box">
                             <p class="subtitle is-size-6">Rendimento bruto</p>
                             <p class="title is-size-5">{{ resultadoRendimento.bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
-                        </div>
-                    </div>
-                    <div class="tile is-parent">
-                        <div class="tile is-child box">
-                            <p class="subtitle is-size-6">IR devido</p>
-                            <p class="title is-size-5">{{ resultadoRendimento.impostoDevido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
+                            <p class="subtitle is-size-7">IR devido {{ resultadoRendimento.aliquotaIR.toLocaleString('pt-BR', {
+                                style: 'percent',
+                                minimumFractionDigits: 1,
+                                maximumFractionDigits: 1,
+                            }) }}</p>
+                            <p class="title is-size-6 has-text-danger">{{ (resultadoRendimento.impostoDevido * -1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>                              
                         </div>
                     </div>
                     <div class="tile is-parent">
                         <div class="tile is-child box">
                             <p class="subtitle is-size-6">Rendimento líquido</p>
                             <p class="title is-size-5">{{ resultadoRendimento.liquido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
+                            <p class="subtitle is-size-7">Dividido por {{ dadosEntrada.prazo > 0 ? dadosEntrada.prazo : 0 }} meses</p>
+                            <p class="title is-size-6">{{ resultadoRendimento.divididoNoPrazo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>                            
                         </div>
                     </div>
-                    <div class="tile is-parent">
-                        <div class="tile is-child box">
-                            <p class="subtitle is-size-6">Alíquota IR</p>
-                            <p class="title is-size-5">{{ resultadoRendimento.aliquotaIR.toLocaleString('pt-BR', {
-                                    style: 'percent',
-                                    minimumFractionDigits: 1,
-                                    maximumFractionDigits: 1,
-                                }) }}
-                            </p>
-
-                        </div>
-                    </div>
-
                 </div>
 
                 <p class="block is-size-7">* Valores aproximados e apenas para simulação. Não é uma indicação de aplicação.</p>

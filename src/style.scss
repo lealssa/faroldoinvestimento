@@ -1,3 +1,5 @@
+@import 'bulma-switch-control';
+@import 'bulma-radio';
 @import 'bulma';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Source+Code+Pro:wght@200&display=swap');
 
@@ -24,6 +26,12 @@ body {
 /* .column {
     display: flex;
 } */
+.td.is-vcentered {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center; /* used this for multiple child */
+    align-items: center; /* if an only child */
+  }
 
 .rotate {
     -moz-transition: all .1s linear;
