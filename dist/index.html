@@ -72,7 +72,7 @@
                                 </span>
 
                                 <p class="is-size-5 has-text-left">
-                                    Aprenda como funcionam os investimentos em <strong>Renda Fixa</strong> e aplique seu
+                                    Aprenda como funcionam os investimentos em <strong class="has-text-grey">Renda Fixa</strong> e aplique seu
                                     dinheiro de
                                     forma correta e com o
                                     maior rendimento.
@@ -92,7 +92,7 @@
                                 </span>
 
                                 <p class="is-size-5 has-text-left">
-                                    Use nosso exclusivo <strong>simulador de rendimento</strong>, compare e escolha os
+                                    Use nosso exclusivo <strong class="has-text-grey">simulador de rendimento</strong>, compare e escolha os
                                     mais
                                     rentáveis. Ou simplesmente monte uma carteira com vários investimentos e obtenha
                                     o valor total na mesma simulação.
@@ -119,7 +119,7 @@
                                         class="link has-text-link" target="_blank">
                                         Clique aqui
                                     </a>para consultar
-                                    a lista de corretoras registradas na <strong>CVM</strong>, que é o orgão responsável
+                                    a lista de corretoras registradas na <strong class="has-text-grey">CVM</strong>, que é o orgão responsável
                                     por regular as atividades
                                     delas.
                                 </p>
@@ -128,26 +128,27 @@
                     </div>
                 </section>
 
-                <section class="section is-size-5 has-text-left">
+                <!-- Tutorial Renda Fixa -->
+                <section class="section is-size-5">
 
-                    <content-collapsible :is-expanded="true">
+                    <div class="box" id="rendafixa">
 
-                        <template v-slot:title>
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5" id="rendafixa">
-                                O que é investimento em Renda Fixa?
-                                <a href="#rendafixa" class="link is-size-6 has-text-grey">
-                                    <span class="icon">
-                                        <i class="fas fa-link" aria-hidden="true"></i>
-                                    </span>
-                                </a>
-
-                            </h3>
-                        </template>
+                        <h3 class="title is-size-4 has-text-centered">
+                            <span class="icon has-text-grey mr-3 is-hidden-mobile">
+                                <i class="fas fa-graduation-cap"></i>
+                            </span>
+                            O que é investimento em Renda Fixa?
+                            <a href="#rendafixa" class="link is-size-6 has-text-grey">
+                                <span class="icon">
+                                    <i class="fas fa-link" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </h3>
 
                         <div class="content">
-                            <blockquote class="has-background-link-light">
+                            <p class="has-background-link-light p-2">
                                 Investimento em renda fixa é uma categoria de investimento em que o rendimento é
-                                <strong>fixado por
+                                <strong class="has-text-grey">fixado por
                                     algum indexador</strong> e a rentabilidade pode ser previsível enquanto o dinheiro
                                 está
                                 aplicado. O
@@ -155,26 +156,28 @@
                                 bancos
                                 ou
                                 outras empresas -, e, no futuro, recebe esse valor de volta, acrescido de juros.
-                            </blockquote>
+                            </p>
                         </div>
-                    </content-collapsible>
 
-                    <content-collapsible>
+                    </div>
 
-                        <template v-slot:title>
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5" id="tiposrendafixa">
-                                Quais os tipos de investimento de Renda Fixa?
-                                <a href="#tiposrendafixa" class="link is-size-6 has-text-grey">
-                                    <span class="icon">
-                                        <i class="fas fa-link" aria-hidden="true"></i>
-                                    </span>
-                                </a>
-                            </h3>
-                        </template>
+                    <div class="box" id="tiposrendafixa">
 
-                        <div class="content px-5">
+                        <h3 class="title is-size-4 has-text-centered">
+                            <span class="icon has-text-grey mr-3 is-hidden-mobile">
+                                <i class="fas fa-graduation-cap"></i>
+                            </span>
+                            Quais os tipos de investimento de Renda Fixa?
+                            <a href="#tiposrendafixa" class="link is-size-6 has-text-grey">
+                                <span class="icon">
+                                    <i class="fas fa-link" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </h3>
+
+                        <div class="content">
                             <p>
-                                Existem vários tipos de investimentos em renda fixa, como <strong> Tesouro Direto
+                                Existem vários tipos de investimentos em renda fixa, como <strong class="has-text-grey"> Tesouro Direto
                                     (títulos
                                     do
                                     governo),
@@ -185,27 +188,26 @@
                                     LCAs (títulos de bancos)</strong>, entre outros.
                             </p>
                         </div>
-                    </content-collapsible>
 
-                    <content-collapsible>
+                    </div>                    
 
-                        <template v-slot:title>
+                    <div class="box" id="riscosrendafixa">
 
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5" id="riscosrendafixa">
-                                Existe algum risco investir em Renda Fixa?
-                                <a href="#riscosrendafixa" class="link is-size-6 has-text-grey">
-                                    <span class="icon">
-                                        <i class="fas fa-link" aria-hidden="true"></i>
-                                    </span>
-                                </a>
-                            </h3>
+                        <h3 class="title is-size-4 has-text-centered">
+                            <span class="icon has-text-grey mr-3 is-hidden-mobile">
+                                <i class="fas fa-graduation-cap"></i>
+                            </span>
+                            Existe algum risco investir em Renda Fixa?
+                            <a href="#riscosrendafixa" class="link is-size-6 has-text-grey">
+                                <span class="icon">
+                                    <i class="fas fa-link" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </h3>
 
-                        </template>
-
-                        <div class="content px-5">
-
+                        <div class="content">
                             <p>
-                                Este tipo de investimento é conhecido por possuir <strong>menores riscos
+                                Este tipo de investimento é conhecido por possuir <strong class="has-text-grey">menores riscos
                                     associados</strong>,
                                 quando comparados
                                 aos de renda variável (investimentos da bolsa, por exemplo...). No entanto, é importante
@@ -213,31 +215,27 @@
                                 que a rentabilidade da renda fixa pode
                                 variar de acordo com as condições do mercado e do emissor do título.
                             </p>
-
                         </div>
 
-                    </content-collapsible>
+                    </div>
+                    
+                    <div class="box" id="indicesvariamrendafixa">
 
-                    <content-collapsible>
+                        <h3 class="title is-size-4 has-text-centered">
+                            <span class="icon has-text-grey mr-3 is-hidden-mobile">
+                                <i class="fas fa-graduation-cap"></i>
+                            </span>
+                            Os índices da Renda Fixa variam ao longo do tempo?
+                            <a href="#indicesvariamrendafixa" class="link is-size-6 has-text-grey">
+                                <span class="icon">
+                                    <i class="fas fa-link" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </h3>
 
-                        <template v-slot:title>
-
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5"
-                                id="indicesvariamrendafixa">
-                                Os índices da Renda Fixa variam ao longo do tempo?
-                                <a href="#indicesvariamrendafixa" class="link is-size-6 has-text-grey">
-                                    <span class="icon">
-                                        <i class="fas fa-link" aria-hidden="true"></i>
-                                    </span>
-                                </a>
-                            </h3>
-
-                        </template>
-
-                        <div class="content px-5">
-
+                        <div class="content">
                             <p>
-                                <strong>Os índices da renda fixa podem variar ao longo do prazo do
+                                <strong class="has-text-grey">Os índices da renda fixa podem variar ao longo do prazo do
                                     investimento</strong>, o
                                 que
                                 pode
@@ -255,29 +253,25 @@
                                 mesma
                                 durante o período.
                             </p>
-
                         </div>
 
-                    </content-collapsible>
+                    </div>        
+                    
+                    <div class="box" id="impostorendafixa">
 
-                    <content-collapsible>
+                        <h3 class="title is-size-4 has-text-centered">
+                            <span class="icon has-text-grey mr-3 is-hidden-mobile">
+                                <i class="fas fa-graduation-cap"></i>
+                            </span>
+                            Preciso pagar imposto sobre o rendimento de Renda Fixa?
+                            <a href="#impostorendafixa" class="link is-size-6 has-text-grey">
+                                <span class="icon">
+                                    <i class="fas fa-link" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </h3>
 
-                        <template v-slot:title>
-
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5"
-                                id="impostorendafixa">
-                                Preciso pagar imposto sobre o rendimento de Renda Fixa?
-                                <a href="#impostorendafixa" class="link is-size-6 has-text-grey">
-                                    <span class="icon">
-                                        <i class="fas fa-link" aria-hidden="true"></i>
-                                    </span>
-                                </a>
-                            </h3>
-
-                        </template>
-
-                        <div class="content px-5">
-
+                        <div class="content">
                             <p>
                                 A depender do tipo de investimento de renda fixa, o governo cobra Imposto de Renda sobre
                                 o
@@ -286,7 +280,7 @@
                             </p>
 
                             <p>
-                                <strong>A tabela regressiva do Imposto de Renda em aplicações de renda fixa varia entre
+                                <strong class="has-text-grey">A tabela regressiva do Imposto de Renda em aplicações de renda fixa varia entre
                                     22,5% e
                                     15% </strong>, e
                                 também incide apenas sobre o rendimento. As faixas de tributação para a tabela
@@ -315,35 +309,35 @@
                                 mais
                                 atrativos do que os resgatados no curto prazo.
                             </p>
-
                         </div>
 
-                    </content-collapsible>
+                    </div>                    
 
-                    <content-collapsible>
+                    <div class="box" id="investimentostributadosrendafixa">
 
-                        <template v-slot:title>
+                        <h3 class="title is-size-4 has-text-centered">
+                            <span class="icon has-text-grey mr-3 is-hidden-mobile">
+                                <i class="fas fa-graduation-cap"></i>
+                            </span>
+                            Quais investimentos de Renda Fixa são tributados e quais são isentos?
+                            <a href="#investimentostributadosrendafixa" class="link is-size-6 has-text-grey">
+                                <span class="icon">
+                                    <i class="fas fa-link" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </h3>
 
-                            <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5"
-                                id="investimentostributadosrendafixa">
-                                Quais investimentos de Renda Fixa são tributados e quais são isentos?
-                                <a href="#investimentostributadosrendafixa" class="link is-size-6 has-text-grey">
-                                    <span class="icon">
-                                        <i class="fas fa-link" aria-hidden="true"></i>
-                                    </span>
-                                </a>
-                            </h3>
-
-                        </template>
-
-                        <div class="content px-5">
-
+                        <div class="content">
                             <p>
                                 Existem vários tipos de investimentos em renda fixa que são tributados pelo Imposto de
                                 Renda
-                                (IR), como <strong>Tesouro Direto (títulos do governo), CDBs e RDBs (títulos de bancos),
+                                (IR), como <strong class="has-text-grey">Tesouro Direto (títulos do governo), CDBs e RDBs (títulos de bancos),
                                     Debêntures e
-                                    Notas Promissórias (títulos de empresas) </strong>, entre outros. Conforme vimos, a
+                                    Notas Promissórias (títulos de empresas) </strong>, entre outros.
+                            </p>
+
+                            <p>
+                                Conforme vimos, a
                                 tributação desses investimentos segue
                                 a tabela regressiva do IR, que varia entre 22,5% e 15%, e incide apenas sobre o
                                 rendimento.
@@ -352,7 +346,7 @@
                             <p>
                                 No entanto, também existem alguns investimentos em renda fixa que são isentos de Imposto
                                 de
-                                Renda, como a <strong>poupança, as Letras de Crédito Imobiliário (LCI), as Letras de
+                                Renda, como a <strong class="has-text-grey">poupança, as Letras de Crédito Imobiliário (LCI), as Letras de
                                     Crédito
                                     do
                                     Agronegócio (LCA) e as Debêntures incentivadas</strong>.
@@ -362,10 +356,9 @@
                                 É importante notar que, mesmo nos investimentos isentos de IR, os rendimentos devem ser
                                 declarados na Declaração Anual de Imposto de Renda.
                             </p>
-
                         </div>
 
-                    </content-collapsible>
+                    </div>                              
 
                 </section>
 

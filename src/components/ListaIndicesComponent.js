@@ -40,7 +40,14 @@ export const ListaIndices = {
         <div class="column is-4" v-for="(value, index) in indicesStore.oci" v-else>
             <div class="card">
                 <div class="card-header has-background-white-ter">
-                    <p class="card-header-title has-text-grey-dark">{{ value.nome }}</p>
+                    <p class="card-header-title has-text-grey-dark">                    
+                    <span class="icon-text">
+                        <span class="icon">
+                        <i class="fas fa-chart-line"></i>
+                        </span>
+                        <span>{{ value.nome }}</span>
+                    </span>                    
+                    </p>
                 </div>
                 <div class="card-content">
                     <h3>{{ value.descricao }}</h3>
