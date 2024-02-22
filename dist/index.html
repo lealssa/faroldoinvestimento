@@ -32,12 +32,12 @@
                 <div class="navbar-menu mx-5">
                     <div class="navbar-end">
                         <div class="navbar-item">
-                            <button class="button is-warning is-light is-outlined">
-                                <span class="icon">
-                                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <a class="button is-warning is-light is-outlined" href="https://www.instagram.com/faroldoinvestimento?igsh=MWNyN28xNjZpcjdjdQ==" target="_blank">
+                                <span class="icon is-size-4">
+                                    <i class="fa-brands fa-instagram"></i>
                                 </span>
-                                <span>Contato</span>
-                            </button>
+                                <span>@faroldoinvestimento</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -403,6 +403,21 @@
                     v-if="!indicesStore.isErrored && !indicesStore.isLoading"></calculadora-renda-fixa>
             </div>
         </main>
+
+        <div class="hero-foot">
+            <footer class="footer has-text-centered p-1">
+                <div class="block">
+                    <p class="is-size-5 has-text-weight-light">Farol do Investimento {{ (new Date()).getFullYear() }}</p>
+
+                    <a href="https://www.instagram.com/faroldoinvestimento?igsh=MWNyN28xNjZpcjdjdQ==" target="_blank" class="link is-size-3 has-text-grey">
+                        <p class="icon has-text-warning-dark">
+                            <i class="fa-brands fa-instagram"></i>
+                        </p>                        
+                    </a>
+                    <p class="is-size-7">Todos os direitos reservados.</p>
+                </div>
+            </footer>
+        </div>
     </div>
 </body>
 
