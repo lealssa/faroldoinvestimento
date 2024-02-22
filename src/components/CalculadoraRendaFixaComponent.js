@@ -183,22 +183,25 @@ export const CalculadoraRendaFixa = {
     template: `
     <div class="block">
 
-        <!-- Aviso mobile virar horizontal -->
+        <!-- Aviso mobile -->
         <article class="message is-info is-hidden-tablet">
             <div class="message-body has-text-centered">
                 <span class="icon">
                     <i class="fas fa-lightbulb"></i>
                 </span>
-                <span>Deixe seu celular na horizontal para acessar o simulador completo</span>        
+                <span>Use um tablet ou PC para acessar o simulador completo</span>        
             </div>
         </article>    
 
+        <!-- Simulador -->
         <div class="card">
 
+            <!-- Título -->
             <div class="card-header has-background-white-ter">
                 <p class="card-header-title has-text-grey-dark">Simulação #{{ simulacoesStore.lista.length + 1 }}</p>
             </div>
 
+            <!-- Conteúdo do simulador -->
             <div class="card-content">
                 <!-- Campos -->
                 <div class="columns is-centered is-multiline is-variable">
@@ -301,24 +304,7 @@ export const CalculadoraRendaFixa = {
                                     <span class="control-label">Não</span>
                                 </label>                                
                             </div>
-                        </div>                         
-                    <!--
-                        <div class="field">
-                            <label class="switch is-outlined is-rounded">
-                                <input type="checkbox" value="false" checked="" v-model="dadosEntrada.IR">
-                                <span class="check is-info"></span>
-                                <span class="control-label">IR</span>
-                            </label>
-                        </div>   
-                    
-                        <div class="field">
-                            <label class="switch is-outlined is-rounded">
-                                <input type="checkbox" value="false" checked="" v-model="dadosEntrada.calcularInflacao">
-                                <span class="check is-info"></span>
-                                <span class="control-label">Inflação</span>
-                            </label>
-                        </div> 
-                    -->                                                                   
+                        </div>                                                                                  
                     </div>    
                 </div>
 
@@ -355,7 +341,11 @@ export const CalculadoraRendaFixa = {
                     </div>
                 </div>
 
-                <p class="block is-size-7">* Valores aproximados e apenas para simulação. Não é uma indicação de aplicação.</p>
+                <!-- Disclaimer -->
+                <div class="block is-size-7">
+                    <p>* Valores aproximados e apenas para simulação. Não é uma indicação de aplicação.</p>
+                    <p>** O cálculo da inflação é baseado no IPCA dos últimos 12 meses.</p>
+                </div>
 
                 <!-- Botão adicionar -->
                 <button class="button is-rounded is-warning is-light is-outlined is-hidden-mobile"

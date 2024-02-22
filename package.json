@@ -8,7 +8,9 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "bulma": "^0.9.4"
+    "bulma": "^0.9.4",
+    "bulma-radio": "^1.2.0",
+    "bulma-switch-control": "^1.2.2"
   },
   "scripts": {
     "build": "webpack --mode production",
