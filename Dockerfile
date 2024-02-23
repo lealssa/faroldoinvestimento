@@ -9,3 +9,4 @@ FROM nginx:stable-alpine as production-stage
 WORKDIR /usr/share/nginx/html
 COPY --from=build-stage /app/dist .
 COPY ./nginx_default.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
