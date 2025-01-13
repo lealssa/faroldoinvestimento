@@ -21,6 +21,7 @@ spec:
       containers:
         - name: faroldoinvestimento
           image: docker.io/lealssa/faroldoinvestimento:v0.8
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---
