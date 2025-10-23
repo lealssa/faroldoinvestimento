@@ -17,7 +17,7 @@ function salvarSimulacoes() {
 </script>
 
 <template>
-    <div class="block is-hidden-mobile has-background-white">
+    <div class="block is-hidden-mobile has-background-white p-4">
         <table class="table is-fullwidth is-hoverable">
             <thead>
                 <tr>
@@ -29,7 +29,6 @@ function salvarSimulacoes() {
                     <th>Rend. bruto</th>
                     <th>IR</th>
                     <th>Rend. líquido</th>
-                    <th>Alíq. IR</th>
                     <th></th>
                 </tr>
             </thead>
@@ -42,37 +41,50 @@ function salvarSimulacoes() {
                 </tr>
 
                 <tr v-for="(simulacao, index) in simulacoesStore.lista" :key="index">
-                    <td>
+                    <td class="is-vcentered">
                         <span>{{ index + 1 }}</span>
                     </td>
-                    <td>{{ simulacao.montanteAplicado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
-                    </td>
-                    <td>
+                    <td class="is-vcentered">{{ simulacao.montanteAplicado.toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL' }) }}</td>
+                    <td class="is-vcentered">
                         {{ simulacao.info }}
-                        <span class="tag is-success is-light is-rounded" v-if="simulacao.aliquotaIR === 0">Isento
-                            IR</span>
+                        <span class="tag is-info is-light is-rounded">{{ (simulacao.taxaReal /
+                            100).toLocaleString('pt-BR', {
+                                style: 'percent',
+                                minimumFractionDigits: 1,
+                                maximumFractionDigits: 2,
+                            }) }}</span>
                     </td>
-                    <td>{{ simulacao.prazoMes }}</td>
-                    <td class="has-text-weight-semibold">{{ simulacao.valorNoVencimento.toLocaleString('pt-BR', {
-                        style:
-                            'currency', currency: 'BRL'
-                    }) }}</td>
-                    <td>{{ simulacao.bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</td>
-                    <td>{{ simulacao.impostoDevido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
+                    <td class="is-vcentered">{{ simulacao.prazoMes }}</td>
+                    <td class="is-vcentered">
+                        <span class="has-text-weight-semibold">{{ simulacao.valorNoVencimento.toLocaleString('pt-BR', {
+                            style: 'currency', currency: 'BRL' }) }}</span>
+                        <span class="tag is-danger is-light is-rounded mx-1"
+                            v-if="simulacao.inflacaoPeriodo > 0">Inflação {{ (simulacao.inflacaoPeriodo *
+                                -1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
                     </td>
-                    <td class="has-text-weight-semibold">{{ simulacao.liquido.toLocaleString('pt-BR', {
-                        style:
-                            'currency', currency: 'BRL'
-                    }) }}</td>
-                    <td>{{ simulacao.aliquotaIR.toLocaleString('pt-BR', {
-                        style: 'percent',
-                        minimumFractionDigits: 1,
-                        maximumFractionDigits: 1,
-                    }) }}</td>
-                    <td>
+                    <td class="is-vcentered">{{ simulacao.bruto.toLocaleString('pt-BR', {
+                        style: 'currency', currency:
+                        'BRL' }) }}</td>
+                    <td class="has-text-danger is-vcentered">
+                        {{ (simulacao.impostoDevido * -1).toLocaleString('pt-BR', {
+                            style: 'currency', currency: 'BRL'
+                        }) }}
+                        <span class="tag is-danger is-light is-rounded" v-if="simulacao.aliquotaIR > 0">{{
+                            simulacao.aliquotaIR.toLocaleString('pt-BR', {
+                                style: 'percent',
+                                minimumFractionDigits: 1,
+                                maximumFractionDigits: 1,
+                            }) }}</span>
+                        <span class="tag is-success is-light is-rounded" v-if="simulacao.aliquotaIR === 0">Isento</span>
+                    </td>
+                    <td class="has-text-weight-semibold is-vcentered">{{ simulacao.liquido.toLocaleString('pt-BR', {
+                        style: 'currency', currency: 'BRL' }) }}</td>
+                    <td class="is-vcentered">
                         <a class="link py-4 has-text-grey-dark" @click="simulacoesStore.remover(index)">
                             <span class="icon">
-                                <i class="fas fa-trash-can" aria-hidden="true"></i>
+                                <font-awesome-icon icon="fa-solid fa-trash-can" />
                             </span>
                         </a>
                     </td>
@@ -83,22 +95,18 @@ function salvarSimulacoes() {
                     <th>Total</th>
                     <th>{{ simulacoesStore.totalMontanteAplicado.toLocaleString('pt-BR', {
                         style: 'currency', currency:
-                            'BRL'
-                    }) }}</th>
+                        'BRL' }) }}</th>
                     <th></th>
                     <th></th>
                     <th>{{ simulacoesStore.totalValorNoVencimento.toLocaleString('pt-BR', {
                         style: 'currency', currency:
-                            'BRL'
-                    }) }}</th>
+                        'BRL' }) }}</th>
                     <th>{{ simulacoesStore.totalBruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
                     </th>
-                    <th>{{ simulacoesStore.totalImpostoDevido.toLocaleString('pt-BR', {
-                        style: 'currency', currency:
-                            'BRL'
-                    }) }}</th>
+                    <th class="has-text-danger">{{ (simulacoesStore.totalImpostoDevido * -1).toLocaleString('pt-BR', {
+                        style: 'currency', currency: 'BRL' }) }}</th>
                     <th>{{ simulacoesStore.totalLiquido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-                    }}</th>
+                        }}</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -118,7 +126,7 @@ function salvarSimulacoes() {
             -->
             <button class="button is-small is-light is-rounded" @click="isShowTotal = !isShowTotal">
                 <span class="icon">
-                    <i class="fa-regular" :class="isShowTotal ? 'fa-eye-slash' : 'fa-eye'"></i>
+                    <font-awesome-icon :icon="['fa-solid', isShowTotal ? 'fa-eye-slash' : 'fa-eye']" />
                 </span>
                 <span>
                     {{ isShowTotal ? 'Ocultar total' : 'Mostrar total' }}
@@ -126,7 +134,7 @@ function salvarSimulacoes() {
             </button>
             <button class="button is-small is-danger is-light is-rounded" @click="simulacoesStore.limpar()">
                 <span class="icon">
-                    <i class="fas fa-trash-can" aria-hidden="true"></i>
+                    <font-awesome-icon icon="fa-solid fa-trash-can" />
                 </span>
                 <span>
                     Limpar todos

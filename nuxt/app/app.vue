@@ -1,6 +1,6 @@
 <script setup>
 const indicesStore = useIndicesStore();
-await callOnce(indicesStore.fetchIndicesOCI)
+// await callOnce(indicesStore.fetchIndicesOCI)
 </script>
 
 <template>

@@ -24,7 +24,7 @@ watch(() => props.isExpanded, (newVal) => {
 
         <a class="link is-size-6 has-text-grey is-pulled-right" @click="showContent = !showContent">
             <span class="icon">
-                <i class="fas fa-chevron-up rotate" :class="{ 'down': showContent }" aria-hidden="true"></i>
+                <font-awesome-icon icon="fa-solid fa-chevron-up" class="rotate" :class="{ 'down': showContent }" />
             </span>
         </a>
 
@@ -33,7 +33,7 @@ watch(() => props.isExpanded, (newVal) => {
 
             <a :href="`#${id}`" class="link is-size-6 has-text-grey">
                 <span class="icon">
-                    <i class="fas fa-link" aria-hidden="true"></i>
+                    <font-awesome-icon icon="fa-solid fa-link" />
                 </span>
             </a>
         </h3>

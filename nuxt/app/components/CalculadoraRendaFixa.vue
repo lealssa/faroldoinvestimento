@@ -2,20 +2,20 @@
 const simulacoesStore = useSimulacoesStore();
 const indicesStore = useIndicesStore();
 
-// --- Estados Reativos (data) ---
-
 const opcoesIndices = reactive({
     pos: { label: "% da CDI/SELIC a.a", taxa: 90 },
     pre: { label: "Taxa a.a", taxa: 0 },
     poupanca: { label: "Poupança a.a", taxa: 0 },
-    ipca: { label: "+ IPCA a.a", taxa: 5 }
+    ipca: { label: "+ IPCA a.a", taxa: 5 },
+    selic: { label: "+ SELIC a.a", taxa: 0.15 }
 });
 
 const dadosEntrada = reactive({
     montante: 0,
     prazo: 12,
     taxa: 0,
-    IR: true
+    IR: true,
+    calcularInflacao: false
 });
 
 const tipoIndiceSelecionado = ref('pre');
@@ -28,20 +28,16 @@ const resultadoRendimento = reactive({
     impostoDevido: 0,
     aliquotaIR: 0,
     prazoMes: 0,
-    info: ''
+    info: '',
+    taxaReal: 0,
+    inflacaoPeriodo: 0,
+    divididoNoPrazo: 0
 });
 
-// --- Métodos (methods) ---
-
 const calculaJurosCompostos = (montante, prazoMes, taxaAno) => {
-    const valorNoVencimento = montante * Math.pow(1 + taxaAno / 100 / 12, prazoMes);
-    return valorNoVencimento;
-};
-
-const calculaJurosCompostosDiarios = (montante, prazoMes, taxaAno) => {
-    const taxaDiaria = Math.pow(1 + taxaAno / 100, 1 / 252) - 1;
-    const prazoDias = prazoMes * 30;
-    const valorNoVencimento = montante * Math.pow(1 + taxaDiaria, prazoDias);
+    const taxaAnualDecimal = taxaAno / 100;
+    const taxaMensal = Math.pow(1 + taxaAnualDecimal, 1/12) - 1;
+    const valorNoVencimento = montante * Math.pow(1 + taxaMensal, prazoMes);    
     return valorNoVencimento;
 };
 
@@ -66,7 +62,8 @@ const calculaIR = (prazoMes, rendimentoBruto) => {
 
 const calculaRendaFixa = () => {
     let taxa = dadosEntrada.taxa;
-    let info = '';
+    let info = 'Pré-fixado';
+    let inflacaoPeriodo = 0;
 
     if (tipoIndiceSelecionado.value === 'pos') {
         taxa = (dadosEntrada.taxa * indicesStore.oci.SELIC.valor) / 100;
@@ -76,14 +73,21 @@ const calculaRendaFixa = () => {
         taxa = dadosEntrada.taxa + indicesStore.oci.IPCA.valor;
         info = `${dadosEntrada.taxa}% + IPCA`;
     }
+    else if (tipoIndiceSelecionado.value === 'selic') {
+        taxa = dadosEntrada.taxa + indicesStore.oci.SELIC.valor;
+        info = `${dadosEntrada.taxa}% + SELIC`;
+    }
     else if (tipoIndiceSelecionado.value === 'poupanca') {
         info = `Poupança`;
     }
-    else {
-        info = `${dadosEntrada.taxa}%`;
+
+    let valorNoVencimento = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, taxa);
+
+    if (dadosEntrada.calcularInflacao) {
+        inflacaoPeriodo = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, indicesStore.oci.IPCA.valor) - dadosEntrada.montante;
+        valorNoVencimento = valorNoVencimento - inflacaoPeriodo;
     }
 
-    const valorNoVencimento = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, taxa);
     const rendimentoBruto = valorNoVencimento - dadosEntrada.montante;
     let rendimentoLiquido = 0;
     let calculoIR = {
@@ -99,6 +103,10 @@ const calculaRendaFixa = () => {
         rendimentoLiquido = rendimentoBruto;
     }
 
+    let dividido = 0;
+    if (rendimentoLiquido > 0 && dadosEntrada.prazo > 0)
+        dividido = rendimentoLiquido / dadosEntrada.prazo;
+
     resultadoRendimento.montanteAplicado = dadosEntrada.montante;
     resultadoRendimento.valorNoVencimento = parseFloat(valorNoVencimento.toFixed(2));
     resultadoRendimento.bruto = parseFloat(rendimentoBruto.toFixed(2));
@@ -108,6 +116,8 @@ const calculaRendaFixa = () => {
     resultadoRendimento.prazoMes = dadosEntrada.prazo;
     resultadoRendimento.info = info;
     resultadoRendimento.taxaReal = taxa;
+    resultadoRendimento.inflacaoPeriodo = inflacaoPeriodo;
+    resultadoRendimento.divididoNoPrazo = dividido;
 };
 
 const salvarSimulacao = () => {
@@ -119,30 +129,31 @@ const salvarSimulacao = () => {
     simulacoesStore.inserir(result);
 };
 
-// --- Watchers (watch) ---
+// --- Watchers e Inicialização ---
 
-// Inicializa valores após a loja de índices carregar (ou na montagem se já estiver carregada)
-onMounted(() => {
+// Inicializa valores se a store já estiver carregada (simulando a inicialização no Options API)
+const inicializarValores = () => {
     if (!indicesStore.isLoading && indicesStore.oci.SELIC.valor) {
         opcoesIndices.pre.taxa = indicesStore.oci.SELIC.valor;
         opcoesIndices.poupanca.taxa = indicesStore.oci.Poupanca.valor;
         dadosEntrada.taxa = indicesStore.oci.SELIC.valor;
         calculaRendaFixa();
     }
-});
+};
 
+onMounted(inicializarValores);
 
 // Watchers de Store
 watch(() => indicesStore.oci.SELIC, (value) => {
     opcoesIndices.pre.taxa = value.valor;
     dadosEntrada.taxa = value.valor;
     calculaRendaFixa();
-});
+}, { deep: true });
 
 watch(() => indicesStore.oci.Poupanca, (value) => {
     opcoesIndices.poupanca.taxa = value.valor;
     calculaRendaFixa();
-});
+}, { deep: true });
 
 // Watcher de tipoIndiceSelecionado
 watch(tipoIndiceSelecionado, (value) => {
@@ -160,173 +171,229 @@ watch(dadosEntrada, () => {
     calculaRendaFixa();
 }, { deep: true });
 
-// --- Exportar para uso no template ---
-// No setup, tudo declarado é automaticamente exposto ao template.
-// Estamos exportando as funções e os estados que o template pode precisar.
+// Exportar funções e estados para o template
 defineExpose({
     dadosEntrada,
     opcoesIndices,
     tipoIndiceSelecionado,
     resultadoRendimento,
     salvarSimulacao,
-    calculaRendaFixa
+    calculaRendaFixa,
 });
 </script>
 
 <template>
     <div class="block">
-        <!-- Aviso mobile virar horizontal -->
+
+        <!-- Aviso mobile -->
         <article class="message is-info is-hidden-tablet">
             <div class="message-body has-text-centered">
                 <span class="icon">
-                    <i class="fas fa-lightbulb"></i>
+                    <font-awesome-icon icon="fas fa-lightbulb" />
                 </span>
-                <span>Deixe seu celular na horizontal para acessar o simulador completo</span>
+                <span>Use um tablet ou PC para acessar o simulador completo</span>
             </div>
         </article>
 
+        <!-- Simulador -->
         <div class="card">
 
+            <!-- Título -->
             <div class="card-header has-background-white-ter">
                 <p class="card-header-title has-text-grey-dark">Simulação #{{ simulacoesStore.lista.length + 1 }}</p>
             </div>
 
+            <!-- Conteúdo do simulador -->
             <div class="card-content">
-                <!-- Campos -->
-                <div class="columns is-centered is-multiline">
-                    <!-- Montante -->
-                    <div class="column is-2">
-                        <div class="field">
+                <fieldset :disabled="!indicesStore.hasIndices">
+                    <!-- Campos -->
+                    <div class="columns is-centered is-multiline is-variable">
+                        <!-- Montante -->
+                        <div class="column is-3">
                             <label class="label has-text-weight-light">Montante</label>
-                            <div class="control">
-                                <input class="input" type="text" placeholder="Montante"
-                                    v-model.number="dadosEntrada.montante">
+                            <div class="field has-addons">
+                                <div class="control has-icons-left is-expanded">
+                                    <span class="icon is-small is-left">
+                                        <font-awesome-icon icon="fa-solid fa-brazilian-real-sign" />
+                                    </span>
+                                    <input class="input" type="text" placeholder="Montante"
+                                        v-model.number="dadosEntrada.montante">
+                                </div>
+                                <div class="control">
+                                    <a class="button is-static">
+                                        ,00
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Prazo -->
-                    <div class="column is-2">
-                        <div class="field">
-                            <label class="label has-text-weight-light">Prazo
-                                a.m</label>
-                            <div class="control">
-                                <input class="input" type="text" placeholder="Prazo a.m"
-                                    v-model.number="dadosEntrada.prazo">
+                        <!-- Prazo -->
+                        <div class="column">
+                            <div class="field">
+                                <label class="label has-text-weight-light">Prazo a.m</label>
+                                <div class="control has-icons-left">
+                                    <span class="icon is-small is-left">
+                                        <font-awesome-icon icon="fa-solid fa-calendar" />
+                                    </span>
+                                    <input class="input" type="text" placeholder="Prazo em meses"
+                                        v-model.number="dadosEntrada.prazo">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Taxa -->
-                    <div class="column is-2">
-                        <div class="field">
-                            <label class="label has-text-weight-light">{{ opcoesIndices[tipoIndiceSelecionado].label
+                        <!-- Taxa -->
+                        <div class="column">
+                            <div class="field">
+                                <label class="label has-text-weight-light">{{ opcoesIndices[tipoIndiceSelecionado].label
                                 }}</label>
-                            <div class="control has-icons-right">
-                                <input class="input" type="text" placeholder="Taxa a.a"
-                                    v-model.number="dadosEntrada.taxa">
-                                <span class="icon is-small is-right">
-                                    <i class="fas fa-percentage"></i>
-                                </span>
+                                <div class="control has-icons-right">
+                                    <input class="input" type="text" placeholder="Taxa a.a"
+                                        v-model.number="dadosEntrada.taxa">
+                                    <span class="icon is-small is-right">
+                                        <font-awesome-icon icon="fa-solid fa-percentage" />
+                                    </span>
+                                </div>
+                                <p class="help is-info">Taxa real {{ ((resultadoRendimento.taxaReal > 0 ?
+                                    resultadoRendimento.taxaReal : opcoesIndices.pre.taxa) /
+                                    100.0).toLocaleString('pt-BR',
+                                        {
+                                            style: 'percent',
+                                            minimumFractionDigits: 1,
+                                            maximumFractionDigits: 2,
+                                        }) }}</p>
                             </div>
                         </div>
-                    </div>
-                    <!-- Tipo -->
-                    <div class="column is-2">
-                        <div class="field">
-                            <label class="label has-text-weight-light">Tipo</label>
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select v-model="tipoIndiceSelecionado">
-                                        <option value="pre">Pré-fixado</option>
-                                        <option value="pos">Pós-fixado</option>
-                                        <option value="poupanca">Poupança</option>
-                                        <option value="ipca">IPCA+</option>
-                                    </select>
+                        <!-- Tipo -->
+                        <div class="column is-2">
+                            <div class="field">
+                                <label class="label has-text-weight-light">Tipo</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select v-model="tipoIndiceSelecionado">
+                                            <option value="pre">Pré-fixado</option>
+                                            <option value="pos">Pós-fixado</option>
+                                            <option value="poupanca">Poupança</option>
+                                            <option value="ipca">IPCA+</option>
+                                            <option value="selic">SELIC+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- IR -->
+                        <div class="column">
+                            <div class="field">
+                                <label class="label has-text-weight-light">Isento IR</label>
+                                <div class="control">
+                                    <label class="b-radio radio">
+                                        <input type="radio" name="ir" :value="false" v-model="dadosEntrada.IR">
+                                        <span class="check is-info"></span>
+                                        <span class="control-label">Sim</span>
+                                    </label>
+                                    <label class="b-radio radio">
+                                        <input type="radio" name="ir" :value="true" v-model="dadosEntrada.IR">
+                                        <span class="check is-info"></span>
+                                        <span class="control-label">Não</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Inflação -->
+                        <div class="column">
+                            <div class="field">
+                                <label class="label has-text-weight-light">Inflação</label>
+                                <div class="control">
+                                    <label class="b-radio radio">
+                                        <input type="radio" name="inflacao" :value="true"
+                                            v-model="dadosEntrada.calcularInflacao">
+                                        <span class="check is-info"></span>
+                                        <span class="control-label">Sim</span>
+                                    </label>
+                                    <label class="b-radio radio">
+                                        <input type="radio" name="inflacao" :value="false"
+                                            v-model="dadosEntrada.calcularInflacao">
+                                        <span class="check is-info"></span>
+                                        <span class="control-label">Não</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- IR -->
-                    <div class="column is-2">
-                        <div class="field">
-                            <label class="label has-text-weight-light">Isento
-                                IR?</label>
-                            <div class="control">
-                                <label class="radio">
-                                    <input type="radio" id="isento" name="ir" :value="false" v-model="dadosEntrada.IR">
-                                    Sim
-                                </label>
-                                <label class="radio">
-                                    <input type="radio" id="naoIsento" name="ir" :value="true"
-                                        v-model="dadosEntrada.IR">
-                                    Não
-                                </label>
+
+                    <!-- Resultado -->
+                    <div class="columns is-vcentered has-text-centered">
+
+                        <!-- valor vencimento -->
+                        <div class="column">
+                            <div class="box">
+                                <p class="subtitle is-size-6">Valor no vencimento</p>
+                                <p class="title is-size-5">{{
+                                    resultadoRendimento.valorNoVencimento.toLocaleString('pt-BR',
+                                        { style: 'currency', currency: 'BRL' }) }}</p>
+                                <hr>
+                                <p class="subtitle is-size-7">Inflação no período</p>
+                                <p class="title is-size-6 has-text-danger">{{ (resultadoRendimento.inflacaoPeriodo *
+                                    -1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-
-                <!-- Resultado mobile -->
-                <div class="tile is-ancestor has-text-centered">
-
-                    <div class="tile is-parent">
-                        <div class="tile is-child box">
-                            <p class="subtitle is-size-6">Valor no vencimento</p>
-                            <p class="title is-size-5">{{ resultadoRendimento.valorNoVencimento.toLocaleString('pt-BR',
-                                { style: 'currency', currency: 'BRL' }) }}</p>
+                        <!-- rendimento bruto -->
+                        <div class="column">
+                            <div class="box">
+                                <p class="subtitle is-size-6">Rendimento bruto</p>
+                                <p class="title is-size-5">{{ resultadoRendimento.bruto.toLocaleString('pt-BR', {
+                                    style:
+                                        'currency', currency: 'BRL'
+                                    }) }}</p>
+                                <hr>
+                                <p class="subtitle is-size-7">IR devido {{
+                                    resultadoRendimento.aliquotaIR.toLocaleString('pt-BR', {
+                                        style: 'percent',
+                                        minimumFractionDigits: 1,
+                                        maximumFractionDigits: 1,
+                                    }) }}</p>
+                                <p class="title is-size-6 has-text-danger">{{ (resultadoRendimento.impostoDevido *
+                                    -1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tile is-parent">
-                        <div class="tile is-child box">
-                            <p class="subtitle is-size-6">Rendimento bruto</p>
-                            <p class="title is-size-5">{{ resultadoRendimento.bruto.toLocaleString('pt-BR', {
-                                style:
-                                'currency', currency: 'BRL' }) }}</p>
-                        </div>
-                    </div>
-                    <div class="tile is-parent">
-                        <div class="tile is-child box">
-                            <p class="subtitle is-size-6">IR devido</p>
-                            <p class="title is-size-5">{{ resultadoRendimento.impostoDevido.toLocaleString('pt-BR', {
-                                style: 'currency', currency: 'BRL' }) }}</p>
-                        </div>
-                    </div>
-                    <div class="tile is-parent">
-                        <div class="tile is-child box">
-                            <p class="subtitle is-size-6">Rendimento líquido</p>
-                            <p class="title is-size-5">{{ resultadoRendimento.liquido.toLocaleString('pt-BR', {
-                                style:
-                                'currency', currency: 'BRL' }) }}</p>
-                        </div>
-                    </div>
-                    <div class="tile is-parent">
-                        <div class="tile is-child box">
-                            <p class="subtitle is-size-6">Alíquota IR</p>
-                            <p class="title is-size-5">{{ resultadoRendimento.aliquotaIR.toLocaleString('pt-BR', {
-                                style: 'percent',
-                                minimumFractionDigits: 1,
-                                maximumFractionDigits: 1,
-                            }) }}
-                            </p>
 
+                        <!-- rendimento liq. -->
+                        <div class="column">
+                            <div class="box">
+                                <p class="subtitle is-size-6">Rendimento líquido</p>
+                                <p class="title is-size-5">{{ resultadoRendimento.liquido.toLocaleString('pt-BR', {
+                                    style:
+                                        'currency', currency: 'BRL'
+                                    }) }}</p>
+                                <hr>
+                                <p class="subtitle is-size-7">Dividido por {{ dadosEntrada.prazo > 0 ?
+                                    dadosEntrada.prazo :
+                                    0 }} meses</p>
+                                <p class="title is-size-6">{{
+                                    resultadoRendimento.divididoNoPrazo.toLocaleString('pt-BR', {
+                                        style: 'currency', currency: 'BRL'
+                                    }) }}</p>
+                            </div>
                         </div>
+
                     </div>
 
-                </div>
+                    <!-- Disclaimer -->
+                    <div class="block is-size-7">
+                        <p>* Valores aproximados e apenas para simulação. Não é uma indicação de aplicação.</p>
+                        <p>** O cálculo da inflação é baseado no IPCA dos últimos 12 meses.</p>
+                    </div>
 
-                <p class="block is-size-7">* Valores aproximados e apenas para simulação. Não é uma indicação de
-                    aplicação.</p>
+                    <!-- Botão adicionar -->
+                    <button class="button is-rounded is-warning is-light is-outlined is-hidden-mobile"
+                        @click="salvarSimulacao()">
+                        <span class="icon">
+                            <font-awesome-icon icon="fa-solid fa-plus" />
+                        </span>
 
-                <!-- Botão adicionar -->
-                <button class="button is-rounded is-warning is-light is-outlined is-hidden-mobile"
-                    @click="salvarSimulacao()">
-                    <span class="icon">
-                        <i class="fas fa-plus" aria-hidden="true"></i>
-                    </span>
-                    <span>
-                        Comparar
-                    </span>
-                </button>
+                        <span>
+                            Comparar
+                        </span>
+                    </button>
+                </fieldset>
             </div>
         </div>
     </div>

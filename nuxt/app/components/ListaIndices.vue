@@ -1,30 +1,30 @@
 <script setup>
 const indicesStore = useIndicesStore()
+
+onMounted(() => {
+    indicesStore.fetchIndicesOCI()
+})
 </script>
 
 <template>
     <div class="columns is-centered is-multiline">
 
-        <div class="column" v-if="indicesStore.isLoading">
-
-            <div class="notification has-background-info-light box has-text-centered">
-                <span class="icon is-large has-text-grey">
-                    <i class="fas fa-2x fa-hourglass-start"></i>
-                </span>
-                <p class="title has-text-grey is-size-4">Obtendo índices</p>
-                <p class="subtitle">Aguarde...</p>
+        <!-- skeleton -->
+        <div class="column" v-if="indicesStore.isLoading || !indicesStore.hasIndices">
+            <div class="column">
+                <div class="skeleton-block">
+                    <p>Aguarde...</p>
+                </div>
             </div>
-
         </div>
 
         <!-- Mensagem de erro -->
         <div class="column" v-else-if="indicesStore.isErrored">
-
-            <div class="notification is-warning is-light box has-text-centered">
+            <div class="notification is-light box has-text-centered">
                 <span class="icon is-large">
-                    <i class="fas fa-2x fa-triangle-exclamation"></i>
+                    <font-awesome-icon icon="fa-solid fa-2x fa-triangle-exclamation" />
                 </span>
-                <p class="title has-text-warning-dark is-size-4">Não foi possível obter os índices</p>
+                <p class="title is-size-4">Não foi possível obter os índices</p>
                 <p class="subtitle">Tente novamente em instantes</p>
             </div>
 

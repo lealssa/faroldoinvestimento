@@ -1,5 +1,6 @@
 export const useIndicesStore = defineStore('indicesStore', {
     state: () => ({
+        hasIndices: false,
         isLoading: false,
         isErrored: false,
         oci: {
@@ -30,6 +31,7 @@ export const useIndicesStore = defineStore('indicesStore', {
                     this.oci.SELIC = json.find((item) => item.nome === 'SELIC');
                     this.oci.IPCA = json.find((item) => item.nome === 'IPCA');
                     this.oci.Poupanca = json.find((item) => item.nome === 'Poupança');
+                    this.hasIndices = true;
                 } else {
                     throw new Error('Formato de dados inesperado.');
                 }

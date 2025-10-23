@@ -10,7 +10,7 @@ const indicesStore = useIndicesStore()
                 <div class="content box py-6">
 
                     <span class="icon is-size-4 mb-5">
-                        <i class="fa-solid fa-graduation-cap"></i>
+                        <font-awesome-icon icon="fa-solid fa-graduation-cap" />
                     </span>
 
                     <p class="is-size-5 has-text-left">
@@ -30,7 +30,7 @@ const indicesStore = useIndicesStore()
             <div class="column is-flex">
                 <div class="content box py-6">
                     <span class="icon is-size-4 mb-5">
-                        <i class="fa-solid fa-calculator"></i>
+                        <font-awesome-icon icon="fa-solid fa-calculator" />
                     </span>
 
                     <p class="is-size-5 has-text-left">
@@ -46,7 +46,7 @@ const indicesStore = useIndicesStore()
             <div class="column is-flex">
                 <div class="content box py-6">
                     <span class="icon is-size-4 mb-5">
-                        <i class="fa-solid fa-chart-line"></i>
+                        <font-awesome-icon icon="fa-solid fa-chart-line" />
                     </span>
 
                     <p class="is-size-5 has-text-left">
@@ -205,7 +205,7 @@ const indicesStore = useIndicesStore()
             Índices da renda fixa
             <a href="#indicesrendafixa" class="link is-size-6 has-text-grey">
                 <span class="icon">
-                    <i class="fas fa-link" aria-hidden="true"></i>
+                    <font-awesome-icon icon="fa-solid fa-link" />
                 </span>
             </a>
         </h1>
@@ -216,7 +216,8 @@ const indicesStore = useIndicesStore()
     <!-- End Header Índices -->
 
     <!-- Lista Índices -->
-    <ListaIndices></ListaIndices>
+    <!-- <ListaIndices></ListaIndices> -->
+    <IndicesRendaFixa></IndicesRendaFixa>
     <!-- End Lista Índices  -->
 
     <!-- Header simulador -->
@@ -225,7 +226,7 @@ const indicesStore = useIndicesStore()
             Simulador de rendimento
             <a href="#simuladorrendafixa" class="link is-size-6 has-text-grey">
                 <span class="icon">
-                    <i class="fas fa-link" aria-hidden="true"></i>
+                    <font-awesome-icon icon="fa-solid fa-link" />
                 </span>
             </a>
         </h1>
