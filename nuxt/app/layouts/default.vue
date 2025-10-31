@@ -78,8 +78,7 @@ useHead({
         <div class="hero-foot">
             <footer class="footer has-text-centered p-5">
                 <div class="block">
-                    <p class="is-size-5 has-text-weight-light">Farol do Investimento {{ (new Date()).getFullYear() }}
-                    </p>
+                    <p class="is-size-5 has-text-weight-light">Farol do Investimento <NuxtTime :datetime="Date.now()" locale="pt-BR" year="numeric" /></p>
                     <a href="https://www.instagram.com/faroldoinvestimento?igsh=MWNyN28xNjZpcjdjdQ==" target="_blank"
                         class="link is-size-3 has-text-grey">
                         <p class="icon has-text-warning-dark">
@@ -92,7 +91,4 @@ useHead({
         </div>
         <!-- End Footer -->
     </div>
-
-
-
 </template>

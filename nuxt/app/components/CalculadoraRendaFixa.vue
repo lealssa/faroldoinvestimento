@@ -65,15 +65,15 @@ const calculaRendaFixa = () => {
     let info = 'Pré-fixado';
     let inflacaoPeriodo = 0;
 
-    if (tipoIndiceSelecionado.value === 'pos') {
+    if (tipoIndiceSelecionado.value === 'pos' && indicesStore.oci.SELIC?.valor) {
         taxa = (dadosEntrada.taxa * indicesStore.oci.SELIC.valor) / 100;
         info = `${dadosEntrada.taxa}% da CDI/SELIC`;
     }
-    else if (tipoIndiceSelecionado.value === 'ipca') {
+    else if (tipoIndiceSelecionado.value === 'ipca' && indicesStore.oci.IPCA?.valor) {
         taxa = dadosEntrada.taxa + indicesStore.oci.IPCA.valor;
         info = `${dadosEntrada.taxa}% + IPCA`;
     }
-    else if (tipoIndiceSelecionado.value === 'selic') {
+    else if (tipoIndiceSelecionado.value === 'selic' && indicesStore.oci.SELIC?.valor) {
         taxa = dadosEntrada.taxa + indicesStore.oci.SELIC.valor;
         info = `${dadosEntrada.taxa}% + SELIC`;
     }
@@ -83,7 +83,7 @@ const calculaRendaFixa = () => {
 
     let valorNoVencimento = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, taxa);
 
-    if (dadosEntrada.calcularInflacao) {
+    if (dadosEntrada.calcularInflacao && indicesStore.oci.IPCA?.valor) {
         inflacaoPeriodo = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, indicesStore.oci.IPCA.valor) - dadosEntrada.montante;
         valorNoVencimento = valorNoVencimento - inflacaoPeriodo;
     }
@@ -129,30 +129,33 @@ const salvarSimulacao = () => {
     simulacoesStore.inserir(result);
 };
 
-// --- Watchers e Inicialização ---
+// --- Watchers ---
 
-// Inicializa valores se a store já estiver carregada (simulando a inicialização no Options API)
-const inicializarValores = () => {
-    if (!indicesStore.isLoading && indicesStore.oci.SELIC.valor) {
+onMounted(() => {
+    if (indicesStore.oci.SELIC?.valor) {
         opcoesIndices.pre.taxa = indicesStore.oci.SELIC.valor;
-        opcoesIndices.poupanca.taxa = indicesStore.oci.Poupanca.valor;
         dadosEntrada.taxa = indicesStore.oci.SELIC.valor;
         calculaRendaFixa();
     }
-};
-
-onMounted(inicializarValores);
+    if (indicesStore.oci.Poupanca?.valor) {
+        opcoesIndices.poupanca.taxa = indicesStore.oci.Poupanca.valor;
+    }
+});
 
 // Watchers de Store
 watch(() => indicesStore.oci.SELIC, (value) => {
-    opcoesIndices.pre.taxa = value.valor;
-    dadosEntrada.taxa = value.valor;
-    calculaRendaFixa();
+    if (value && value.valor) {
+        opcoesIndices.pre.taxa = value.valor;
+        dadosEntrada.taxa = value.valor;
+        calculaRendaFixa();
+    }
 }, { deep: true });
 
 watch(() => indicesStore.oci.Poupanca, (value) => {
-    opcoesIndices.poupanca.taxa = value.valor;
-    calculaRendaFixa();
+    if (value && value.valor) {
+        opcoesIndices.poupanca.taxa = value.valor;
+        calculaRendaFixa();
+    }
 }, { deep: true });
 
 // Watcher de tipoIndiceSelecionado
@@ -162,7 +165,6 @@ watch(tipoIndiceSelecionado, (value) => {
         dadosEntrada.IR = false;
     else
         dadosEntrada.IR = true;
-
     calculaRendaFixa();
 });
 

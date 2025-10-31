@@ -4,4 +4,5 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/main.css','@fortawesome/fontawesome-svg-core/styles.css'],
   modules: ['@pinia/nuxt'],  
+  ssr: false,
 })
