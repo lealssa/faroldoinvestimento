@@ -17,7 +17,7 @@ function salvarSimulacoes() {
 </script>
 
 <template>
-    <div class="block is-hidden-mobile has-background-white p-4">
+    <div class="block is-hidden-mobile has-background-white p-4 table-container">
         <table class="table is-fullwidth is-hoverable">
             <thead>
                 <tr>
@@ -161,3 +161,9 @@ function salvarSimulacoes() {
         </div>
     </div>
 </template>
+
+<style scoped>
+.table-container {
+    border-radius: 6px;
+}
+</style>

@@ -160,6 +160,7 @@ useHead({
 .theme-dark .box {
     background-color: #1e293b !important;
     color: #e2e8f0 !important;
+    border: 1px solid #334155 !important;
 }
 
 .theme-dark .card {
@@ -230,5 +231,13 @@ useHead({
     background-color: transparent !important;
     border: 1px solid #334155 !important;
     color: #e2e8f0 !important;
+}
+
+.box {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
 </style>
