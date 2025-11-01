@@ -1,9 +1,40 @@
 <script setup lang="js">
+const isDark = ref(true)
+const isMenuOpen = ref(false)
+
+const toggleTheme = () => {
+    isDark.value = !isDark.value
+}
+
+const toggleMenu = () => {
+    isMenuOpen.value = !isMenuOpen.value
+}
+
+// Evita hydration mismatch
+onMounted(() => {
+    // Estado inicial sempre false para consistência
+})
+
 useHead({
     title: 'Farol do Investimento',
+    titleTemplate: '%s - Seu guia de investimentos',
     htmlAttrs: {
-        class: 'theme-light',
+        class: computed(() => isDark.value ? 'theme-dark' : 'theme-light'),
+        lang: 'pt-BR'
     },
+    meta: [
+        { name: 'description', content: 'Aprenda sobre investimentos em Renda Fixa com nosso simulador exclusivo. Compare rendimentos, calcule impostos e tome decisões inteligentes.' },
+        { name: 'keywords', content: 'investimentos, renda fixa, simulador, CDI, SELIC, IPCA, tesouro direto, CDB, LCI, LCA' },
+        { name: 'author', content: 'Farol do Investimento' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { property: 'og:title', content: 'Farol do Investimento - Seu guia de investimentos' },
+        { property: 'og:description', content: 'Aprenda sobre investimentos em Renda Fixa com nosso simulador exclusivo. Compare rendimentos e tome decisões inteligentes.' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:locale', content: 'pt_BR' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'Farol do Investimento - Seu guia de investimentos' },
+        { name: 'twitter:description', content: 'Aprenda sobre investimentos em Renda Fixa com nosso simulador exclusivo.' }
+    ]
 })
 </script>
 
@@ -12,7 +43,7 @@ useHead({
 
         <!-- Header -->
         <header class="hero-head">
-            <nav class="navbar">
+            <nav class="navbar is-fixed-top has-background-white">
                 <div class="container is-max-widescreen">
                     <div class="navbar-brand">
                         <NuxtLink class="navbar-item" to="/">
@@ -21,6 +52,11 @@ useHead({
                         <NuxtLink class="navbar-item link is-size-5" to="/">
                             Farol do Investimento
                         </NuxtLink>
+                        <a class="navbar-burger" @click="toggleMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
                     </div>
                     <div class="navbar-menu">
                         <div class="navbar-end">
@@ -33,14 +69,11 @@ useHead({
                                 </NuxtLink>
                             </div>
                             <div class="navbar-item">
-                                <a class="button is-warning is-light is-outlined"
-                                    href="https://www.instagram.com/faroldoinvestimento?igsh=MWNyN28xNjZpcjdjdQ=="
-                                    target="_blank">
+                                <button class="button" @click="toggleTheme">
                                     <span class="icon">
-                                        <font-awesome-icon icon="fa-brands fa-instagram" />
+                                        <font-awesome-icon icon="fa-solid fa-sun" />
                                     </span>
-                                    <span>@faroldoinvestimento</span>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -50,7 +83,7 @@ useHead({
         <!-- End Header -->
 
         <!-- Main -->
-        <main class="hero-body has-background-light">
+        <main class="hero-body has-background-light" style="padding-top: 3.25rem;">
             <div class="container is-max-widescreen">
 
                 <!-- Center Logo -->
@@ -79,17 +112,117 @@ useHead({
         <div class="hero-foot">
             <footer class="footer has-text-centered p-5">
                 <div class="block">
-                    <p class="is-size-5 has-text-weight-light">Farol do Investimento <NuxtTime :datetime="Date.now()" locale="pt-BR" year="numeric" /></p>
+                    <p class="is-size-5 has-text-weight-light">Farol do Investimento {{ new Date().getFullYear() }}</p>
                     <a href="https://www.instagram.com/faroldoinvestimento?igsh=MWNyN28xNjZpcjdjdQ==" target="_blank"
-                        class="link is-size-3 has-text-grey">
-                        <p class="icon has-text-warning-dark">
-                            <font-awesome-icon icon="fa-brands fa-instagram" />
-                        </p>
+                        class="link has-text-warning">
+                        @faroldoinvestimento
                     </a>
-                    <p class="is-size-7">Todos os direitos reservados.</p>
+                    <p class="is-size-7">&copy Todos os direitos reservados.</p>
                 </div>
             </footer>
         </div>
         <!-- End Footer -->
     </div>
 </template>
+
+<style>
+.theme-dark {
+    --bulma-scheme-main: #0f172a;
+    --bulma-background: #0f172a;
+    --bulma-text: #e2e8f0;
+    --bulma-border: #334155;
+    --bulma-box-background-color: #1e293b;
+    --bulma-card-background-color: #1e293b;
+    --bulma-navbar-background-color: #1e293b;
+    --bulma-footer-background-color: #1e293b;
+}
+
+.theme-dark .has-background-light {
+    background-color: #0f172a !important;
+}
+
+.theme-dark .has-background-white {
+    background-color: #1e293b !important;
+}
+
+.theme-dark .navbar {
+    background-color: #1e293b !important;
+}
+
+.theme-dark .has-background-white-ter {
+    background-color: #334155 !important;
+}
+
+.theme-dark .has-background-white-bis {
+    background-color: #334155 !important;
+}
+
+.theme-dark .box {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .card {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .input {
+    background-color: #334155 !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+.theme-dark .select select {
+    background-color: #334155 !important;
+    color: #e2e8f0 !important;
+    border-color: #475569 !important;
+}
+
+.theme-dark .message {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .message-body {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .table {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .table td,
+.theme-dark .table th {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+.theme-dark .footer {
+    background-color: #1e293b !important;
+}
+
+.theme-dark .has-background-link-95 {
+    background-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+.theme-dark .title {
+    color: #d0d0d0 !important;
+}
+
+.theme-dark .subtitle {
+    color: #b0b0b0 !important;
+}
+
+.theme-dark .card-header-title {
+    color: #d0d0d0 !important;
+}
+
+.theme-dark .has-text-grey-dark {
+    color: #d0d0d0 !important;
+}
+</style>

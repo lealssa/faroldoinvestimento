@@ -237,10 +237,10 @@ const indicesStore = useIndicesStore()
     <!-- End Header simulador -->
 
     <!-- Tabela Simulações -->
-    <TabelaSimulacoes v-if="!indicesStore.isErrored && !indicesStore.isLoading"></TabelaSimulacoes>
+    <TabelaSimulacoes></TabelaSimulacoes>
     <!-- End Tabela Simulações -->
 
     <!-- Calculadora -->
-    <CalculadoraRendaFixa v-if="!indicesStore.isErrored && !indicesStore.isLoading"></CalculadoraRendaFixa>
+    <CalculadoraRendaFixa></CalculadoraRendaFixa>
     <!-- End Calculadora -->
 </template>

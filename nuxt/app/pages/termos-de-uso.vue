@@ -1,3 +1,13 @@
+<script setup>
+useHead({
+    title: 'Termos de Uso',
+    meta: [
+        { name: 'description', content: 'Termos de uso do Farol do Investimento. Conheça nossas políticas de privacidade e limitações de responsabilidade.' },
+        { name: 'robots', content: 'index, follow' }
+    ]
+})
+</script>
+
 <template>
     <div class="box is-shadowless"
         style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);">
