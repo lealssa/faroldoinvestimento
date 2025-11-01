@@ -69,7 +69,7 @@ function salvarSimulacoes() {
                                     style: 'currency', currency: 'BRL'
                                 }) }}</span>
                             <span class="tag is-danger is-light is-rounded mx-1"
-                                v-if="simulacao.inflacaoPeriodo > 0">Inflação {{ (simulacao.inflacaoPeriodo *
+                                v-if="simulacao.inflacaoPeriodo > 0">Infl. {{ (simulacao.inflacaoPeriodo *
                                     -1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
                         </div>
                     </td>
