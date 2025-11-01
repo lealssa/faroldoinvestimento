@@ -225,4 +225,10 @@ useHead({
 .theme-dark .has-text-grey-dark {
     color: #d0d0d0 !important;
 }
+
+.theme-dark .tag {
+    background-color: transparent !important;
+    border: 1px solid #334155 !important;
+    color: #e2e8f0 !important;
+}
 </style>
