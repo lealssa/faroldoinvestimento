@@ -213,18 +213,12 @@ defineExpose({
                         <!-- Montante -->
                         <div class="column is-3">
                             <label class="label has-text-weight-light">Montante</label>
-                            <div class="field has-addons">
-                                <div class="control has-icons-left is-expanded">
+                            <div class="field">
+                                <div class="control has-icons-left">
                                     <span class="icon is-small is-left">
                                         <font-awesome-icon icon="fa-solid fa-brazilian-real-sign" />
                                     </span>
-                                    <input class="input" type="text" placeholder="Montante"
-                                        v-model.number="dadosEntrada.montante">
-                                </div>
-                                <div class="control">
-                                    <a class="button is-static">
-                                        ,00
-                                    </a>
+                                    <InputMoney v-model="dadosEntrada.montante" placeholder="0,00" />
                                 </div>
                             </div>
                         </div>
@@ -247,7 +241,7 @@ defineExpose({
                                 <label class="label has-text-weight-light">{{ opcoesIndices[tipoIndiceSelecionado].label
                                 }}</label>
                                 <div class="control has-icons-right">
-                                    <input class="input" type="text" placeholder="Taxa a.a"
+                                    <input class="input" type="number" placeholder="Taxa a.a"
                                         v-model.number="dadosEntrada.taxa">
                                     <span class="icon is-small is-right">
                                         <font-awesome-icon icon="fa-solid fa-percentage" />
