@@ -17,24 +17,9 @@ onMounted(() => {
 
 useHead({
     title: 'Farol do Investimento',
-    titleTemplate: '%s - Seu guia de investimentos',
     htmlAttrs: {
-        class: computed(() => isDark.value ? 'theme-dark' : 'theme-light'),
-        lang: 'pt-BR'
-    },
-    meta: [
-        { name: 'description', content: 'Aprenda sobre investimentos em Renda Fixa com nosso simulador exclusivo. Compare rendimentos, calcule impostos e tome decisões inteligentes.' },
-        { name: 'keywords', content: 'investimentos, renda fixa, simulador, CDI, SELIC, IPCA, tesouro direto, CDB, LCI, LCA' },
-        { name: 'author', content: 'Farol do Investimento' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { property: 'og:title', content: 'Farol do Investimento - Seu guia de investimentos' },
-        { property: 'og:description', content: 'Aprenda sobre investimentos em Renda Fixa com nosso simulador exclusivo. Compare rendimentos e tome decisões inteligentes.' },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:locale', content: 'pt_BR' },
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Farol do Investimento - Seu guia de investimentos' },
-        { name: 'twitter:description', content: 'Aprenda sobre investimentos em Renda Fixa com nosso simulador exclusivo.' }
-    ]
+        class: computed(() => isDark.value ? 'theme-dark' : 'theme-light')
+    }
 })
 </script>
 
@@ -87,16 +72,19 @@ useHead({
             <div class="container is-max-widescreen">
 
                 <!-- Center Logo -->
-                <section class="section has-text-centered">
+                <section class="section has-text-centered is-flex is-flex-direction-column logo-section">
 
                     <figure class="image is-128x128 mx-auto">
                         <img src="/img/farol_do_investimento_logo.png" alt="Logo Farol do Investimento" width="432px">
                     </figure>
 
-                    <h1 class="title">Farol do Investimento</h1>
-                    <h2 class="subtitle">
-                        Seu guia de investimentos.
-                    </h2>
+                    <div>
+                        <h1 class="title">Farol do Investimento</h1>
+                        <h2 class="subtitle">
+                            Seu guia de investimentos.
+                        </h2>
+                    </div>
+
 
                 </section>
                 <!-- End Center Logo -->
@@ -207,8 +195,13 @@ useHead({
 }
 
 .theme-dark .has-background-link-95 {
-    background-color: #334155 !important;
+    background-color: #1e293b !important;
     color: #e2e8f0 !important;
+}
+
+.has-background-link-95 {
+    background-color: #fefce8 !important;
+    color: #333333 !important;
 }
 
 .theme-dark .title {
@@ -239,5 +232,9 @@ useHead({
 
 .card {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.logo-section {
+    gap: 1rem;
 }
 </style>

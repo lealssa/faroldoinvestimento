@@ -79,7 +79,7 @@ const indicesStore = useIndicesStore()
             </template>
 
             <div class="content">
-                <p class="has-background-link-95 p-4">
+                <p class="has-background-link-95 p-4 is-size-6">
                     Investimento em renda fixa é uma categoria de investimento em que o rendimento é
                     <strong>fixado por algum indexador</strong> e a rentabilidade pode ser previsível enquanto o
                     dinheiro
@@ -94,7 +94,7 @@ const indicesStore = useIndicesStore()
                 Quais os tipos de investimento de Renda Fixa?
             </template>
 
-            <div class="content px-5">
+            <div class="content px-5 is-size-6">
                 <p>
                     Existem vários tipos de investimentos em renda fixa, como <strong> Tesouro Direto
                         (títulos do governo), CDBs e RDBs (títulos de bancos), Debêntures e Notas Promissórias (títulos
@@ -109,7 +109,7 @@ const indicesStore = useIndicesStore()
                 Existe algum risco investir em Renda Fixa?
             </template>
 
-            <div class="content px-5">
+            <div class="content px-5 is-size-6">
                 <p>
                     Este tipo de investimento é conhecido por possuir <strong>menores riscos
                         associados</strong>, quando comparados
@@ -125,7 +125,7 @@ const indicesStore = useIndicesStore()
                 Os índices da Renda Fixa variam ao longo do tempo?
             </template>
 
-            <div class="content px-5">
+            <div class="content px-5 is-size-6">
                 <p>
                     <strong>Os índices da renda fixa podem variar ao longo do prazo do
                         investimento</strong>, o que pode impactar no rendimento ao final.
@@ -146,7 +146,7 @@ const indicesStore = useIndicesStore()
                 Preciso pagar imposto sobre o rendimento de Renda Fixa?
             </template>
 
-            <div class="content px-5">
+            <div class="content px-5 is-size-6">
                 <p>
                     A depender do tipo de investimento de renda fixa, o governo cobra Imposto de Renda sobre o
                     rendimento seguindo uma tabela regressiva, onde o percentual do imposto
@@ -175,7 +175,7 @@ const indicesStore = useIndicesStore()
                 Quais investimentos de Renda Fixa são tributados e quais são isentos?
             </template>
 
-            <div class="content px-5">
+            <div class="content px-5 is-size-6">
                 <p>
                     Existem vários tipos de investimentos em renda fixa que são tributados pelo Imposto de
                     Renda (IR), como <strong>Tesouro Direto (títulos do governo), CDBs e RDBs (títulos de bancos),
