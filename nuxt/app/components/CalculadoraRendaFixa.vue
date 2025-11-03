@@ -81,12 +81,15 @@ const calculaRendaFixa = () => {
         info = `Poupança`;
     }
 
-    let valorNoVencimento = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, taxa);
-
+    let taxaReal = taxa;
+    
     if (dadosEntrada.calcularInflacao && indicesStore.oci.IPCA?.valor) {
+        // Calcula taxa real descontando inflação: (1 + taxa) / (1 + inflação) - 1
+        taxaReal = ((1 + taxa/100) / (1 + indicesStore.oci.IPCA.valor/100) - 1) * 100;
         inflacaoPeriodo = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, indicesStore.oci.IPCA.valor) - dadosEntrada.montante;
-        valorNoVencimento = valorNoVencimento - inflacaoPeriodo;
     }
+    
+    let valorNoVencimento = calculaJurosCompostos(dadosEntrada.montante, dadosEntrada.prazo, taxaReal);
 
     const rendimentoBruto = valorNoVencimento - dadosEntrada.montante;
     let rendimentoLiquido = 0;
@@ -115,7 +118,7 @@ const calculaRendaFixa = () => {
     resultadoRendimento.aliquotaIR = calculoIR.aliquotaIR;
     resultadoRendimento.prazoMes = dadosEntrada.prazo;
     resultadoRendimento.info = info;
-    resultadoRendimento.taxaReal = taxa;
+    resultadoRendimento.taxaReal = taxaReal;
     resultadoRendimento.inflacaoPeriodo = inflacaoPeriodo;
     resultadoRendimento.divididoNoPrazo = dividido;
 };
