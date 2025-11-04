@@ -1,6 +1,7 @@
 <script setup lang="js">
-const isDark = ref(false)
+const isDark = ref(true)
 const isMenuOpen = ref(false)
+const showCookieBanner = ref(false)
 
 const toggleTheme = () => {
     isDark.value = !isDark.value
@@ -13,10 +14,20 @@ const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value
 }
 
+const acceptCookies = () => {
+    if (process.client) {
+        localStorage.setItem('cookiesAccepted', 'true')
+        showCookieBanner.value = false
+    }
+}
+
 onMounted(() => {
     if (process.client) {
         const savedTheme = localStorage.getItem('theme')
-        isDark.value = savedTheme === 'dark'
+        isDark.value = savedTheme ? savedTheme === 'dark' : true
+        
+        const cookiesAccepted = localStorage.getItem('cookiesAccepted')
+        showCookieBanner.value = !cookiesAccepted
     }
 })
 
@@ -116,10 +127,33 @@ useHead({
                         @faroldoinvestimento
                     </a>
                     <p class="is-size-7">&copy Todos os direitos reservados.</p>
+                    <p class="is-size-7">
+                        <NuxtLink to="/termos-de-uso" class="has-text-grey">Termos de Uso</NuxtLink> | 
+                        <NuxtLink to="/politica-privacidade" class="has-text-grey">Política de Privacidade</NuxtLink>
+                    </p>
                 </div>
             </footer>
         </div>
         <!-- End Footer -->
+        
+        <!-- Cookie Banner -->
+        <div v-if="showCookieBanner" class="cookie-banner">
+            <div class="container is-max-widescreen">
+                <div class="notification is-light">
+                    <div class="columns is-vcentered">
+                        <div class="column">
+                            <p>Este site utiliza cookies e armazenamento local para melhorar sua experiência. Ao continuar navegando, você concorda com nossa <NuxtLink to="/politica-privacidade" class="link has-text-primary">política de privacidade</NuxtLink>.</p>
+                        </div>
+                        <div class="column is-narrow">
+                            <button class="button is-primary" @click="acceptCookies">
+                                Aceitar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Cookie Banner -->
     </div>
 </template>
 
@@ -246,5 +280,20 @@ useHead({
 
 .logo-section {
     gap: 1rem;
+}
+
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.theme-dark .cookie-banner .notification {
+    background-color: #1e293b !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #334155 !important;
 }
 </style>
