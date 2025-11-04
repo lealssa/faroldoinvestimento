@@ -38,36 +38,6 @@ const indicesStore = useIndicesStore()
                 </div>
             </div>
             <div class="column is-flex">
-                <div class="card intro-card intro-card-featured">
-                    <div class="card-content has-text-centered">
-                        <div class="intro-icon-wrapper mb-4">
-                            <span class="icon is-size-2 has-text-warning">
-                                <ClientOnly>
-                                    <font-awesome-icon icon="fa-solid fa-calculator" />
-                                </ClientOnly>
-                            </span>
-                        </div>
-
-                        <h3 class="title is-5 mb-4">Simulador Exclusivo</h3>
-
-                        <p class="is-size-6 mb-4">
-                            Compare rendimentos, monte carteiras e tome decisões inteligentes com nossa calculadora que
-                            simula diversos tipos de investimento, com base no montante a ser investido.
-                            <strong class="has-text-warning">Totalmente grátis</strong>.
-                        </p>
-
-                        <a class="button is-warning is-rounded" href="#simuladorrendafixa">
-                            <span class="icon">
-                                <ClientOnly>
-                                    <font-awesome-icon icon="fa-solid fa-rocket" />
-                                </ClientOnly>
-                            </span>
-                            <span>Simular Agora</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-flex">
                 <div class="card intro-card">
                     <div class="card-content has-text-centered">
                         <div class="intro-icon-wrapper mb-4">
@@ -98,13 +68,43 @@ const indicesStore = useIndicesStore()
                     </div>
                 </div>
             </div>
+            <div class="column is-flex">
+                <div class="card intro-card intro-card-featured">
+                    <div class="card-content has-text-centered">
+                        <div class="intro-icon-wrapper mb-4">
+                            <span class="icon is-size-2 has-text-warning">
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-calculator" />
+                                </ClientOnly>
+                            </span>
+                        </div>
+
+                        <h3 class="title is-5 mb-4">Simulador Exclusivo</h3>
+
+                        <p class="is-size-6 mb-4">
+                            Compare rendimentos, monte carteiras e tome decisões inteligentes com nossa calculadora que
+                            simula diversos tipos de investimento, com base no montante a ser investido.
+                            <strong class="has-text-warning">Totalmente grátis</strong>.
+                        </p>
+
+                        <a class="button is-warning is-rounded" href="#simuladorrendafixa">
+                            <span class="icon">
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-rocket" />
+                                </ClientOnly>
+                            </span>
+                            <span>Simular Agora</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <!-- End Intro -->
 
     <section class="section py-5">
         <div class="container">
-            <div class="notification has-background-link-95 has-text-centered steps-banner">
+            <div class="steps-banner">
                 <div class="steps-content">
                     <div class="steps-icon mb-3">
                         <span class="icon is-size-1 has-text-warning">
@@ -321,5 +321,38 @@ const indicesStore = useIndicesStore()
 
 .theme-dark .intro-icon-wrapper {
     background: rgba(255, 221, 87, 0.2);
+}
+
+.steps-banner {
+    background: linear-gradient(135deg, #fff9e6 0%, #fef3c7 100%);
+    border: 2px solid #fbbf24;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.steps-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 221, 87, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.steps-content {
+    position: relative;
+    z-index: 1;
+}
+
+.theme-dark .steps-banner {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: #fbbf24;
+    box-shadow: 0 10px 25px rgba(251, 191, 36, 0.2), 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 </style>
