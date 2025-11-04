@@ -4,71 +4,102 @@ const indicesStore = useIndicesStore()
 
 <template>
     <!-- Intro -->
-    <section class="section has-text-centered pb-1">
-        <div class="columns">
+    <section class="section has-text-centered">
+        <div class="columns is-variable is-8">
             <div class="column is-flex">
-                <div class="content box py-6">
+                <div class="card intro-card">
+                    <div class="card-content has-text-centered">
+                        <div class="intro-icon-wrapper mb-4">
+                            <span class="icon is-size-2 has-text-warning">
+                                <font-awesome-icon icon="fa-solid fa-graduation-cap" />
+                            </span>
+                        </div>
 
-                    <span class="icon is-size-4 mb-5">
-                        <font-awesome-icon icon="fa-solid fa-graduation-cap" />
-                    </span>
+                        <h3 class="title is-5 mb-4">Aprenda e invista</h3>
 
-                    <p class="is-size-5 has-text-left">
-                        Aprenda como funcionam os investimentos em <strong>Renda Fixa</strong> e aplique seu dinheiro de
-                        forma correta e com o
-                        maior rendimento.
-                    </p>
+                        <p class="is-size-6 mb-4">
+                            Tenha autonomia para investir seu dinheiro da melhor forma. Aqui você vai entender os
+                            conceitos básicos sobre <strong>investimentos em Renda Fixa</strong> e aplicar seu dinheiro
+                            com
+                            inteligência e maior rentabilidade.
+                        </p>
 
-                    <p class="is-size-5 has-text-left">
-                        <a href="#rendafixa" class="link has-text-warning-70">Abaixo</a> você encontra um guia
-                        introdutório
-                        super didático que elaboramos para você.
-                    </p>
-
+                        <a href="#rendafixa" class="button is-warning is-light is-rounded">
+                            <span class="icon">
+                                <font-awesome-icon icon="fa-solid fa-book-open" />
+                            </span>
+                            <span>Começar Agora</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="column is-flex">
-                <div class="content box py-6">
-                    <span class="icon is-size-4 mb-5">
-                        <font-awesome-icon icon="fa-solid fa-calculator" />
-                    </span>
+                <div class="card intro-card intro-card-featured">
+                    <div class="card-content has-text-centered">
+                        <div class="intro-icon-wrapper mb-4">
+                            <span class="icon is-size-2 has-text-warning">
+                                <font-awesome-icon icon="fa-solid fa-calculator" />
+                            </span>
+                        </div>
 
-                    <p class="is-size-5 has-text-left">
-                        Use nosso exclusivo <strong>simulador de rendimento</strong>, compare e escolha os mais
-                        rentáveis. Ou simplesmente monte uma carteira com vários investimentos e obtenha
-                        o valor total na mesma simulação.
-                    </p>
+                        <h3 class="title is-5 mb-4">Simulador Exclusivo</h3>
 
-                    <a class="button is-warning is-outlined is-fullwidth has-text-warning-70"
-                        href="#simuladorrendafixa">Simulador</a>
+                        <p class="is-size-6 mb-4">
+                            Compare rendimentos, monte carteiras e tome decisões inteligentes com nossa calculadora que
+                            simula diversos tipos de investimento, com base no montante a ser investido.
+                            <strong class="has-text-warning">Totalmente grátis</strong>.
+                        </p>
+
+                        <a class="button is-warning is-rounded" href="#simuladorrendafixa">
+                            <span class="icon">
+                                <font-awesome-icon icon="fa-solid fa-rocket" />
+                            </span>
+                            <span>Simular Agora</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="column is-flex">
-                <div class="content box py-6">
-                    <span class="icon is-size-4 mb-5">
-                        <font-awesome-icon icon="fa-solid fa-chart-line" />
-                    </span>
+                <div class="card intro-card">
+                    <div class="card-content has-text-centered">
+                        <div class="intro-icon-wrapper mb-4">
+                            <span class="icon is-size-2 has-text-warning">
+                                <font-awesome-icon icon="fa-solid fa-chart-line" />
+                            </span>
+                        </div>
 
-                    <p class="is-size-5 has-text-left">
-                        Cadastre-se em uma corretora à sua escolha e invista nos títulos de Renda Fixa
-                        com maior retorno.
-                    </p>
+                        <h3 class="title is-5 mb-4">Invista com Segurança</h3>
 
-                    <p class="is-size-5 has-text-left">
-                        Lembre-se de escolher corretoras com mais solidez e tempo de mercado.
+                        <p class="is-size-6 mb-4">
+                            Escolha apenas corretoras regulamentadas pela <strong>CVM</strong> e invista
+                            com total segurança e transparência. A CVM é um orgão do governo brasileiro responsável por
+                            controlar o mercado de investimentos no país.
+                        </p>
+
                         <a href="https://sistemas.cvm.gov.br/asp/cvmwww/InvNRes/tabecus.asp"
-                            class="link has-text-warning-70" target="_blank">
-                            Clique aqui
-                        </a>para consultar
-                        a lista de corretoras registradas na <strong>CVM</strong>, que é o orgão responsável por regular
-                        as atividades
-                        delas.
-                    </p>
+                            class="button is-warning is-light is-rounded" target="_blank">
+                            <span class="icon">
+                                <font-awesome-icon icon="fa-solid fa-shield-halved" />
+                            </span>
+                            <span>Ver Corretoras</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- End Intro -->
+
+    <section class="section">
+        <div class="box has-text-centered">
+            <span class="icon-text is-size-6">
+                <span class="icon has-text-warning">
+                    <font-awesome-icon icon="fa-solid fa-shoe-prints" />
+                </span>
+                <span class="has-text-weight-semibold has-text-grey-dark">Dê os seus primeiros passos com nosso breve tutorial abaixo</span>
+            </span>
+        </div>
+    </section>
 
     <!-- Learn -->
     <section class="section is-size-5 has-text-left">
@@ -244,3 +275,37 @@ const indicesStore = useIndicesStore()
     <CalculadoraRendaFixa></CalculadoraRendaFixa>
     <!-- End Calculadora -->
 </template>
+<style scoped>
+.intro-card {
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.intro-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.intro-card-featured {
+    border-color: #ffdd57;
+    position: relative;
+}
+
+
+
+.intro-icon-wrapper {
+    background: rgba(255, 221, 87, 0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.theme-dark .intro-icon-wrapper {
+    background: rgba(255, 221, 87, 0.2);
+}
+</style>
