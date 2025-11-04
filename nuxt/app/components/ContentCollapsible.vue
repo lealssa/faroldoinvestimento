@@ -30,12 +30,6 @@ watch(() => props.isExpanded, (newVal) => {
 
         <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5 has-text-grey-dark" :id="id">
             <slot name="title"></slot>
-
-            <a :href="`#${id}`" class="link is-size-6 has-text-grey">
-                <span class="icon">
-                    <font-awesome-icon icon="fa-solid fa-link" />
-                </span>
-            </a>
         </h3>
 
         <slot v-if="showContent"></slot>
