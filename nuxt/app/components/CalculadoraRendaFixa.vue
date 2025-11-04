@@ -34,6 +34,23 @@ const resultadoRendimento = reactive({
     divididoNoPrazo: 0
 });
 
+const tooltips = reactive({
+    montante: false,
+    prazo: false,
+    taxa: false,
+    tipo: false,
+    ir: false,
+    inflacao: false
+});
+
+const showTooltip = (field) => {
+    tooltips[field] = true;
+};
+
+const hideTooltip = (field) => {
+    tooltips[field] = false;
+};
+
 const calculaJurosCompostos = (montante, prazoMes, taxaAno) => {
     const taxaAnualDecimal = taxaAno / 100;
     const taxaMensal = Math.pow(1 + taxaAnualDecimal, 1/12) - 1;
@@ -215,8 +232,16 @@ defineExpose({
                     <div class="columns is-centered is-multiline is-variable">
                         <!-- Montante -->
                         <div class="column is-3">
-                            <label class="label has-text-weight-light">Montante</label>
                             <div class="field">
+                                <label class="label has-text-weight-light is-flex is-align-items-center">
+                                    Montante
+                                    <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('montante')" @mouseleave="hideTooltip('montante')">
+                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                    </button>
+                                </label>
+                                <div v-if="tooltips.montante" class="tooltip-box">
+                                    Valor inicial que você pretende investir
+                                </div>
                                 <div class="control has-icons-left">
                                     <span class="icon is-small is-left">
                                         <font-awesome-icon icon="fa-solid fa-brazilian-real-sign" />
@@ -228,7 +253,15 @@ defineExpose({
                         <!-- Prazo -->
                         <div class="column">
                             <div class="field">
-                                <label class="label has-text-weight-light">Prazo a.m</label>
+                                <label class="label has-text-weight-light is-flex is-align-items-center">
+                                    Prazo a.m
+                                    <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('prazo')" @mouseleave="hideTooltip('prazo')">
+                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                    </button>
+                                </label>
+                                <div v-if="tooltips.prazo" class="tooltip-box">
+                                    Tempo em meses que o dinheiro ficará investido
+                                </div>
                                 <div class="control has-icons-left">
                                     <span class="icon is-small is-left">
                                         <font-awesome-icon icon="fa-solid fa-calendar" />
@@ -241,8 +274,15 @@ defineExpose({
                         <!-- Taxa -->
                         <div class="column">
                             <div class="field">
-                                <label class="label has-text-weight-light">{{ opcoesIndices[tipoIndiceSelecionado].label
-                                }}</label>
+                                <label class="label has-text-weight-light is-flex is-align-items-center">
+                                    {{ opcoesIndices[tipoIndiceSelecionado].label }}
+                                    <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('taxa')" @mouseleave="hideTooltip('taxa')">
+                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                    </button>
+                                </label>
+                                <div v-if="tooltips.taxa" class="tooltip-box">
+                                    Taxa de juros anual do investimento. Varia conforme o tipo selecionado
+                                </div>
                                 <div class="control has-icons-right">
                                     <input class="input" type="number" placeholder="Taxa a.a"
                                         v-model.number="dadosEntrada.taxa">
@@ -263,7 +303,15 @@ defineExpose({
                         <!-- Tipo -->
                         <div class="column is-2">
                             <div class="field">
-                                <label class="label has-text-weight-light">Tipo</label>
+                                <label class="label has-text-weight-light is-flex is-align-items-center">
+                                    Tipo
+                                    <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('tipo')" @mouseleave="hideTooltip('tipo')">
+                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                    </button>
+                                </label>
+                                <div v-if="tooltips.tipo" class="tooltip-box">
+                                    Modalidade do investimento: pré (taxa fixa), pós (% do CDI), IPCA+ ou SELIC+
+                                </div>
                                 <div class="control">
                                     <div class="select is-fullwidth">
                                         <select v-model="tipoIndiceSelecionado">
@@ -280,7 +328,15 @@ defineExpose({
                         <!-- IR -->
                         <div class="column">
                             <div class="field">
-                                <label class="label has-text-weight-light">Isento IR</label>
+                                <label class="label has-text-weight-light is-flex is-align-items-center">
+                                    Isento IR
+                                    <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('ir')" @mouseleave="hideTooltip('ir')">
+                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                    </button>
+                                </label>
+                                <div v-if="tooltips.ir" class="tooltip-box">
+                                    Se o investimento é isento de Imposto de Renda (ex: LCI, LCA, CRA, CRI)
+                                </div>
                                 <div class="control">
                                     <label class="b-radio radio">
                                         <input type="radio" name="ir" :value="false" v-model="dadosEntrada.IR">
@@ -298,7 +354,15 @@ defineExpose({
                         <!-- Inflação -->
                         <div class="column">
                             <div class="field">
-                                <label class="label has-text-weight-light">Inflação</label>
+                                <label class="label has-text-weight-light is-flex is-align-items-center">
+                                    Inflação
+                                    <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('inflacao')" @mouseleave="hideTooltip('inflacao')">
+                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                    </button>
+                                </label>
+                                <div v-if="tooltips.inflacao" class="tooltip-box">
+                                    Se deve descontar a inflação (IPCA) do rendimento para calcular o ganho real
+                                </div>
                                 <div class="control">
                                     <label class="b-radio radio">
                                         <input type="radio" name="inflacao" :value="true"
@@ -397,3 +461,36 @@ defineExpose({
         </div>
     </div>
 </template>
+
+<style scoped>
+.field {
+    position: relative;
+}
+
+.tooltip-box {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background: #3273dc;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    max-width: 250px;
+    margin-top: 0.25rem;
+}
+
+.tooltip-box::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 1rem;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid #3273dc;
+}
+</style>
