@@ -210,10 +210,10 @@ defineExpose({
         <!-- Aviso mobile -->
         <article class="message is-info is-hidden-tablet">
             <div class="message-body has-text-centered">
-                <span class="icon">
+                <span class="icon pr-3">
                     <font-awesome-icon icon="fas fa-lightbulb" />
                 </span>
-                <span>Use um tablet ou PC para acessar o simulador completo</span>
+                <span>Use um PC para acessar o simulador completo</span>
             </div>
         </article>
 

@@ -73,7 +73,7 @@ useHead({
             <div class="container is-max-widescreen">
 
                 <!-- Center Logo -->
-                <section class=" section has-text-centered is-flex is-flex-direction-column logo-section">
+                <section class="mt-4 section has-text-centered is-flex is-flex-direction-column logo-section">
 
                     <figure class="image is-128x128 mx-auto">
                         <img src="/img/farol_do_investimento_logo.png" alt="Logo Farol do Investimento" width="432px">
