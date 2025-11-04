@@ -291,7 +291,7 @@ export const CalculadoraRendaFixa = {
                     <!-- Inflação -->
                     <div class="column">
                         <div class="field">
-                            <label class="label has-text-weight-light">Inflação</label>
+                            <label class="label has-text-weight-light">Calc. inflação</label>
                             <div class="control">
                                 <label class="b-radio radio">
                                     <input type="radio" name="inflacao" :value="true" v-model="dadosEntrada.calcularInflacao">

@@ -45,7 +45,7 @@ export const TabelaSimulacoes = {
 
                 <tr v-if="!simulacoesStore.hasSimulation">
                     <td colspan="10">
-                        <p class="subtitle has-text-centered">Preencha os dados e clique em "Comparar"</p>
+                        <p class="subtitle has-text-centered is-size-6">Preencha os dados e clique em "Comparar"</p>
                     </td>
                 </tr>
 
@@ -64,7 +64,7 @@ export const TabelaSimulacoes = {
                     </td>
                     <td class="is-vcentered">{{ simulacao.prazoMes }}</td>
                     <td class="is-vcentered">
-                        <span class="has-text-weight-semibold">{{ simulacao.valorNoVencimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
+                        <span class="">{{ simulacao.valorNoVencimento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>
                         <span class="tag is-danger is-light is-rounded mx-1" v-if="simulacao.inflacaoPeriodo > 0">Inflação {{ (simulacao.inflacaoPeriodo * -1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</span>                        
                     </td>
                     <td class="is-vcentered">{{ simulacao.bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</td>
