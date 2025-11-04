@@ -3,7 +3,7 @@ const simulacoesStore = useSimulacoesStore();
 const indicesStore = useIndicesStore();
 
 const opcoesIndices = reactive({
-    pos: { label: "% da CDI/SELIC a.a", taxa: 90 },
+    pos: { label: "% da CDI a.a", taxa: 90 },
     pre: { label: "Taxa a.a", taxa: 0 },
     poupanca: { label: "Poupança a.a", taxa: 0 },
     ipca: { label: "+ IPCA a.a", taxa: 5 },
@@ -84,7 +84,7 @@ const calculaRendaFixa = () => {
 
     if (tipoIndiceSelecionado.value === 'pos' && indicesStore.oci.SELIC?.valor) {
         taxa = (dadosEntrada.taxa * indicesStore.oci.SELIC.valor) / 100;
-        info = `${dadosEntrada.taxa}% da CDI/SELIC`;
+        info = `${dadosEntrada.taxa}% da CDI`;
     }
     else if (tipoIndiceSelecionado.value === 'ipca' && indicesStore.oci.IPCA?.valor) {
         taxa = dadosEntrada.taxa + indicesStore.oci.IPCA.valor;
