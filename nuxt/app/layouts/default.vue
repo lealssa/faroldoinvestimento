@@ -37,13 +37,14 @@ useHead({
                         <NuxtLink class="navbar-item link is-size-5" to="/">
                             Farol do Investimento
                         </NuxtLink>
-                        <a class="navbar-burger" @click="toggleMenu">
+                        <a class="navbar-burger" :class="{ 'is-active': isMenuOpen }" @click="toggleMenu">
+                            <span></span>
                             <span></span>
                             <span></span>
                             <span></span>
                         </a>
                     </div>
-                    <div class="navbar-menu">
+                    <div class="navbar-menu" :class="{ 'is-active': isMenuOpen }">
                         <div class="navbar-end">
                             <div class="navbar-item">
                                 <NuxtLink class="button" to="/termos-de-uso">
@@ -72,7 +73,7 @@ useHead({
             <div class="container is-max-widescreen">
 
                 <!-- Center Logo -->
-                <section class="section has-text-centered is-flex is-flex-direction-column logo-section">
+                <section class=" section has-text-centered is-flex is-flex-direction-column logo-section">
 
                     <figure class="image is-128x128 mx-auto">
                         <img src="/img/farol_do_investimento_logo.png" alt="Logo Farol do Investimento" width="432px">
