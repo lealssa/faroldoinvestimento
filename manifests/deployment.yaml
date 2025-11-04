@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: faroldoinvestimento-site
-          image: docker.io/lealssa/faroldoinvestimento-site:latest
+          image: docker.io/lealssa/faroldoinvestimento-site:1.0
           ports:
             - containerPort: 80
