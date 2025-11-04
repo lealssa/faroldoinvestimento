@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: faroldoinvestimento
+  name: faroldoinvestimento-site
+spec:
+  selector:
+    matchLabels:
+      app: faroldoinvestimento-site
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: faroldoinvestimento-site
+    spec:
+      containers:
+        - name: faroldoinvestimento-site
+          image: faroldoinvestimento-site:latest
+          ports:
+            - containerPort: 80
