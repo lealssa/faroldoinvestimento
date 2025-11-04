@@ -99,7 +99,9 @@ function salvarSimulacoes() {
                     <td class="is-vcentered">
                         <a class="link py-4 has-text-grey-dark" @click="simulacoesStore.remover(index)">
                             <span class="icon">
-                                <font-awesome-icon icon="fa-solid fa-trash-can" />
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-trash-can" />
+                                </ClientOnly>
                             </span>
                         </a>
                     </td>
@@ -144,7 +146,9 @@ function salvarSimulacoes() {
             -->
             <button class="button is-small is-light is-rounded" @click="isShowTotal = !isShowTotal">
                 <span class="icon">
-                    <font-awesome-icon :icon="['fa-solid', isShowTotal ? 'fa-eye-slash' : 'fa-eye']" />
+                    <ClientOnly>
+                        <font-awesome-icon :icon="['fa-solid', isShowTotal ? 'fa-eye-slash' : 'fa-eye']" />
+                    </ClientOnly>
                 </span>
                 <span>
                     {{ isShowTotal ? 'Ocultar total' : 'Mostrar total' }}
@@ -152,7 +156,9 @@ function salvarSimulacoes() {
             </button>
             <button class="button is-small is-danger is-light is-rounded" @click="simulacoesStore.limpar()">
                 <span class="icon">
-                    <font-awesome-icon icon="fa-solid fa-trash-can" />
+                    <ClientOnly>
+                        <font-awesome-icon icon="fa-solid fa-trash-can" />
+                    </ClientOnly>
                 </span>
                 <span>
                     Limpar todos

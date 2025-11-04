@@ -211,7 +211,9 @@ defineExpose({
         <article class="message is-info is-hidden-tablet">
             <div class="message-body has-text-centered">
                 <span class="icon pr-3">
-                    <font-awesome-icon icon="fas fa-lightbulb" />
+                    <ClientOnly>
+                        <font-awesome-icon icon="fas fa-lightbulb" />
+                    </ClientOnly>
                 </span>
                 <span>Use um PC para acessar o simulador completo</span>
             </div>
@@ -236,7 +238,9 @@ defineExpose({
                                 <label class="label has-text-weight-light is-flex is-align-items-center">
                                     Montante
                                     <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('montante')" @mouseleave="hideTooltip('montante')">
-                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        </ClientOnly>
                                     </button>
                                 </label>
                                 <div v-if="tooltips.montante" class="tooltip-box">
@@ -244,7 +248,9 @@ defineExpose({
                                 </div>
                                 <div class="control has-icons-left">
                                     <span class="icon is-small is-left">
-                                        <font-awesome-icon icon="fa-solid fa-brazilian-real-sign" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-brazilian-real-sign" />
+                                        </ClientOnly>
                                     </span>
                                     <InputMoney v-model="dadosEntrada.montante" placeholder="0,00" />
                                 </div>
@@ -256,7 +262,9 @@ defineExpose({
                                 <label class="label has-text-weight-light is-flex is-align-items-center">
                                     Prazo a.m
                                     <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('prazo')" @mouseleave="hideTooltip('prazo')">
-                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        </ClientOnly>
                                     </button>
                                 </label>
                                 <div v-if="tooltips.prazo" class="tooltip-box">
@@ -264,7 +272,9 @@ defineExpose({
                                 </div>
                                 <div class="control has-icons-left">
                                     <span class="icon is-small is-left">
-                                        <font-awesome-icon icon="fa-solid fa-calendar" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-calendar" />
+                                        </ClientOnly>
                                     </span>
                                     <input class="input" type="text" placeholder="Prazo em meses"
                                         v-model.number="dadosEntrada.prazo">
@@ -277,7 +287,9 @@ defineExpose({
                                 <label class="label has-text-weight-light is-flex is-align-items-center">
                                     {{ opcoesIndices[tipoIndiceSelecionado].label }}
                                     <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('taxa')" @mouseleave="hideTooltip('taxa')">
-                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        </ClientOnly>
                                     </button>
                                 </label>
                                 <div v-if="tooltips.taxa" class="tooltip-box">
@@ -287,7 +299,9 @@ defineExpose({
                                     <input class="input" type="number" placeholder="Taxa a.a"
                                         v-model.number="dadosEntrada.taxa">
                                     <span class="icon is-small is-right">
-                                        <font-awesome-icon icon="fa-solid fa-percentage" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-percentage" />
+                                        </ClientOnly>
                                     </span>
                                 </div>
                                 <p class="help is-info">Taxa real {{ ((resultadoRendimento.taxaReal > 0 ?
@@ -306,7 +320,9 @@ defineExpose({
                                 <label class="label has-text-weight-light is-flex is-align-items-center">
                                     Tipo
                                     <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('tipo')" @mouseleave="hideTooltip('tipo')">
-                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        </ClientOnly>
                                     </button>
                                 </label>
                                 <div v-if="tooltips.tipo" class="tooltip-box">
@@ -331,7 +347,9 @@ defineExpose({
                                 <label class="label has-text-weight-light is-flex is-align-items-center">
                                     Isento IR
                                     <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('ir')" @mouseleave="hideTooltip('ir')">
-                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        </ClientOnly>
                                     </button>
                                 </label>
                                 <div v-if="tooltips.ir" class="tooltip-box">
@@ -357,7 +375,9 @@ defineExpose({
                                 <label class="label has-text-weight-light is-flex is-align-items-center">
                                     Inflação
                                     <button type="button" class="button is-small is-ghost p-1 ml-1" @mouseenter="showTooltip('inflacao')" @mouseleave="hideTooltip('inflacao')">
-                                        <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-question-circle" class="has-text-info is-size-7" />
+                                        </ClientOnly>
                                     </button>
                                 </label>
                                 <div v-if="tooltips.inflacao" class="tooltip-box">
@@ -449,7 +469,9 @@ defineExpose({
                     <button class="button is-rounded is-warning is-light is-outlined is-hidden-mobile"
                         @click="salvarSimulacao()">
                         <span class="icon">
-                            <font-awesome-icon icon="fa-solid fa-plus" />
+                            <ClientOnly>
+                                <font-awesome-icon icon="fa-solid fa-plus" />
+                            </ClientOnly>
                         </span>
 
                         <span>

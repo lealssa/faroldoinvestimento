@@ -24,7 +24,9 @@ watch(() => props.isExpanded, (newVal) => {
 
         <a class="link is-size-6 has-text-grey is-pulled-right" @click="showContent = !showContent">
             <span class="icon">
-                <font-awesome-icon icon="fa-solid fa-chevron-up" class="rotate" :class="{ 'down': showContent }" />
+                <ClientOnly>
+                    <font-awesome-icon icon="fa-solid fa-chevron-up" class="rotate" :class="{ 'down': showContent }" />
+                </ClientOnly>
             </span>
         </a>
 

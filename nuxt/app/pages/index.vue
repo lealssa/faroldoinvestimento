@@ -11,7 +11,9 @@ const indicesStore = useIndicesStore()
                     <div class="card-content has-text-centered">
                         <div class="intro-icon-wrapper mb-4">
                             <span class="icon is-size-2 has-text-warning">
-                                <font-awesome-icon icon="fa-solid fa-graduation-cap" />
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-graduation-cap" />
+                                </ClientOnly>
                             </span>
                         </div>
 
@@ -26,7 +28,9 @@ const indicesStore = useIndicesStore()
 
                         <a href="#rendafixa" class="button is-warning is-light is-rounded">
                             <span class="icon">
-                                <font-awesome-icon icon="fa-solid fa-book-open" />
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-book-open" />
+                                </ClientOnly>
                             </span>
                             <span>Começar Agora</span>
                         </a>
@@ -38,7 +42,9 @@ const indicesStore = useIndicesStore()
                     <div class="card-content has-text-centered">
                         <div class="intro-icon-wrapper mb-4">
                             <span class="icon is-size-2 has-text-warning">
-                                <font-awesome-icon icon="fa-solid fa-calculator" />
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-calculator" />
+                                </ClientOnly>
                             </span>
                         </div>
 
@@ -52,7 +58,9 @@ const indicesStore = useIndicesStore()
 
                         <a class="button is-warning is-rounded" href="#simuladorrendafixa">
                             <span class="icon">
-                                <font-awesome-icon icon="fa-solid fa-rocket" />
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-rocket" />
+                                </ClientOnly>
                             </span>
                             <span>Simular Agora</span>
                         </a>
@@ -64,7 +72,9 @@ const indicesStore = useIndicesStore()
                     <div class="card-content has-text-centered">
                         <div class="intro-icon-wrapper mb-4">
                             <span class="icon is-size-2 has-text-warning">
-                                <font-awesome-icon icon="fa-solid fa-chart-line" />
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-chart-line" />
+                                </ClientOnly>
                             </span>
                         </div>
 
@@ -79,7 +89,9 @@ const indicesStore = useIndicesStore()
                         <a href="https://sistemas.cvm.gov.br/asp/cvmwww/InvNRes/tabecus.asp"
                             class="button is-warning is-light is-rounded" target="_blank">
                             <span class="icon">
-                                <font-awesome-icon icon="fa-solid fa-shield-halved" />
+                                <ClientOnly>
+                                    <font-awesome-icon icon="fa-solid fa-shield-halved" />
+                                </ClientOnly>
                             </span>
                             <span>Ver Corretoras</span>
                         </a>
@@ -96,7 +108,9 @@ const indicesStore = useIndicesStore()
                 <div class="steps-content">
                     <div class="steps-icon mb-3">
                         <span class="icon is-size-1 has-text-warning">
-                            <font-awesome-icon icon="fa-solid fa-shoe-prints" />
+                            <ClientOnly>
+                                <font-awesome-icon icon="fa-solid fa-shoe-prints" />
+                            </ClientOnly>
                         </span>
                     </div>
                     <h3 class="title is-4 mb-2">Primeiros Passos</h3>

@@ -49,7 +49,9 @@ useHead({
                             <div class="navbar-item">
                                 <NuxtLink class="button" to="/termos-de-uso">
                                     <span class="icon">
-                                        <font-awesome-icon icon="fa-solid fa-file-lines" />
+                                        <ClientOnly>
+                                            <font-awesome-icon icon="fa-solid fa-file-lines" />
+                                        </ClientOnly>
                                     </span>
                                     <span>Termos de uso</span>
                                 </NuxtLink>
@@ -57,7 +59,9 @@ useHead({
                             <div class="navbar-item">
                                 <button class="button" @click="toggleTheme">
                                     <span class="icon">
-                                        <font-awesome-icon icon="fa-solid fa-sun" />
+                                        <ClientOnly>
+                                            <font-awesome-icon :icon="isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'" />
+                                        </ClientOnly>
                                     </span>
                                 </button>
                             </div>

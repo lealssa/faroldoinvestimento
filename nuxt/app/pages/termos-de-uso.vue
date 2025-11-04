@@ -91,7 +91,9 @@ useHead({
             <div class="buttons is-centered">
                 <NuxtLink to="/" class="button">
                     <span class="icon">
-                        <font-awesome-icon icon="fa-solid fa-home" />
+                        <ClientOnly>
+                            <font-awesome-icon icon="fa-solid fa-home" />
+                        </ClientOnly>
                     </span>
                     <span>Voltar</span>
                 </NuxtLink>

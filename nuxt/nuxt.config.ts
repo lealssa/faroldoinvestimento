@@ -1,8 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  vite: {
+    define: {
+      // Isso aumenta o tamanho do bundle, use apenas para debug e remova depois
+      "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": false
+    }
+  },
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  css: ['~/assets/main.css','@fortawesome/fontawesome-svg-core/styles.css'],
+  css: ['~/assets/main.css', '@fortawesome/fontawesome-svg-core/styles.css'],
   modules: ['@pinia/nuxt'],
   app: {
     head: {
