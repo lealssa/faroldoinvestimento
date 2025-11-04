@@ -1,18 +1,23 @@
 <script setup lang="js">
-const isDark = ref(true)
+const isDark = ref(false)
 const isMenuOpen = ref(false)
 
 const toggleTheme = () => {
     isDark.value = !isDark.value
+    if (process.client) {
+        localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+    }
 }
 
 const toggleMenu = () => {
     isMenuOpen.value = !isMenuOpen.value
 }
 
-// Evita hydration mismatch
 onMounted(() => {
-    // Estado inicial sempre false para consistência
+    if (process.client) {
+        const savedTheme = localStorage.getItem('theme')
+        isDark.value = savedTheme === 'dark'
+    }
 })
 
 useHead({
