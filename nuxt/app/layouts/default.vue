@@ -5,9 +5,8 @@ const showCookieBanner = ref(false)
 
 const toggleTheme = () => {
     isDark.value = !isDark.value
-    if (process.client) {
-        localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-    }
+    localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+    document.documentElement.className = isDark.value ? 'theme-dark' : 'theme-light'
 }
 
 const toggleMenu = () => {
@@ -15,27 +14,34 @@ const toggleMenu = () => {
 }
 
 const acceptCookies = () => {
-    if (process.client) {
-        localStorage.setItem('cookiesAccepted', 'true')
-        showCookieBanner.value = false
-    }
+    localStorage.setItem('cookiesAccepted', 'true')
+    showCookieBanner.value = false
 }
 
 onMounted(() => {
-    if (process.client) {
-        const savedTheme = localStorage.getItem('theme')
-        isDark.value = savedTheme ? savedTheme === 'dark' : true
-        
-        const cookiesAccepted = localStorage.getItem('cookiesAccepted')
-        showCookieBanner.value = !cookiesAccepted
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+        isDark.value = savedTheme === 'dark'
     }
+
+    const cookiesAccepted = localStorage.getItem('cookiesAccepted')
+    showCookieBanner.value = !cookiesAccepted
 })
 
 useHead({
     title: 'Farol do Investimento',
-    htmlAttrs: {
-        class: computed(() => isDark.value ? 'theme-dark' : 'theme-light')
-    }
+    script: [
+        {
+            innerHTML: `
+                (function() {
+                    const theme = localStorage.getItem('theme');
+                    const isDark = theme ? theme === 'dark' : true;
+                    document.documentElement.className = isDark ? 'theme-dark' : 'theme-light';
+                })();
+            `,
+            type: 'text/javascript'
+        }
+    ]
 })
 </script>
 
@@ -76,7 +82,8 @@ useHead({
                                 <button class="button" @click="toggleTheme">
                                     <span class="icon">
                                         <ClientOnly>
-                                            <font-awesome-icon :icon="isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'" />
+                                            <font-awesome-icon
+                                                :icon="isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'" />
                                         </ClientOnly>
                                     </span>
                                 </button>
@@ -128,21 +135,23 @@ useHead({
                     </a>
                     <p class="is-size-7">&copy Todos os direitos reservados.</p>
                     <p class="is-size-7">
-                        <NuxtLink to="/termos-de-uso" class="has-text-grey">Termos de Uso</NuxtLink> | 
+                        <NuxtLink to="/termos-de-uso" class="has-text-grey">Termos de Uso</NuxtLink> |
                         <NuxtLink to="/politica-privacidade" class="has-text-grey">Política de Privacidade</NuxtLink>
                     </p>
                 </div>
             </footer>
         </div>
         <!-- End Footer -->
-        
+
         <!-- Cookie Banner -->
         <div v-if="showCookieBanner" class="cookie-banner">
             <div class="container is-max-widescreen">
                 <div class="notification is-light">
                     <div class="columns is-vcentered">
                         <div class="column">
-                            <p>Este site utiliza cookies e armazenamento local para melhorar sua experiência. Ao continuar navegando, você concorda com nossa <NuxtLink to="/politica-privacidade" class="link has-text-primary">política de privacidade</NuxtLink>.</p>
+                            <p>Este site utiliza cookies e armazenamento local para melhorar sua experiência. Ao
+                                continuar navegando, você concorda com nossa <NuxtLink to="/politica-privacidade"
+                                    class="link has-text-primary">política de privacidade</NuxtLink>.</p>
                         </div>
                         <div class="column is-narrow">
                             <button class="button is-primary" @click="acceptCookies">
