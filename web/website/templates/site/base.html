@@ -1,0 +1,388 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR" class="theme-dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Farol do Investimento - Simulador e Guia de Investimentos em Renda Fixa{% endblock %}</title>
+    <meta name="description" content="{% block description %}Aprenda a investir em renda fixa com nosso guia completo e simulador gratuito. Compare rendimentos, entenda impostos e tome decisões inteligentes de investimento.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}investimentos, renda fixa, simulador, CDB, tesouro direto, SELIC, IPCA, calculadora financeira, educação financeira{% endblock %}">
+    <meta name="author" content="Farol do Investimento">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{% block canonical %}https://faroldoinvestimento.com{% endblock %}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}Farol do Investimento - Simulador e Guia de Renda Fixa{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Aprenda a investir em renda fixa com nosso guia completo e simulador gratuito. Compare rendimentos e tome decisões inteligentes.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{% block og_url %}https://faroldoinvestimento.com{% endblock %}">
+    <meta property="og:image" content="{% static 'img/farol_do_investimento_logo.png' %}">
+    <meta property="og:locale" content="pt_BR">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}Farol do Investimento - Simulador de Renda Fixa{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Simulador gratuito e guia completo para investir em renda fixa com segurança e inteligência.{% endblock %}">
+    <meta name="twitter:image" content="{% static 'img/farol_do_investimento_logo.png' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Farol do Investimento",
+        "description": "Guia completo e simulador gratuito para investimentos em renda fixa",
+        "url": "https://faroldoinvestimento.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://faroldoinvestimento.com/#simuladorrendafixa",
+            "query-input": "required name=search_term_string"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Farol do Investimento",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{% static 'img/farol_do_investimento_logo.png' %}"
+            }
+        }
+    }
+    </script>
+
+</head>
+<body x-data="{ 
+          isDark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme')), 
+          showCookieBanner: !localStorage.getItem('cookiesAccepted'),
+          isMenuOpen: false
+      }" 
+      x-init="
+          if (isDark) { 
+              document.documentElement.className = 'theme-dark'; 
+          } else { 
+              document.documentElement.className = 'theme-light'; 
+          }
+      ">
+    <div class="hero is-fullheight">
+
+        <!-- Header -->
+        <header class="hero-head">
+            <nav class="navbar is-fixed-top has-background-white">
+                <div class="container is-max-widescreen">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="{% url 'index' %}">
+                            <img src="{% static 'img/farol_do_investimento_logo.png' %}" alt="Logo" />
+                        </a>
+                        <a class="navbar-item link is-size-5" href="{% url 'index' %}">
+                            Farol do Investimento
+                        </a>
+                        <a class="navbar-burger" :class="{ 'is-active': isMenuOpen }" @click="isMenuOpen = !isMenuOpen">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </div>
+                    <div class="navbar-menu" :class="{ 'is-active': isMenuOpen }">
+                        <div class="navbar-end">
+                                    <div class="navbar-item">
+                                <a class="button" href="{% url 'termos_uso' %}">
+                                    <span class="icon">
+                                        📄
+                                    </span>
+                                    <span>Termos de uso</span>
+                                </a>
+                            </div>
+                            <div class="navbar-item">
+                                <button class="button" @click="
+                                    isDark = !isDark; 
+                                    localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
+                                    document.documentElement.className = isDark ? 'theme-dark' : 'theme-light';
+                                ">
+                                    <span class="icon">
+                                        <span x-text="isDark ? '☀️' : '🌙'"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- End Header -->
+
+        <!-- Main -->
+        <main class="hero-body has-background-light" style="padding-top: 3.25rem;">
+            <div class="container is-max-widescreen">
+
+                <!-- Center Logo -->
+                <section class="mt-4 section has-text-centered is-flex is-flex-direction-column logo-section">
+                    <figure class="image is-128x128 mx-auto">
+                        <img src="{% static 'img/farol_do_investimento_logo.png' %}" alt="Logo Farol do Investimento" width="432px">
+                    </figure>
+                    <div>
+                        <h1 class="title">Farol do Investimento</h1>
+                        <p class="subtitle">
+                            Seu guia completo para investimentos em renda fixa
+                        </p>
+                    </div>
+                </section>
+                <!-- End Center Logo -->
+
+                <!-- Render Page -->
+                {% block content %}
+                {% endblock %}
+                <!-- End Render Page -->
+
+            </div>
+        </main>
+        <!-- End Main -->
+        
+        <!-- Footer -->
+        <div class="hero-foot">
+            <footer class="footer has-text-centered p-5">
+                <div class="block">
+                    <p class="is-size-5 has-text-weight-light">Farol do Investimento {% now "Y" %}</p>
+                    <a href="https://www.instagram.com/faroldoinvestimento?igsh=MWNyN28xNjZpcjdjdQ==" target="_blank"
+                        class="link has-text-warning">
+                        @faroldoinvestimento
+                    </a>
+                    <p class="is-size-7">&copy Todos os direitos reservados.</p>
+                    <p class="is-size-7">
+                        <a href="{% url 'termos_uso' %}" class="has-text-grey">Termos de Uso</a> | 
+                        <a href="{% url 'politica_privacidade' %}" class="has-text-grey">Política de Privacidade</a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+        <!-- End Footer -->
+        
+        <!-- Cookie Banner -->
+        <div x-show="showCookieBanner" class="cookie-banner">
+            <div class="container is-max-widescreen">
+                <div class="notification is-light">
+                    <div class="columns is-vcentered">
+                        <div class="column">
+                            <p>Este site utiliza cookies e armazenamento local para melhorar sua experiência. Ao continuar navegando, você concorda com nossa <a href="{% url 'politica_privacidade' %}" class="link has-text-primary">política de privacidade</a>.</p>
+                        </div>
+                        <div class="column is-narrow">
+                            <button @click="
+                                localStorage.setItem('cookiesAccepted', 'true'); 
+                                showCookieBanner = false
+                            " class="button is-primary">
+                                Aceitar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Cookie Banner -->
+    </div>
+
+    <style>
+    .theme-dark {
+        --bulma-scheme-main: #0f172a;
+        --bulma-background: #0f172a;
+        --bulma-text: #e2e8f0;
+        --bulma-border: #334155;
+        --bulma-box-background-color: #1e293b;
+        --bulma-card-background-color: #1e293b;
+        --bulma-navbar-background-color: #1e293b;
+        --bulma-footer-background-color: #1e293b;
+    }
+
+    .theme-dark .has-background-light {
+        background-color: #0f172a !important;
+    }
+
+    .theme-dark .has-background-white {
+        background-color: #1e293b !important;
+    }
+
+    .theme-dark .navbar {
+        background-color: #1e293b !important;
+    }
+
+    .theme-dark .has-background-white-ter {
+        background-color: #334155 !important;
+    }
+
+    .theme-dark .has-background-white-bis {
+        background-color: #334155 !important;
+    }
+
+    .theme-dark .box {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+        border: 1px solid #334155 !important;
+    }
+
+    .theme-dark .card {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+    }
+
+    .theme-dark .input {
+        background-color: #334155 !important;
+        color: #e2e8f0 !important;
+        border-color: #475569 !important;
+    }
+
+    .theme-dark .select select {
+        background-color: #334155 !important;
+        color: #e2e8f0 !important;
+        border-color: #475569 !important;
+    }
+
+    .theme-dark .table {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+    }
+
+    .theme-dark .table td,
+    .theme-dark .table th {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+        border-color: #334155 !important;
+    }
+
+    .theme-dark .footer {
+        background-color: #1e293b !important;
+    }
+
+    .theme-dark .has-background-link-95 {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+    }
+
+    .has-background-link-95 {
+        background-color: #fefce8 !important;
+        color: #333333 !important;
+    }
+
+    .theme-dark .title {
+        color: #d0d0d0 !important;
+    }
+
+    .theme-dark .subtitle {
+        color: #b0b0b0 !important;
+    }
+
+    .theme-dark .card-header-title {
+        color: #d0d0d0 !important;
+    }
+
+    .theme-dark .has-text-grey-dark {
+        color: #d0d0d0 !important;
+    }
+
+    .intro-card {
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .intro-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .intro-card-featured {
+        border-color: #ffdd57;
+    }
+
+    .intro-icon-wrapper {
+        background: rgba(255, 221, 87, 0.1);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .theme-dark .intro-icon-wrapper {
+        background: rgba(255, 221, 87, 0.2);
+    }
+
+    .steps-banner {
+        background: linear-gradient(135deg, #fff9e6 0%, #fef3c7 100%);
+        border: 2px solid #fbbf24;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(251, 191, 36, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .steps-banner::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 221, 87, 0.1) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .steps-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .theme-dark .steps-banner {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        border-color: #64748b;
+        box-shadow: 0 10px 25px rgba(100, 116, 139, 0.1), 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo-section {
+        gap: 1rem;
+    }
+
+    .cookie-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding: 1rem;
+    }
+
+    .theme-dark .cookie-banner .notification {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+        border: 1px solid #334155 !important;
+    }
+
+    .rotate {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .rotate.down {
+        transform: rotate(180deg);
+    }
+
+    .theme-dark .button.is-warning {
+        background-color: #334155 !important;
+        color: #e2e8f0 !important;
+        border-color: #475569 !important;
+    }
+
+    .theme-dark .button.is-warning:hover {
+        background-color: #475569 !important;
+    }
+
+    .theme-light .button.is-warning {
+        background-color: #ffdd57 !important;
+        color: #363636 !important;
+    }
+    </style>
+</body>
+</html>

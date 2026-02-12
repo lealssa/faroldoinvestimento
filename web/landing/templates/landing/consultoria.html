@@ -1,0 +1,54 @@
+{% extends 'landing/base.html' %}
+
+{% block title %}Consultoria em Renda Fixa - Farol do Investimento{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 6rem;">
+    <div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-6">
+                <h1 class="title is-2">Consultoria Especializada</h1>
+                <h2 class="subtitle">Maximize seus rendimentos com orientação profissional</h2>
+                
+                <div class="content">
+                    <h3 class="title is-4">O que você recebe:</h3>
+                    <ul class="is-size-5">
+                        <li><strong>Análise completa</strong> do seu perfil de investidor</li>
+                        <li><strong>Estratégia personalizada</strong> para seus objetivos</li>
+                        <li><strong>Recomendações específicas</strong> de produtos</li>
+                        <li><strong>Acompanhamento mensal</strong> via WhatsApp</li>
+                        <li><strong>Relatórios de performance</strong> detalhados</li>
+                    </ul>
+                </div>
+                
+                <div class="box has-background-primary-light">
+                    <h4 class="title is-5">Planos Disponíveis</h4>
+                    <div class="columns">
+                        <div class="column">
+                            <strong>Básico</strong><br>
+                            R$ 297/mês<br>
+                            <small>Consultoria + Relatórios</small>
+                        </div>
+                        <div class="column">
+                            <strong>Premium</strong><br>
+                            R$ 497/mês<br>
+                            <small>Consultoria + Sistema + WhatsApp</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <a class="button is-warning is-large" href="{% url 'contato' %}">
+                    <span class="icon"><i class="fab fa-whatsapp"></i></span>
+                    <span>Contratar Agora</span>
+                </a>
+            </div>
+            
+            <div class="column is-6">
+                <figure class="image">
+                    <img src="https://via.placeholder.com/600x400/00d1b2/ffffff?text=Consultoria" alt="Consultoria">
+                </figure>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

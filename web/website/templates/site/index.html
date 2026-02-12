@@ -1,0 +1,349 @@
+{% extends 'site/base.html' %}
+
+{% block title %}Simulador de Renda Fixa Gratuito - Farol do Investimento{% endblock %}
+{% block description %}Simule investimentos em CDB, Tesouro Direto e Poupança. Calculadora gratuita com índices atualizados (SELIC, IPCA). Aprenda a investir com segurança.{% endblock %}
+{% block keywords %}simulador renda fixa, calculadora CDB, tesouro direto, investimentos seguros, SELIC, IPCA, poupança, educação financeira{% endblock %}
+
+{% block content %}
+<!-- Intro -->
+<section class="section has-text-centered">
+    <div class="columns is-variable is-8">
+        <div class="column is-flex">
+            <div class="card intro-card" style="height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid transparent;">
+                <div class="card-content has-text-centered">
+                    <div class="intro-icon-wrapper mb-4" style="background: rgba(255, 221, 87, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <span class="icon is-size-2 has-text-warning">
+                            🎓
+                        </span>
+                    </div>
+                    <h2 class="title is-5 mb-4">Aprenda e invista</h2>
+                    <p class="is-size-6 mb-4">
+                        Tenha autonomia para investir seu dinheiro da melhor forma. Aqui você vai entender os
+                        conceitos básicos sobre <strong>investimentos em Renda Fixa</strong> e aplicar seu dinheiro
+                        com inteligência e maior rentabilidade.
+                    </p>
+                    <a href="#rendafixa" class="button is-warning is-light is-rounded">
+                        <span class="icon">
+                            📚
+                        </span>
+                        <span>Começar Agora</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="column is-flex">
+            <div class="card intro-card" style="height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid transparent;">
+                <div class="card-content has-text-centered">
+                    <div class="intro-icon-wrapper mb-4" style="background: rgba(255, 221, 87, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <span class="icon is-size-2 has-text-warning">
+                            📈
+                        </span>
+                    </div>
+                    <h2 class="title is-5 mb-4">Invista com Segurança</h2>
+                    <p class="is-size-6 mb-4">
+                        Escolha apenas corretoras regulamentadas pela <strong>CVM</strong> e invista
+                        com total segurança e transparência. A CVM é um orgão do governo brasileiro responsável por
+                        controlar o mercado de investimentos no país.
+                    </p>
+                    <a href="https://sistemas.cvm.gov.br/asp/cvmwww/InvNRes/tabecus.asp" class="button is-warning is-light is-rounded" target="_blank">
+                        <span class="icon">
+                            🛡️
+                        </span>
+                        <span>Ver Corretoras</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="column is-flex">
+            <div class="card intro-card intro-card-featured" style="height: 100%; transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid #ffdd57;">
+                <div class="card-content has-text-centered">
+                    <div class="intro-icon-wrapper mb-4" style="background: rgba(255, 221, 87, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <span class="icon is-size-2 has-text-warning">
+                            🧮
+                        </span>
+                    </div>
+                    <h2 class="title is-5 mb-4">Simulador Exclusivo</h2>
+                    <p class="is-size-6 mb-4">
+                        Compare rendimentos, monte carteiras e tome decisões inteligentes com nossa calculadora que
+                        simula diversos tipos de investimento, com base no montante a ser investido.
+                        <strong class="has-text-warning">Totalmente grátis</strong>.
+                    </p>
+                    <a class="button is-warning is-rounded" href="#simuladorrendafixa">
+                        <span class="icon">
+                            🚀
+                        </span>
+                        <span>Simular Agora</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Intro -->
+
+<section class="section py-5">
+    <div class="container">
+        <div class="steps-banner">
+            <div class="steps-content">
+                <div class="steps-icon mb-3">
+                    <span class="icon is-size-1">
+                        <i class="fas fa-shoe-prints"></i>
+                    </span>
+                </div>
+                <h2 class="title is-4 mb-2">Primeiros Passos</h2>
+                <p class="subtitle is-6 has-text-grey-dark">
+                    Comece sua jornada nos investimentos com nosso guia prático e didático
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Learn -->
+<section class="section learn-section">
+    <div class="container">
+        <div class="has-text-centered mb-6">
+            <h2 class="title is-3 mb-3">Guia Completo de Renda Fixa</h2>
+            <p class="subtitle is-5 has-text-grey">Tudo que você precisa saber para investir com segurança</p>
+        </div>
+
+        <div class="columns is-multiline is-variable is-6">
+            <div class="column is-full">
+                <div class="box has-background-white-bis" x-data="{ open: true }">
+                    <a class="link is-size-6 has-text-grey is-pulled-right" @click="open = !open">
+                        <span class="icon">
+                            <span class="rotate" :class="{ 'down': open }" style="transition: transform 0.2s ease-in-out; transform: rotate(0deg);">▲</span>
+                        </span>
+                    </a>
+                    <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5 has-text-grey-dark" id="rendafixa">
+                        O que é investimento em Renda Fixa?
+                        <a href="#rendafixa" class="link is-size-6 has-text-grey">
+                            <span class="icon">
+                                🔗
+                            </span>
+                        </a>
+                    </h3>
+                    <div x-show="open" class="content">
+                        <p class="has-background-link-95 p-4 is-size-6">
+                            Investimento em renda fixa é uma categoria de investimento em que o rendimento é
+                            <strong>fixado por algum indexador</strong> e a rentabilidade pode ser previsível enquanto o
+                            dinheiro está aplicado. O investidor "empresta" o dinheiro para alguém - que, nesse caso, pode
+                            ser o governo, bancos ou outras empresas -, e, no futuro, recebe esse valor de volta, acrescido de juros.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half">
+                <div class="box has-background-white-bis" x-data="{ open: false }">
+                    <a class="link is-size-6 has-text-grey is-pulled-right" @click="open = !open">
+                        <span class="icon">
+                            <span class="rotate" :class="{ 'down': open }" style="transition: transform 0.2s ease-in-out;">▲</span>
+                        </span>
+                    </a>
+                    <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5 has-text-grey-dark" id="tiposrendafixa">
+                        Quais os tipos de investimento de Renda Fixa?
+                        <a href="#tiposrendafixa" class="link is-size-6 has-text-grey">
+                            <span class="icon">
+                                🔗
+                            </span>
+                        </a>
+                    </h3>
+                    <div x-show="open" class="content px-5 is-size-6">
+                        <p>
+                            Existem vários tipos de investimentos em renda fixa, como <strong> Tesouro Direto
+                            (títulos do governo), CDBs e RDBs (títulos de bancos), Debêntures e Notas Promissórias (títulos
+                            de empresas), LCIs e LCAs (títulos de bancos)</strong>, entre outros.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half">
+                <div class="box has-background-white-bis" x-data="{ open: false }">
+                    <a class="link is-size-6 has-text-grey is-pulled-right" @click="open = !open">
+                        <span class="icon">
+                            <span class="rotate" :class="{ 'down': open }" style="transition: transform 0.2s ease-in-out;">▲</span>
+                        </span>
+                    </a>
+                    <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5 has-text-grey-dark" id="riscosrendafixa">
+                        Existe algum risco investir em Renda Fixa?
+                        <a href="#riscosrendafixa" class="link is-size-6 has-text-grey">
+                            <span class="icon">
+                                🔗
+                            </span>
+                        </a>
+                    </h3>
+                    <div x-show="open" class="content px-5 is-size-6">
+                        <p>
+                            Este tipo de investimento é conhecido por possuir <strong>menores riscos
+                            associados</strong>, quando comparados aos de renda variável (investimentos da bolsa, por exemplo...). No entanto, é importante
+                            notar que a rentabilidade da renda fixa pode variar de acordo com as condições do mercado e do
+                            emissor do título.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half">
+                <div class="box has-background-white-bis" x-data="{ open: false }">
+                    <a class="link is-size-6 has-text-grey is-pulled-right" @click="open = !open">
+                        <span class="icon">
+                            <span class="rotate" :class="{ 'down': open }" style="transition: transform 0.2s ease-in-out;">▲</span>
+                        </span>
+                    </a>
+                    <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5 has-text-grey-dark" id="indicesvariamrendafixa">
+                        Índices da Renda Fixa variam com o tempo?
+                        <a href="#indicesvariamrendafixa" class="link is-size-6 has-text-grey">
+                            <span class="icon">
+                                🔗
+                            </span>
+                        </a>
+                    </h3>
+                    <div x-show="open" class="content px-5 is-size-6">
+                        <p>
+                            <strong>Os índices da renda fixa podem variar ao longo do prazo do
+                            investimento</strong>, o que pode impactar no rendimento ao final.
+                        </p>
+                        <p>
+                            Um rendimento pós-fixado, onde aplica-se um percentual
+                            sobre um determinado índice - geralmente CDI/SELIC -
+                            está mais exposto a essas variações, visto que o índice pode ir sofrendo variações
+                            durante o período e o rendimento o acompanha; já em um rendimento pré-fixado,
+                            onde a taxa é definida no momento da aplicação, isso não ocorre, pois permenecerá a mesma
+                            durante o período.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-half">
+                <div class="box has-background-white-bis" x-data="{ open: false }">
+                    <a class="link is-size-6 has-text-grey is-pulled-right" @click="open = !open">
+                        <span class="icon">
+                            <span class="rotate" :class="{ 'down': open }" style="transition: transform 0.2s ease-in-out;">▲</span>
+                        </span>
+                    </a>
+                    <h3 class="title is-size-4 is-size-5-mobile is-size-5-widescreen px-5 has-text-grey-dark" id="impostorendafixa">
+                        Preciso pagar imposto em rendimentos de Renda Fixa?
+                        <a href="#impostorendafixa" class="link is-size-6 has-text-grey">
+                            <span class="icon">
+                                🔗
+                            </span>
+                        </a>
+                    </h3>
+                    <div x-show="open" class="content px-5 is-size-6">
+                        <p>
+                            A depender do tipo de investimento de renda fixa, o governo cobra Imposto de Renda sobre
+                            o rendimento seguindo uma tabela regressiva, onde o percentual do imposto
+                            diminui de acordo com o prazo.
+                        </p>
+                        <p>
+                            <strong>A tabela regressiva do Imposto de Renda em aplicações de renda fixa varia entre
+                            22,5% e 15% </strong>, e incide apenas sobre o rendimento. As faixas de tributação para a tabela
+                            regressiva do Imposto de Renda são:
+                        </p>
+                        <ul>
+                            <li>Até 180 dias: 22,5%</li>
+                            <li>De 181 a 360 dias: 20%</li>
+                            <li>De 361 a 720 dias: 17,5%</li>
+                            <li>A partir de 721 dias: 15%</li>
+                        </ul>
+                        <p>
+                            Dessa forma, os investimentos em renda fixa de longo prazo e tributados pelo IR se tornam
+                            mais atrativos do que os resgatados no curto prazo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Learn -->
+
+<!-- Header Índices -->
+<section class="section has-text-centered">
+    <h2 class="title is-size-4" id="indicesrendafixa">
+        Índices da renda fixa
+    </h2>
+    <p class="subtitle is-size-5">
+        Estes índices são usados como indexadores do rendimento das aplicações na Renda Fixa
+    </p>
+</section>
+<!-- End Header Índices -->
+
+<!-- Lista Índices -->
+<section class="section" 
+         x-data="{
+             indices: {
+                 SELIC: { nome: 'SELIC', valor: 10.75, descricao: 'Taxa básica de juros atual', notas: 'Taxa definida pelo Banco Central' },
+                 Poupanca: { nome: 'Poupança', valor: 6.17, descricao: 'Rendimento da poupança após 2012', notas: '70% da SELIC quando SELIC ≤ 8,5%' },
+                 IPCA: { nome: 'Inflação (IPCA)', valor: 4.23, descricao: 'Inflação acumulada dos últimos 12 meses', notas: 'Índice oficial de inflação do Brasil' }
+             },
+             loading: false,
+             hasIndices: true
+         }" 
+         x-init="
+             loading = true;
+             fetch('https://objectstorage.sa-vinhedo-1.oraclecloud.com/n/axjwvnzorobg/b/indices/o/latest.json')
+                 .then(response => response.json())
+                 .then(data => {
+                     if (Array.isArray(data)) {
+                         const selic = data.find(item => item.nome === 'SELIC');
+                         const ipca = data.find(item => item.nome === 'IPCA');
+                         const poupanca = data.find(item => item.nome === 'Poupança');
+                         if (selic) indices.SELIC = selic;
+                         if (ipca) indices.IPCA = ipca;
+                         if (poupanca) indices.Poupanca = poupanca;
+                         hasIndices = true;
+                     }
+                 })
+                 .catch(err => console.error('Erro ao carregar índices:', err))
+                 .finally(() => loading = false);
+         ">
+    <div class="columns is-centered is-multiline">
+        <template x-for="(indice, key) in indices" :key="key">
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-header has-background-white-ter">
+                        <p class="card-header-title has-text-grey-dark" x-text="indice.nome"></p>
+                    </div>
+                    <div class="card-content">
+                        <h2 class="subtitle is-size-6" x-text="indice.descricao"></h2>
+                        <template x-if="hasIndices && !loading">
+                            <div class="content">
+                                <h1 class="title has-text-grey-dark" x-text="indice.valor + '% a.a'"></h1>
+                                <p class="is-size-7" x-text="indice.notas"></p>
+                            </div>
+                        </template>
+                        <template x-if="loading">
+                            <div class="skeleton-lines">
+                                <div style="height: 20px; background: #e2e8f0; margin-bottom: 10px; border-radius: 4px;"></div>
+                                <div style="height: 15px; background: #e2e8f0; border-radius: 4px;"></div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</section>
+<!-- End Lista Índices -->
+
+<!-- Header simulador -->
+<section class="section has-text-centered">
+    <h2 class="title" id="simuladorrendafixa">
+        Simulador de rendimento
+    </h2>
+    <p class="subtitle is-size-5">
+        Simule e compare quanto rende seu dinheiro aplicado na Renda Fixa
+    </p>
+</section>
+<!-- End Header simulador -->
+
+
+
+<!-- Calculadora -->
+{% include 'site/simulador_alpine.html' %}
+<!-- End Calculadora -->
+{% endblock %}

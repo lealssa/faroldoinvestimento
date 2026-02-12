@@ -1,0 +1,45 @@
+{% extends 'landing/base.html' %}
+
+{% block title %}Sistema de Acompanhamento - Farol do Investimento{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 6rem;">
+    <div class="container">
+        <div class="columns is-vcentered">
+            <div class="column is-6">
+                <figure class="image">
+                    <img src="https://via.placeholder.com/600x400/3273dc/ffffff?text=Dashboard" alt="Sistema">
+                </figure>
+            </div>
+            
+            <div class="column is-6">
+                <h1 class="title is-2">Sistema de Acompanhamento</h1>
+                <h2 class="subtitle">Controle total dos seus investimentos</h2>
+                
+                <div class="content">
+                    <h3 class="title is-4">Funcionalidades:</h3>
+                    <ul class="is-size-5">
+                        <li><strong>Dashboard intuitivo</strong> com todos seus investimentos</li>
+                        <li><strong>Cálculo automático</strong> de rendimentos</li>
+                        <li><strong>Alertas de vencimento</strong> por WhatsApp</li>
+                        <li><strong>Histórico completo</strong> de operações</li>
+                        <li><strong>Relatórios em PDF</strong> para IR</li>
+                        <li><strong>Comparativo de performance</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="box has-background-info-light">
+                    <h4 class="title is-5">Preço</h4>
+                    <p class="is-size-4"><strong>R$ 97/mês</strong></p>
+                    <p>Acesso completo ao sistema + Suporte via WhatsApp</p>
+                </div>
+                
+                <a class="button is-warning is-large" href="{% url 'contato' %}">
+                    <span class="icon"><i class="fas fa-rocket"></i></span>
+                    <span>Começar Agora</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

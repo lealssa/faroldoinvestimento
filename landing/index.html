@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farol do Investimento - Pare de Perder Dinheiro na Poupança | Aprenda Renda Fixa</title>
+    <meta name="description" content="Aprenda a investir em renda fixa de forma simples e segura. Pare de perder dinheiro na poupança. Educação financeira gratuita e ferramentas para comparar investimentos.">
+    
+    <!-- Tailwind CSS 4 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#0A0A0A',
+                        'accent': '#F97316',
+                        'muted': '#6B7280'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-900 text-white antialiased">
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-gray-900/80 backdrop-blur-sm border-b border-gray-700 z-50">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="lighthouse" class="w-6 h-6 text-accent"></i>
+                <span class="font-semibold text-lg">Farol</span>
+            </div>
+            <button class="bg-primary text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-colors">
+                Começar Grátis
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="pt-24 pb-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-400 mb-8">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                +10.000 pessoas aprendendo
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+                Pare de perder dinheiro na 
+                <span class="text-accent">poupança</span>
+            </h1>
+            
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-12">
+                Aprenda renda fixa de forma simples. Sem complicação, sem riscos desnecessários.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                    Começar Grátis
+                </button>
+                <button class="border border-gray-600 px-8 py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                    Ver Como Funciona
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="py-16 px-6 bg-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Você está perdendo dinheiro</h2>
+                <p class="text-xl text-gray-400">Compare os rendimentos anuais</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="trending-down" class="w-6 h-6 text-red-600"></i>
+                        </div>
+                        <h3 class="font-semibold mb-2">Poupança</h3>
+                        <div class="text-3xl font-bold text-red-600 mb-1">6,17%</div>
+                        <p class="text-sm text-gray-400">ao ano</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600 ring-2 ring-accent/20">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="trending-up" class="w-6 h-6 text-green-600"></i>
+                        </div>
+                        <h3 class="font-semibold mb-2">Tesouro Selic</h3>
+                        <div class="text-3xl font-bold text-green-600 mb-1">13,75%</div>
+                        <p class="text-sm text-gray-400">ao ano</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="arrow-up-right" class="w-6 h-6 text-green-600"></i>
+                        </div>
+                        <h3 class="font-semibold mb-2">CDB 100% CDI</h3>
+                        <div class="text-3xl font-bold text-green-600 mb-1">13,65%</div>
+                        <p class="text-sm text-gray-400">ao ano</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <div class="bg-red-600 text-white p-6 rounded-2xl inline-block">
+                    <p class="text-lg font-semibold">Diferença: R$ 7.580/ano em R$ 100.000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Como funciona</h2>
+                <p class="text-xl text-gray-400">3 passos simples</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-xl font-bold">
+                        1
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Aprenda</h3>
+                    <p class="text-gray-400">Conteúdo didático sobre renda fixa. Do básico ao avançado.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-xl font-bold">
+                        2
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Compare</h3>
+                    <p class="text-gray-400">Simule e compare diferentes investimentos de renda fixa.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-accent text-white rounded-2xl flex items-center justify-center mx-auto mb-6 text-xl font-bold">
+                        3
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Evolua</h3>
+                    <p class="text-gray-400">Organize e acompanhe a evolução dos seus investimentos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-16 px-6 bg-gray-800">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Escolha seu plano</h2>
+                <p class="text-xl text-gray-400">Comece grátis</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600">
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold mb-4">Gratuito</h3>
+                        <div class="text-4xl font-bold mb-6">R$ 0</div>
+                        <ul class="space-y-3 mb-8 text-left">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">PDF Introdução à Renda Fixa</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">Simulador básico</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-gray-600 text-white py-3 rounded-full font-medium hover:bg-gray-500 transition-colors">
+                            Começar Grátis
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-700 p-8 rounded-2xl border-2 border-accent relative">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-accent text-white px-4 py-1 rounded-full text-sm font-medium">
+                        Popular
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold mb-4">Premium</h3>
+                        <div class="text-4xl font-bold mb-6">R$ 29<span class="text-lg text-gray-400">/mês</span></div>
+                        <ul class="space-y-3 mb-8 text-left">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">Simulador ilimitado</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">Cadastro de investimentos</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">Alertas de vencimento</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-accent text-white py-3 rounded-full font-medium hover:bg-orange-600 transition-colors">
+                            Assinar Premium
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-700 p-8 rounded-2xl border border-gray-600">
+                    <div class="text-center">
+                        <h3 class="text-lg font-semibold mb-4">Pro</h3>
+                        <div class="text-4xl font-bold mb-6">R$ 79<span class="text-lg text-gray-400">/mês</span></div>
+                        <ul class="space-y-3 mb-8 text-left">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">Tudo do Premium +</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">Análise de carteira</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check" class="w-5 h-5 text-green-600"></i>
+                                <span class="text-sm">Suporte prioritário</span>
+                            </li>
+                        </ul>
+                        <button class="w-full bg-primary text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                            Quero o PRO
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">10.000+ pessoas aprendendo</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="bg-gray-800 p-6 rounded-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center font-semibold">
+                            M
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Maria S.</h4>
+                            <p class="text-sm text-gray-400">Professora</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">"Finalmente entendi renda fixa. Já migrei da poupança."</p>
+                </div>
+                
+                <div class="bg-gray-800 p-6 rounded-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center font-semibold">
+                            J
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">João P.</h4>
+                            <p class="text-sm text-gray-400">Engenheiro</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">"O simulador me ajudou a comparar investimentos."</p>
+                </div>
+                
+                <div class="bg-gray-800 p-6 rounded-2xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center font-semibold">
+                            A
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Ana L.</h4>
+                            <p class="text-sm text-gray-400">Médica</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">"Conteúdo claro e direto. Recomendo!"</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-8 text-center">
+                <div>
+                    <div class="text-3xl font-bold text-accent mb-2">10K+</div>
+                    <p class="text-gray-400">Usuários</p>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-accent mb-2">R$ 50M+</div>
+                    <p class="text-gray-400">Economizados</p>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-accent mb-2">4.8/5</div>
+                    <p class="text-gray-400">Avaliação</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 px-6 bg-gray-800">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Perguntas frequentes</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-gray-700 p-6 rounded-2xl border border-gray-600">
+                    <h3 class="font-semibold mb-3">É seguro investir em renda fixa?</h3>
+                    <p class="text-gray-400">Sim! Tesouro Direto e CDBs são garantidos pelo governo ou FGC.</p>
+                </div>
+                
+                <div class="bg-gray-700 p-6 rounded-2xl border border-gray-600">
+                    <h3 class="font-semibold mb-3">Vocês indicam investimentos?</h3>
+                    <p class="text-gray-400">Não! Somos educacionais. Ensinamos você a decidir sozinho.</p>
+                </div>
+                
+                <div class="bg-gray-700 p-6 rounded-2xl border border-gray-600">
+                    <h3 class="font-semibold mb-3">Preciso ter muito dinheiro?</h3>
+                    <p class="text-gray-400">Não! Pode começar com R$ 30 no Tesouro Direto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 px-6">
+        <div class="max-w-2xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Comece hoje</h2>
+            <p class="text-xl text-gray-400 mb-8">É grátis, é simples, é seguro.</p>
+            
+            <form class="flex flex-col sm:flex-row gap-4 mb-8">
+                <input 
+                    type="email" 
+                    placeholder="Seu melhor e-mail" 
+                    class="flex-1 px-4 py-3 rounded-full border border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                <button 
+                    type="submit"
+                    class="bg-accent text-white px-8 py-3 rounded-full font-medium hover:bg-orange-600 transition-colors"
+                >
+                    Começar Grátis
+                </button>
+            </form>
+            
+            <div class="flex justify-center gap-8 text-sm text-gray-400">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>Sem pegadinhas</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                    <span>100% educacional</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-primary text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="lighthouse" class="w-5 h-5 text-accent"></i>
+                        <span class="font-semibold">Farol</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Educação financeira simples.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">Sobre</a></li>
+                        <li><a href="#" class="hover:text-white">Blog</a></li>
+                        <li><a href="#" class="hover:text-white">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Recursos</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">Simulador</a></li>
+                        <li><a href="#" class="hover:text-white">Guias</a></li>
+                        <li><a href="#" class="hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Contato</h4>
+                    <p class="text-sm text-gray-400">contato@farol.com.br</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2024 Farol do Investimento. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Obrigado! Em breve você receberá nosso material gratuito.');
+        });
+    </script>
+</body>
+</html>

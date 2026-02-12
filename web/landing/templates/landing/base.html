@@ -1,0 +1,227 @@
+{% load static %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Farol do Investimento - SAAS de Consultoria e Acompanhamento{% endblock %}</title>
+    <meta name="description" content="{% block description %}Consultoria especializada em renda fixa e sistema completo para acompanhar seus investimentos. Maximize seus rendimentos com nossa plataforma.{% endblock %}">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <style>
+    .theme-dark {
+        --bulma-scheme-main: #0f172a;
+        --bulma-background: #0f172a;
+        --bulma-text: #e2e8f0;
+        --bulma-border: #334155;
+        --bulma-box-background-color: #1e293b;
+        --bulma-card-background-color: #1e293b;
+        --bulma-navbar-background-color: #1e293b;
+        --bulma-footer-background-color: #1e293b;
+    }
+
+    .theme-dark .has-background-light {
+        background-color: #0f172a !important;
+    }
+
+    .theme-dark .has-background-white {
+        background-color: #1e293b !important;
+    }
+
+    .theme-dark .navbar {
+        background-color: #1e293b !important;
+    }
+
+    .theme-dark .has-background-white-ter {
+        background-color: #334155 !important;
+    }
+
+    .theme-dark .has-background-white-bis {
+        background-color: #334155 !important;
+    }
+
+    .theme-dark .box {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+        border: 1px solid #334155 !important;
+    }
+
+    .theme-dark .card {
+        background-color: #1e293b !important;
+        color: #e2e8f0 !important;
+    }
+
+    .theme-dark .section {
+        background-color: #0f172a !important;
+    }
+
+    .theme-dark .footer {
+        background-color: #1e293b !important;
+    }
+
+    .theme-dark .title {
+        color: #d0d0d0 !important;
+    }
+
+    .theme-dark .subtitle {
+        color: #b0b0b0 !important;
+    }
+
+    .theme-dark .button.is-warning {
+        background-color: #334155 !important;
+        color: #e2e8f0 !important;
+        border-color: #475569 !important;
+    }
+
+    .theme-dark .button.is-warning:hover {
+        background-color: #475569 !important;
+    }
+
+    .theme-light .button.is-warning {
+        background-color: #ffdd57 !important;
+        color: #363636 !important;
+    }
+
+    .hero-gradient {
+        background: linear-gradient(135deg, #ffdd57 0%, #fbbf24 100%);
+    }
+    
+    .theme-dark .hero-gradient {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    }
+
+    .intro-card {
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid transparent;
+    }
+
+    .intro-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .intro-card-featured {
+        border-color: #ffdd57;
+    }
+    
+    .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .cta-section {
+        background: linear-gradient(45deg, #ffdd57, #fbbf24);
+    }
+    
+    .theme-dark .cta-section {
+        background: linear-gradient(45deg, #1e293b, #334155);
+    }
+    </style>
+</head>
+<body x-data="{ 
+          isDark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme')), 
+          showCookieBanner: !localStorage.getItem('cookiesAccepted'),
+          isMenuOpen: false
+      }" 
+      x-init="
+          if (isDark) { 
+              document.documentElement.className = 'theme-dark'; 
+          } else { 
+              document.documentElement.className = 'theme-light'; 
+          }
+      ">
+    <div class="hero is-fullheight">
+        <!-- Header -->
+        <header class="hero-head">
+            <nav class="navbar is-fixed-top has-background-white">
+                <div class="container is-max-widescreen">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="{% url 'index' %}">
+                            <img src="{% static 'img/farol_do_investimento_logo.png' %}" alt="Logo" />
+                        </a>
+                        <a class="navbar-item link is-size-5" href="{% url 'index' %}">
+                            Farol do Investimento
+                        </a>
+                        <a class="navbar-burger" :class="{ 'is-active': isMenuOpen }" @click="isMenuOpen = !isMenuOpen">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </div>
+                    <div class="navbar-menu" :class="{ 'is-active': isMenuOpen }">
+                        <div class="navbar-end">
+                            <a class="navbar-item" href="{% url 'consultoria' %}">Consultoria</a>
+                            <a class="navbar-item" href="{% url 'sistema' %}">Sistema</a>
+                            <a class="navbar-item" href="/site/">Simulador</a>
+                            <div class="navbar-item">
+                                <button class="button" @click="
+                                    isDark = !isDark; 
+                                    localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
+                                    document.documentElement.className = isDark ? 'theme-dark' : 'theme-light';
+                                ">
+                                    <span class="icon">
+                                        <span x-text="isDark ? '☀️' : '🌙'"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- End Header -->
+
+        <!-- Main -->
+        <main class="hero-body has-background-light" style="padding-top: 3.25rem;">
+            <div class="container is-max-widescreen">
+                <!-- Content -->
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+        <!-- End Main -->
+        
+        <!-- Footer -->
+        <div class="hero-foot">
+
+            <footer class="footer has-text-centered p-5">
+                <div class="block">
+                    <p class="is-size-5 has-text-weight-light">Farol do Investimento {% now "Y" %}</p>
+                    <a href="https://www.instagram.com/faroldoinvestimento?igsh=MWNyN28xNjZpcjdjdQ==" target="_blank"
+                        class="link has-text-warning">
+                        @faroldoinvestimento
+                    </a>
+                    <p class="is-size-7">&copy Todos os direitos reservados.</p>
+                    <div class="columns is-centered mt-4">
+                        <div class="column is-narrow">
+                            <h4 class="title is-6">Serviços</h4>
+                            <ul>
+                                <li><a href="{% url 'consultoria' %}" class="has-text-grey">Consultoria</a></li>
+                                <li><a href="{% url 'sistema' %}" class="has-text-grey">Sistema</a></li>
+                                <li><a href="/site/" class="has-text-grey">Simulador Gratuito</a></li>
+                            </ul>
+                        </div>
+                        <div class="column is-narrow">
+                            <h4 class="title is-6">Contato</h4>
+                            <p><i class="fab fa-whatsapp"></i> WhatsApp: (11) 99999-9999</p>
+                            <p><i class="fas fa-envelope"></i> contato@faroldoinvestimento.com</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- End Footer -->
+    </div>
+</body>
+</html>

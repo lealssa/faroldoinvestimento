@@ -1,0 +1,51 @@
+<!-- Tabela Simulações -->
+<div class="block is-hidden-mobile has-background-white p-4 table-container" id="tabela-simulacoes" style="display: none;">
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Valor aplicado</th>
+                <th>Taxa a.a</th>
+                <th>Prazo a.m</th>
+                <th>Valor no venc.</th>
+                <th>Rend. bruto</th>
+                <th>IR</th>
+                <th>Rend. líquido</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="tbody-simulacoes">
+            <tr id="sem-simulacoes">
+                <td colspan="9">
+                    <p class="subtitle has-text-centered">Preencha os dados e clique em "Comparar"</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="buttons is-right" id="botoes-tabela" style="display: none;">
+        <button class="button is-small is-danger is-light is-rounded" onclick="limparSimulacoes()">
+            <span class="icon"><i class="fas fa-trash"></i></span>
+            <span>Limpar todos</span>
+        </button>
+    </div>
+</div>
+
+<script>
+function limparSimulacoes() {
+    if (window.simulador) {
+        window.simulador.limparSimulacoes();
+    }
+}
+
+function removerSimulacao(id) {
+    if (window.simulador) {
+        window.simulador.removerSimulacao(id);
+    }
+}
+</script>
+
+<style>
+.table-container {
+    border-radius: 6px;
+}
+</style>

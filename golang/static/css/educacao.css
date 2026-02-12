@@ -1,0 +1,101 @@
+/* Education Page Styles */
+.pricing-hero {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 16px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.price-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.currency {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.amount {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #f59e0b;
+}
+
+.period {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.module-card {
+    height: 100%;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-2px);
+}
+
+.module-list {
+    list-style: none;
+    padding: 0;
+}
+
+.module-list li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.module-list i {
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+}
+
+.benefit-card {
+    height: 100%;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.benefit-card:hover {
+    transform: translateY(-2px);
+}
+
+.cta-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+}
+
+.theme-dark .pricing-hero {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: #f59e0b;
+}
+
+.theme-dark .cta-card {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: #475569;
+}
+
+.theme-dark .currency,
+.theme-dark .period {
+    color: #e2e8f0;
+}
+
+.theme-dark .amount {
+    color: #fbbf24;
+}
+
+.theme-dark .module-card,
+.theme-dark .benefit-card {
+    background-color: #1e293b !important;
+}
