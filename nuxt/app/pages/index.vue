@@ -56,15 +56,14 @@ const indicesStore = useIndicesStore()
                             controlar o mercado de investimentos no país.
                         </p>
 
-                        <a href="https://sistemas.cvm.gov.br/asp/cvmwww/InvNRes/tabecus.asp"
-                            class="button is-warning is-light is-rounded" target="_blank">
+                        <NuxtLink class="button is-warning is-light is-rounded" to="/corretoras-cvm">
                             <span class="icon">
                                 <ClientOnly>
                                     <font-awesome-icon icon="fa-solid fa-shield-halved" />
                                 </ClientOnly>
                             </span>
                             <span>Ver Corretoras</span>
-                        </a>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>
